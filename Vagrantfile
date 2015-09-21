@@ -46,4 +46,16 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   #  chef.add_recipe "baseconfig"
   #end
 
+  # Enable provisioning with Fabric. Before using, you must (on your machine,
+  # outside the VM) have Fabric and the vagrant-fabric plugin installed:
+  #     sudo apt-get install fabric
+  #     vagrant plugin install vagrant-fabric
+  # (So if that's going to be a problem for any of your group members, don't
+  # choose Fabric.) Then you can specify the main fabfile and which tasks to
+  # have targetted at your VM.
+  #config.vm.provision :fabric do |fabric|
+  #  fabric.fabfile_path = "./fabric/fabfile.py"
+  #  fabric.tasks = ["base_setup",]
+  #end
+
 end
