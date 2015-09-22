@@ -11,4 +11,7 @@ class baseconfig {
   file { '/etc/ntp.conf':
     source => 'puppet:///modules/baseconfig/ntp.conf';    
   }
+  exec { "ntp_restart":
+    command => "/usr/sbin/service ntp restart"
+  }
 }
