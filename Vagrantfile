@@ -20,13 +20,17 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Provider-specific configuration so you can fine-tune various
   # backing providers for Vagrant. These expose provider-specific options.
-  #config.vm.provider :virtualbox do |vb|
-  #  vb.customize ["modifyvm", :id, "--cpus", "1", "--memory", "1024"]
-  #end
-  #config.vm.provider "vmware_fusion" do |v, override|
-  #    v.vmx["memsize"] = "1024"
-  #    v.vmx["numvcpus"] = "1"
-  #end
+  # If you need to more than double the defaults for this course, you have
+  # done something wrong.
+  cpus = "1"
+  memory = "512" # MB
+  config.vm.provider :virtualbox do |vb|
+    vb.customize ["modifyvm", :id, "--cpus", cpus, "--memory", memory]
+  end
+  config.vm.provider "vmware_fusion" do |v, override|
+      v.vmx["memsize"] = memory
+      v.vmx["numvcpus"] = cpus
+  end
 
   # Enable provisioning with Puppet stand alone.  Puppet manifests
   # are contained in a directory path relative to this Vagrantfile.
