@@ -1,3 +1,8 @@
+# Make sure the Apt package lists are up to date, so we're downloading versions that exist.
+execute 'apt_update' do
+  command 'apt-get update'
+end
+
 # Base configuration recipe in Chef.
 package "wget"
 package "ntp"
