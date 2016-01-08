@@ -32,34 +32,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       v.vmx["numvcpus"] = cpus
   end
 
-  # Enable provisioning with Puppet stand alone.  Puppet manifests
-  # are contained in a directory path relative to this Vagrantfile.
-  # You will need to create the manifests directory and a manifest in
-  # the file default.pp in the manifests_path directory.
-  #config.vm.provision "puppet" do |puppet|
-  #  puppet.manifests_path = "puppet/manifests"
-  #  puppet.module_path = "puppet/modules"
-  #  puppet.manifest_file  = "default.pp"
-  #end
-
   # Enable provisioning with chef solo, specifying a cookbooks path, roles
   # path, and data_bags path (all relative to this Vagrantfile), and adding
   # some recipes and/or roles.
-  #config.vm.provision "chef_solo" do |chef|
-  #  chef.cookbooks_path = "chef/cookbooks"
-  #  chef.add_recipe "baseconfig"
-  #end
-
-  # Enable provisioning with Fabric. Before using, you must (on your machine,
-  # outside the VM) have Fabric and the vagrant-fabric plugin installed:
-  #     sudo apt-get install fabric
-  #     vagrant plugin install vagrant-fabric
-  # (So if that's going to be a problem for any of your group members, don't
-  # choose Fabric.) Then you can specify the main fabfile and which tasks to
-  # have targetted at your VM.
-  #config.vm.provision :fabric do |fabric|
-  #  fabric.fabfile_path = "./fabric/fabfile.py"
-  #  fabric.tasks = ["base_setup",]
-  #end
+  config.vm.provision "chef_solo" do |chef|
+    chef.cookbooks_path = "chef/cookbooks"
+    chef.add_recipe "baseconfig"
+  end
 
 end
