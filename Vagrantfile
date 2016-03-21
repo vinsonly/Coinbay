@@ -26,6 +26,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   memory = "512" # MB
   config.vm.provider :virtualbox do |vb|
     vb.customize ["modifyvm", :id, "--cpus", cpus, "--memory", memory]
+    #vb.gui = true
   end
   config.vm.provider "vmware_fusion" do |v, override|
       v.vmx["memsize"] = memory
