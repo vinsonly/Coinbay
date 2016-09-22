@@ -4,7 +4,8 @@
 VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-  config.vm.box = "larryli/vivid64"
+  config.vm.box = "ubuntu/xenial64"
+  config.vm.box_version = '>= 20160921.0.0'
 
   # Create a forwarded port mapping which allows access to a specific port
   # within the machine from a port on the host machine. In the example below,
@@ -29,8 +30,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     #vb.gui = true
   end
   config.vm.provider "vmware_fusion" do |v, override|
-      v.vmx["memsize"] = memory
-      v.vmx["numvcpus"] = cpus
+    v.vmx["memsize"] = memory
+    v.vmx["numvcpus"] = cpus
   end
 
   # Enable provisioning with chef solo, specifying a cookbooks path, roles
