@@ -34,6 +34,20 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     v.vmx["memsize"] = memory
     v.vmx["numvcpus"] = cpus
   end
+  config.vm.provider :cloudstack do |cloudstack, override|
+    override.vm.box = "Ubuntu-16.04-keys"
+    cloudstack.scheme = "http"
+    cloudstack.host = "sfucloud.ca"
+    cloudstack.path = "/client/api"
+    cloudstack.port = "8080"
+    cloudstack.api_key = ENV['CLOUDSTACK_KEY'] || "AAAAAAAAAAAAAAAA"
+    cloudstack.secret_key = ENV['CLOUDSTACK_SECRET'] || "AAAAAAAAAAAAAAAA"
+    cloudstack.service_offering_name = "sc.t2.micro"
+    cloudstack.zone_name = "NML-Zone"
+    cloudstack.name = 'cmpt470-A-' + File.basename(Dir.getwd) + '-' + (ENV['USERNAME'] || ENV['USER'])
+    cloudstack.ssh_user = "cloud"
+    cloudstack.security_group_names = ['CMPT 470 firewall']
+  end
 
   # Enable provisioning with chef solo, specifying a cookbooks path, roles
   # path, and data_bags path (all relative to this Vagrantfile), and adding
