@@ -44,8 +44,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     cloudstack.secret_key = ENV['CLOUDSTACK_SECRET'] || "AAAAAAAAAAAAAAAA"
     cloudstack.service_offering_name = "sc.t2.micro"
     cloudstack.zone_name = "NML-Zone"
-    cloudstack.name = 'cmpt470-A-' + File.basename(Dir.getwd) + '-' + (ENV['USERNAME'] || ENV['USER'])
-    cloudstack.ssh_user = "cloud"
+    cloudstack.name = "cmpt470-#{File.basename(Dir.getwd)}-#{Random.new.rand(100)}"
+    cloudstack.ssh_user = "ubuntu"
     cloudstack.security_group_names = ['CMPT 470 firewall']
   end
 
