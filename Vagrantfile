@@ -35,11 +35,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     v.vmx["numvcpus"] = cpus
   end
   config.vm.provider :cloudstack do |cloudstack, override|
-    override.vm.box = "Ubuntu-16.04-keys"
-    cloudstack.scheme = "http"
+    override.vm.box = "Ubuntu-16.04-SSH-Keys"
+    cloudstack.scheme = "https"
     cloudstack.host = "sfucloud.ca"
     cloudstack.path = "/client/api"
-    cloudstack.port = "8080"
     cloudstack.api_key = ENV['CLOUDSTACK_KEY'] || "AAAAAAAAAAAAAAAA"
     cloudstack.secret_key = ENV['CLOUDSTACK_SECRET'] || "AAAAAAAAAAAAAAAA"
     cloudstack.service_offering_name = "sc.t2.micro"
