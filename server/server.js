@@ -12,3 +12,18 @@ app.set('views', '../client/views');
 app.use(express.static('../client/public'));
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
+
+var pg = require('pg');
+var connectionString = process.env.DATABASE_URL || 'postgres://test:test@localhost:5432/test';
+
+const client = new pg.Client(connectionString);
+client.connect();
+
+
+client.query('SELECT * FROM playground;', (err, res) => {
+  if (err) {
+    console.log(err.stack)
+  } else {
+    console.log(res.rows[0])
+  }
+})
