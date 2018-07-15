@@ -14,7 +14,7 @@ app.use(express.static('../client/public'));
 app.listen(port, () => console.log(`Listening on port ${port}`));
 
 var pg = require('pg');
-var connectionString = process.env.DATABASE_URL || 'postgres://test:test@localhost:5432/test';
+var connectionString = process.env.DATABASE_URL || 'postgres://admin:admin@localhost:5432/admin';
 
 const client = new pg.Client(connectionString);
 client.connect();
