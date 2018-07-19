@@ -11,6 +11,16 @@ app.set('view engine', 'ejs');
 app.set('views', '../client/views');
 app.use(express.static('../client/public'));
 
+
+
+// set up the set the routes defined in /server/routers to be endpoint
+require('./server/routes')(app);
+
+// default file to send if none of our other router handlers catch the request
+app.get('*', (req, res) => {
+  res.sendFile(__dirname + '/client/index.html');
+})
+
 app.listen(port, () => console.log(`Listening on port ${port}`));
 
 var pg = require('pg');
