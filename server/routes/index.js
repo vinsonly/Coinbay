@@ -1,11 +1,9 @@
-var express = require('express');
-var router = express.Router();
+const usersController = require('../controllers').users;
 
-// router.get('/', (req, res) => {
-// 	res.render('index', {		
-// 		server: 'Vinson computer',
-// 		storage: '2GB'
-// 	})
-// });
-
-module.exports = router;
+module.exports = (app) => {
+    app.get('/api', (req, res) => res.status(200).send({
+        message: 'Welcome to the Contacts API!'  
+      }))
+  
+    // WRITE THE OTHER ENDPOINTS DOWN HERE
+}
