@@ -6,4 +6,12 @@ module.exports = (app) => {
       }))
   
     // WRITE THE OTHER ENDPOINTS DOWN HERE
+
+    // EXAMPLES:
+    //  //CREATE
+    //  app.post('/api/contact', contactsController.create);
+
+    //  //READ
+    //  app.get('/api/contacts', contactsController.read);
+ 
 }
