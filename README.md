@@ -2,9 +2,8 @@
 # Contribution Guide
 1. Clone the repo
 ```
-git clone git@csil-git1.cs.surrey.sfu.ca:vinsonl/CMPT470-ReduxDemoSite.git
+git@csil-git1.cs.surrey.sfu.ca:tamkylet/CMPT470-project-application.git
 ```
-If this doesn't work, try running the same command but replace 'vinsonl' with your own gitlab username (sfu username).
 
 2.  Make sure you have yarn installed on your computer, check by executing:
 ```
