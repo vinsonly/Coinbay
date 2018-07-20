@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 
 import App from './App';
-import Posts from './Posts';
+import Posts from './posts/Posts';
 import Item from './Item';
 import Transaction from './Transaction';
 import Whoops404 from './Whoops404';

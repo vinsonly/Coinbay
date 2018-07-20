@@ -28,27 +28,21 @@ function SimpleMediaCard(props) {
       <Card className={classes.card}>
         <CardMedia
           className={classes.media}
-          image="/static/images/cards/contemplative-reptile.jpg"
+          image="/iphone.png"
           title="Contemplative Reptile"
         />
         <CardContent>
           <Typography gutterBottom variant="headline" component="h2">
-            Lizard
+            iPhone X <p className="right-text-float">$450</p>
           </Typography>
           <Typography component="p">
-            Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
-            across all continents except Antarctica
+            The iPhone X is Apple's new flagship 10th anniversary iPhone featuring a 5.8-inch OLED display, facial recognition
+             and 3D camera functionality, a glass body, and an A11 Bionic processor. Launched November 3, 2017.
           </Typography>
         </CardContent>
         <CardActions>
-          <Button size="small" color="primary">
-            Share
-          </Button>
-          <Button size="small" color="primary">
-            Learn More
-          </Button>
-          <Button size="small" color="primary">
-            <Link to={"/posts/" + props.post}>Item</Link>
+          <Button size="large" color="primary">
+            <Link to={"/posts/" + props.post} className="no-line">More Details</Link>
           </Button>
         </CardActions>
       </Card>
