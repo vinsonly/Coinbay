@@ -40,11 +40,13 @@ function SimpleMediaCard(props) {
              and 3D camera functionality, a glass body, and an A11 Bionic processor. Launched November 3, 2017.
           </Typography>
         </CardContent>
-        <CardActions>
-          <Button size="large" color="primary">
-            <Link to={"/posts/" + props.post} className="no-line">More Details</Link>
-          </Button>
-        </CardActions>
+        <div className="button-center">
+          <CardActions>
+              <Button size="large" color="primary">
+                <Link to={"/posts/" + props.post} className="no-line">More Details</Link>
+              </Button>
+          </CardActions>
+        </div>
       </Card>
     </div>
   );

@@ -13,8 +13,21 @@
 	display: inline;
 	float: right;
 	margin: 0;
-	font-size: 75%;
+	font-size: 0.75em;
 	color: #85bb65
+}
+
+p.MuiTypography-root-34.MuiTypography-body1-43 {
+	font-size: 1em
+}
+
+span.MuiButton-label-61 {
+	font-size: 1.1em
+}
+
+.button-center {
+  display: flex;
+  justify-content: center;
 }
 
 .no-line {
