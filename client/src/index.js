@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 
 import App from './App';
+import Navigation from './Navigation';
 import Posts from './posts/Posts';
 import Item from './Item';
 import Transaction from './Transaction';
@@ -11,6 +12,13 @@ import Whoops404 from './Whoops404';
 
 import registerServiceWorker from './registerServiceWorker';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
+
+
+ReactDOM.render(
+	<Navigation/>,
+	document.getElementById('navigation')
+);
+
 
 ReactDOM.render((
 	<BrowserRouter>
@@ -24,7 +32,7 @@ ReactDOM.render((
 			</Switch>
 		</div>
 	</BrowserRouter>),
-	document.getElementById('root')
+	document.getElementById('body-content')
 );
 
 
