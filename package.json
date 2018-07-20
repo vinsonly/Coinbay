@@ -8,13 +8,16 @@
     "start": "node server/server.js"
   },
   "dependencies": {
+    "@material-ui/core": "^1.4.0",
+    "@material-ui/icons": "^1.1.0",
     "ejs": "^2.6.1",
     "express": "^4.16.2",
     "pg": "^7.4.3",
     "pg-hstore": "^2.3.2",
     "react-redux": "^5.0.7",
     "redux": "^4.0.0",
-    "sequelize": "^4.38.0"
+    "sequelize": "^4.38.0",
+    "typeface-roboto": "0.0.54"
   },
   "devDependencies": {
     "concurrently": "^3.5.0"
