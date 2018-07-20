@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import Item from './Item';
+import SimpleMediaCard from './SimpleMediaCard';
 
 class Posts extends Component {
   render() {
     return (
 		<div>
 	      <h2>This is going to be our page with all the posts.</h2>
-			<Link to="/posts/1">Item</Link>
+	      <SimpleMediaCard post={1}/>
+	      <SimpleMediaCard post={2}/>
+	      <SimpleMediaCard post={3}/>
+	      <SimpleMediaCard post={4}/>
+	      <SimpleMediaCard post={5}/>
 	    </div>
     );
   }
