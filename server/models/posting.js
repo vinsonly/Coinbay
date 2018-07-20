@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.NUMERIC(10,2),
       allowNull: false
     },
-    status: {
+    status: { // active, sold, pending
       type: DataTypes.STRING,
       allowNull: false
     },
