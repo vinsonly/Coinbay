@@ -1,0 +1,25 @@
+img#postingPicture {
+    width:100%;
+}
+
+div.postingInfo {
+    margin: 15px;
+}
+
+div.postingInfo p {
+    line-height: 25px;
+}
+
+div.sellerRating {
+    display: flex;
+    align-items: center;
+}
+
+div.sellerRating i {
+    width: 25px;
+}
+
+div.sellerRating h3 {
+    display:inline;
+    margin-right: 10px;
+}
