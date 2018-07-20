@@ -32,7 +32,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   Posting.associate = function(models) {
     // associations can be defined here
-    Posting.belongsTo(models.Todo, {
+    Posting.belongsTo(models.User, {
       foreignKey: 'userId'
     });
   };

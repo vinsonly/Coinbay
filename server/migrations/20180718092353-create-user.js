@@ -22,11 +22,11 @@ module.exports = {
       },
       phone: {
         type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       nano: {
         type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       rating: {
         type: Sequelize.INTEGER,

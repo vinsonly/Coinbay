@@ -1,6 +1,6 @@
 const users = require('./users.js');
 
 module.exports = {
-    contacts,
+    users,
     // include your own controllers here
 };
