@@ -16,7 +16,7 @@ const styles = theme => ({
   },
 });
 
-class CenteredGrid extends React.Component {
+class SinglePosting extends React.Component {
 
   constructor(props) {
     super(props);
@@ -66,4 +66,4 @@ class CenteredGrid extends React.Component {
   }
 }
 
-export default withStyles(styles)(CenteredGrid);
+export default withStyles(styles)(SinglePosting);

@@ -32,28 +32,28 @@ class Navigation extends Component {
             <Router>
                 <Navbar color="indigo" dark expand="md" scrolling>
                     <NavbarBrand href="/">
-                        <strong>Navbar</strong>
+                        <strong>CryptoBay</strong>
                     </NavbarBrand>
                     { !this.state.isWideEnough && <NavbarToggler onClick = { this.onClick } />}
-                    <Collapse isOpen = { this.state.collapse } navbar>
+                    <Collapse isOpen={ this.state.collapse } navbar>
                         <NavbarNav left>
                           <NavItem active>
-                              <NavLink to="#">Home</NavLink>
+                              <NavLink to="#">Postings</NavLink>
                           </NavItem>
                           <NavItem>
-                              <NavLink to="#">Features</NavLink>
+                              <NavLink to="#">Profile</NavLink>
                           </NavItem>
                           <NavItem>
-                              <NavLink to="#">Pricing</NavLink>
+                              <NavLink to="#">About Us</NavLink>
                           </NavItem>
                           <NavItem>
                               <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
-                              <DropdownToggle nav caret>Dropdown</DropdownToggle>
+                              <DropdownToggle nav caret>Categories</DropdownToggle>
                               <DropdownMenu>
-                                  <DropdownItem href="#">Action</DropdownItem>
-                                  <DropdownItem href="#">Another Action</DropdownItem>
-                                  <DropdownItem href="#">Something else here</DropdownItem>
-                                  <DropdownItem href="#">Something else here</DropdownItem>
+                                  <DropdownItem href="#">Electronics</DropdownItem>
+                                  <DropdownItem href="#">Games</DropdownItem>
+                                  <DropdownItem href="#">Computers</DropdownItem>
+                                  <DropdownItem href="#">Phones</DropdownItem>
                               </DropdownMenu>
                               </Dropdown>
                           </NavItem>

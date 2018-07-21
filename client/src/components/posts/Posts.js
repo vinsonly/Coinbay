@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import SimpleMediaCard from '../SimpleMediaCard';
 import './posts.css';
 
+import 'bootstrap/dist/css/bootstrap.css'
+import 'mdbreact/dist/css/mdb.css'
+
 class Posts extends Component {
   render() {
     return (
