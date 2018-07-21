@@ -264,7 +264,9 @@ findById(req, res) {
                 console.log(error);
                 res.status(400).send(error)
             });
-},    deleteAll(req, res) {
+},    
+
+deleteAll(req, res) {
     return user
         .destroy({
             where: {
