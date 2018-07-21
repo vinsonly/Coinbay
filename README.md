@@ -1,9 +1,8 @@
 # Current State of App
-We currently have the boilerplate of the entire project implemented. Our application is a eBay style marketplace application with in-app cryptocurrency support with the Ethereum Blockchain. We are using React for the front end, and Express/Nodejs for the backend. 
+We currently have the boilerplate of the entire project implemented. Our application is a eBay style marketplace application with in-app cryptocurrency support with the Ethereum Blockchain. We are using React for the front end, and Express/Nodejs for the backend. We are using PostgreSQL as our database with Sequelize as our ORM. 
 
 Here is how the app currently looks like on the landing page.
 ![App Screenshot](https://i.snag.gy/Hg4Dep.jpg)
-
 
 
 # Contribution Guide

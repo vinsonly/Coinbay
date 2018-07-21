@@ -1,0 +1,21 @@
+Current State of App
+-----------------------------
+
+Our application is a eBay style marketplace application with in-app cryptocurrency support with the Ethereum Blockchain. 
+We currently have the boilerplate of the entire project implemented with some basic React components for the front end. 
+We have finished all the basic CRUD commands that we need our Server to support. Through the weeks, we will be refactoring the endpoints
+    for security and speed
+
+Currently, we are developing the login system and integrating the React front-end with the Express/Node backend.
+
+Technologies
+------------------------------
+We are using React for the front end
+Express/Nodejs for the backend
+We are using PostgreSQL as our database with Sequelize as our ORM
+For Cryptocurrency payments, we will be using Ethereum with the Metamask browser extension
+
+
+Here is how the app currently looks like on the landing page.
+https://i.snag.gy/Hg4Dep.jpg
+
