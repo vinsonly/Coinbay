@@ -11,8 +11,11 @@ module.exports = {
                 modelName: req.body.modelName,
                 brand: req.body.brand,
                 price: req.body.price,
-                status: req.body.status,
-                description: req.body.description
+                status: "active",
+                description: req.body.description,
+                abstract: req.body.abstract,
+                location: req.body.location,
+                userId: req.body.userId
             })
             .then((posting) => {
                 console.log("Created a new posting");
@@ -41,4 +44,164 @@ module.exports = {
                 })
     },
 
+    update(req, res) {
+        
+        let id = parseInt(req.body.id);
+        console.log(req.body);
+        
+        return Posting
+            .findById(id)
+                .then(posting => {
+                    if(!posting) {
+                        return res.status(404).send({
+                            message: `posting with id: ${id} not found.`
+                        })
+                    } else {
+                        return posting
+                            .update({
+                                postingTitle: req.body.postingTitle || posting.postingTitle,
+                                modelName: req.body.modelName || posting.modelName,
+                                brand: req.body.brand || posting.brand,
+                                price: req.body.price || posting.price,
+                                status: req.body.status || posting.status,
+                                description: req.body.description || posting.description, 
+                                abstract: req.body.abstract || posting.abstract, 
+                                location: req.body.location || posting.location 
+                            })
+                            .then(() => {
+                                console.log("Successfully updated posting");
+                                res.send(posting);
+                            })
+                            .catch((error) => {
+                                console.log("Opps we ran into an error");
+                                console.log(error);
+                                res.status(400).send(error);
+                            })
+                    }
+                })
+                .catch((error) => {
+                    console.log("Opps we ran into an error");
+                    console.log(error);
+                    res.status(400).send(error);
+                })
+            
+    },
+
 }
+
+/*
+update(req, res) {
+        
+    let id = parseInt(req.body.id);
+    console.log(req.body);
+    
+    return User
+        .findById(id)
+            .then(user => {
+                if(!user) {
+                    return res.status(404).send({
+                        message: `user with id: ${id} not found.`
+                    })
+                } else {
+                    return user
+                        .update({
+                            email: req.body.email || user.email,
+                            username: req.body.username || user.username,
+                            password: req.body.password || user.password,
+                            phone: req.body.phone || user.phone,
+                             crypto: req.body.crypto || user.crypto,
+                            rating: req.body.rating || user.rating 
+                        })
+                        .then(() => {
+                            console.log("Successfully updated user");
+                            res.send(user);
+                        })
+                        .catch((error) => {
+                            console.log("Opps we ran into an error");
+                            console.log(error);
+                            res.status(400).send(error);
+                        })
+                }
+            })
+            .catch((error) => {
+                console.log("Opps we ran into an error");
+                console.log(error);
+                res.status(400).send(error);
+            })
+        
+},
+
+delete(req, res) {
+    let id = parseInt(req.body.id);
+    
+    return User 
+        .findById(id)
+            .then(user => {
+                if(!user) {
+                    return res.status(404).send({
+                        message: `user with id: ${id} not found.`
+                    })
+                } else {
+                    return user
+                        .destroy()
+                        .then(() => {
+                            let msg = `user with id: ${id} destroyed.`
+                            console.log(msg);
+                            res.send(user);
+
+                        })
+                        .catch(error => {
+                            console.log("Opps, we have encountered an error");
+                            console.log(error);
+                            res.status(400).send(error)
+                        });
+                }
+            })
+            .catch(error => {
+                console.log("Opps, we have encountered an error");
+                console.log(error);
+                res.status(400).send(error)
+            });
+},
+
+findById(req, res) {
+    let id = parseInt(req.params.id);
+    
+    return User 
+        .findById(id)
+            .then(user => {
+                if(!user) {
+                    return res.status(404).send({
+                        message: `user with id: ${id} not found.`
+                    })
+                } else {
+                    return res.send(user)
+                }
+            })
+            .catch(error => {
+                console.log("Opps, we have encountered an error");
+                console.log(error);
+                res.status(400).send(error)
+            });
+},    deleteAll(req, res) {
+    return user
+        .destroy({
+            where: {
+                
+            },
+            truncate: true
+        })
+            .then((rowsDeleted) => {
+
+                console.log(rowsDeleted);
+
+                console.log("rowsDeleted = " + resolve(rowsDeleted));
+
+                return res.send("Successfully deleted " + rowsDeleted + " rows.");
+            })
+            .catch((error) => {
+                return res.status(400).send(error);
+            })
+}
+
+*/
