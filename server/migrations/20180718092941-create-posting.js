@@ -25,7 +25,7 @@ module.exports = {
         allowNull: false,
       },
       status: {
-        type: Sequelize.STRING,
+        type: Sequelize.ENUM('active','pending','sold'),
         allowNull: false,
       },
       description: {

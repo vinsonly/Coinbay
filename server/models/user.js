@@ -3,7 +3,10 @@ module.exports = (sequelize, DataTypes) => {
   var User = sequelize.define('User', {
     email: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        isEmail: true
+      }
     },
     username: {
       type: DataTypes.STRING,
@@ -17,13 +20,14 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: true
     },
-    nano: {
+    crypto: {
       type: DataTypes.STRING,
       allowNull: true
     },
     rating: {
       type: DataTypes.INTEGER,
-      allowNull: true
+      allowNull: true,
+      validate: { min: 0, max: 10 }
     },
   }, {});
   User.associate = function(models) {
