@@ -15,11 +15,11 @@ module.exports = (sequelize, DataTypes) => {
     },
     phone: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: true
     },
     nano: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: true
     },
     rating: {
       type: DataTypes.INTEGER,
@@ -29,22 +29,22 @@ module.exports = (sequelize, DataTypes) => {
   User.associate = function(models) {
     // associations can be defined here
     User.hasMany(models.Posting, {
-      foreignKey: 'postingId',
+      foreignKey: 'userId',
       as: 'soldPosts'
     });
 
     User.hasMany(models.Posting, {
-      foreignKey: 'postingId',
+      foreignKey: 'userId',
       as: 'boughtPosts'
     });
 
     User.hasMany(models.Posting, {
-      foreignKey: 'postingId',
+      foreignKey: 'userId',
       as: 'pendingPost'
     });
 
     User.hasMany(models.Posting, {
-      foreignKey: 'postingId',
+      foreignKey: 'userId',
       as: 'activePosts'
     });
 

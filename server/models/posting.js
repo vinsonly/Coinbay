@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.NUMERIC(10,2),
       allowNull: false
     },
-    status: {
+    status: { // active, sold, pending
       type: DataTypes.STRING,
       allowNull: false
     },
@@ -32,7 +32,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   Posting.associate = function(models) {
     // associations can be defined here
-    Posting.belongsTo(models.Todo, {
+    Posting.belongsTo(models.User, {
       foreignKey: 'userId'
     });
   };
