@@ -14,17 +14,17 @@ If you do not have yarn installed, follow the steps found here: [Yarn installati
 
 3. When in the root directory of the project, install dependencies for server
 ```
-yarn install
+sudo yarn install
 ```
 4. cd to /client and install dependencies
 ```
-yarn install
+sudo yarn install
 ```
 
 5. cd to root dir of the project and start the project
 ```
 cd ..
-yarn dev
+sudo yarn dev
 ```
 6. View the app at [localhost:3000](http://localhost:3000/);
 7. To access the app from another LAN, port the app over to ngrok
