@@ -13,9 +13,14 @@ module.exports = (app) => {
     app.post('/api/user/delete', usersController.delete);
     app.get('/api/user/:id', usersController.findById);
 
+    app.get('/api/user/postings/:userId', postingsController.findByUser);
 
     app.get('/api/postings', postingsController.read);
     app.post('/api/posting', postingsController.create);
+    app.post('/api/posting/update', postingsController.update);
+    app.post('/api/posting/delete', postingsController.delete);
+    app.get('/api/posting/:id', postingsController.findById);
+
 
     app.get('/api/adminusers', adminusersController.read);
     app.post('/api/adminuser', adminusersController.create);

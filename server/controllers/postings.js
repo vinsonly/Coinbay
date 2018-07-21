@@ -5,18 +5,24 @@ module.exports = {
 
     create(req, res) {
 
+        let obj = {
+            postingTitle: req.body.postingTitle,
+            modelName: req.body.modelName,
+            brand: req.body.brand,
+            price: req.body.price,
+            status: "active",
+            description: req.body.description,
+            abstract: req.body.abstract,
+            location: req.body.location,
+            userId: req.body.userId
+        }
+
+        if(req.body.id) {
+            obj.id = req.body.id
+        }
+
         return Posting
-            .create({
-                postingTitle: req.body.postingTitle,
-                modelName: req.body.modelName,
-                brand: req.body.brand,
-                price: req.body.price,
-                status: "active",
-                description: req.body.description,
-                abstract: req.body.abstract,
-                location: req.body.location,
-                userId: req.body.userId
-            })
+            .create(obj)
             .then((posting) => {
                 console.log("Created a new posting");
                 console.log(posting);
@@ -32,10 +38,10 @@ module.exports = {
     read(req, res) {
         return Posting
             .findAll()
-                .then((posting) => {
+                .then((postings) => {
                     console.log("Here are all of the postings:");
-                    console.log(posting);
-                    return res.send(posting);
+                    console.log(postings);
+                    return res.send(postings);
                 })
                 .catch((err) => {
                     console.log("We ran into an error:");
@@ -86,6 +92,81 @@ module.exports = {
                 })
             
     },
+
+    delete(req, res) {
+        let id = parseInt(req.body.id);
+        
+        return Posting 
+            .findById(id)
+                .then(posting => {
+                    if(!posting) {
+                        return res.status(404).send({
+                            message: `posting with id: ${id} not found.`
+                        })
+                    } else {
+                        return posting
+                            .destroy()
+                            .then(() => {
+                                let msg = `posting with id: ${id} destroyed.`
+                                console.log(msg);
+                                res.send(posting);
+    
+                            })
+                            .catch(error => {
+                                console.log("Opps, we have encountered an error");
+                                console.log(error);
+                                res.status(400).send(error)
+                            });
+                    }
+                })
+                .catch(error => {
+                    console.log("Opps, we have encountered an error");
+                    console.log(error);
+                    res.status(400).send(error)
+                });
+    },
+
+
+    findById(req, res) {
+        let id = parseInt(req.params.id);
+        
+        return Posting 
+            .findById(id)
+                .then(posting => {
+                    if(!posting) {
+                        return res.status(404).send({
+                            message: `posting with id: ${id} not found.`
+                        })
+                    } else {
+                        return res.send(posting)
+                    }
+                })
+                .catch(error => {
+                    console.log("Opps, we have encountered an error");
+                    console.log(error);
+                    res.status(400).send(error)
+                });
+    },
+
+    findByUser(req, res) {
+        let userId = parseInt(req.params.userId);
+        return Posting
+            .findAll({
+                where: {
+                    userId: userId
+                }
+            })
+                .then((postings) => {
+                    console.log(`Here are all of the postings that are associated to user ${userId}:`);
+                    console.log(postings);
+                    return res.send(postings);
+                })
+                .catch((err) => {
+                    console.log("We ran into an error:");
+                    console.log(err);
+                    return res.status(400).send(err);
+                })
+    }
 
 }
 
