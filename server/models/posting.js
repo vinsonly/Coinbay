@@ -28,6 +28,10 @@ module.exports = (sequelize, DataTypes) => {
     abstract: {
       type: DataTypes.ARRAY(DataTypes.STRING),
       allowNull: true
+    },
+    location: {
+      type: DataTypes.JSONB,
+      allowNull: true
     }
   }, {});
   Posting.associate = function(models) {

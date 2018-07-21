@@ -16,7 +16,7 @@ module.exports = (app) => {
     app.get('/api/adminusers', adminusersController.read);
     app.post('/api/adminuser', adminusersController.create);
 
-
+    
     // WRITE THE OTHER ENDPOINTS DOWN HERE
 
     // EXAMPLES:
