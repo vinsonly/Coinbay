@@ -8,7 +8,6 @@ module.exports = (app) => {
       }));
 
     app.post('/api/user', usersController.create);
-
     app.get('/api/users', usersController.read);
 
     app.get('/api/postings', postingsController.read);

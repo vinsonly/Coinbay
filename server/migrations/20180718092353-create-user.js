@@ -27,7 +27,7 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: true,
       },
-      nano: {
+      crypto: {
         type: Sequelize.STRING,
         allowNull: true,
       },
