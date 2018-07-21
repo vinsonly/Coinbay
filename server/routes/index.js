@@ -9,6 +9,10 @@ module.exports = (app) => {
 
     app.post('/api/user', usersController.create);
     app.get('/api/users', usersController.read);
+    app.post('/api/user/update', usersController.update);
+    app.post('/api/user/delete', usersController.delete);
+
+
 
     app.get('/api/postings', postingsController.read);
     app.post('/api/posting', postingsController.create);
