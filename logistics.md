@@ -51,3 +51,83 @@
 10. An hour after the meetup time, if the transaction has not yet been set to 'sold'
     - Users are able to withdraw all the funds if they have a passcode.
 11. One day after the meetup, any left over funds are send to the Cryptobay Wallet. 
+
+### Contract Specifications
+- Server functions:
+    - setPasscode
+        - sets Passcode, if successful, returns a 200 and the client will use the callback to submit their deposit to the contract
+    - checkIn()
+        - gets the user's public IP address, and if matching the location, returns the opposing user's passcode
+- Variables (public)
+    - itemCost
+    - depositAmount
+    - creationTime
+    - transactionTime
+    - buyerAddress
+    - sellerAddress
+    - amountDepositedBySeller
+    - amountDepositedByBuyer
+    - buyerHash
+    - sellerHash
+    - state: "pending", "active", "fulfilled", "cancelled"
+    - sellerState: "pending", "confirmed", "declined"
+    - buyerState: "pending", "confirmed", "declined"
+- Functions
+    - public
+        - constructor(itemCost, transactionTime, buyerAddress, sellerAddress)
+            - sets itemCost, transactionTime, buyerAddress, sellerAddress, state to "pending", buyer and seller state to "pending", creationTime
+
+        - deposit()
+            - params
+                - msg.value, msg,sender
+            - description
+                - checks if state is not "cancelled"
+                - declines the deposit if the amount is not met
+                - checks the address (buyer or seller) then increments amountDeposited for the appropriate user
+                - If both users have deposited, state is set to "active"
+
+        - cancel() 
+            - check that 2 hours since contract creation time has elapsed
+            - checks that the msg.sender is a buyer or sender
+            - checks that the user has deposited into the contract and that other user has not
+            - changes the state of the contract to "cancelled"
+            - returns the deposited amount to the msg.sender
+        
+        - confirmTransaction(otherUsersPasscode)
+            - checks the passcode
+            - if msg.sender is a buyer or seller, they can confirm the transaction on their end
+            - if both users confirmed the transaction
+                - deposit for both users is returned
+                - itemCost is sent to the seller
+                - state of the transaction is changed to "fulfilled"
+            - if other user has declined transaction
+                - deposit for both users is returned
+                - state of the transaction is changed to "cancelled"
+
+        - declineTransaction(otherUsersPasscode)
+            - checks the passcode
+            - if msg.sender is a buyer or seller, they can decline the transaction on their end
+            - if other user declined the transaction
+                - deposit for both users is returned
+                - itemCost is returned to the buyer
+                - state of the msg.sender is set to "declined"
+                - state of the transaction is changed to "cancelled"
+            - else
+                - state of the msg.sender is set to "declined"
+
+        - withdrawFee(passcode)
+            - checks if 2 hours past transaction time has passed
+            - if msg.sender is seller
+                - check if passcode is buyer's
+                - if 1 day has passed    
+                    - withdraw seller deposit, buyer deposit
+                - else
+                    - withdraw seller deposit
+                - decrement amountDeposited appropriately 
+            - else 
+                - check if passcode is seller's
+                - if 1 day has passed    
+                    - withdraw seller deposit, buyer deposit
+                - else
+                    - withdraw seller deposit
+                - decrement amountDeposited appropriately
