@@ -47,6 +47,9 @@ class Navigation extends Component {
                               <NavLink to="#">About Us</NavLink>
                           </NavItem>
                           <NavItem>
+                              <NavLink to="/metacoin">Meta Coin</NavLink>
+                          </NavItem>
+                          <NavItem>
                               <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
                               <DropdownToggle nav caret>Categories</DropdownToggle>
                               <DropdownMenu>
