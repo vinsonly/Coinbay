@@ -1,4 +1,5 @@
 const Posting = require('../models/').Posting;
+const User = require('../models/').User;
 
 module.exports = {
     // define your route handlers here, see below for details
@@ -166,7 +167,30 @@ module.exports = {
                     console.log(err);
                     return res.status(400).send(err);
                 })
-    }
+    },
+
+    getActivePostsWithSellers(req, res) {
+        return Posting
+            .findAll({
+                where: {
+                    status: 'active'
+                },
+                include: [{
+                    model: User,
+                    required: false
+                }]
+            })
+                .then((postings) => {
+                    console.log("Here are all active postings with users:");
+                    console.log(postings);
+                    return res.send(postings);
+                })
+                .catch((err) => {
+                    console.log("We ran into an error:");
+                    console.log(err);
+                    return res.status(400).send(err);
+                })
+    },
 
 }
 
