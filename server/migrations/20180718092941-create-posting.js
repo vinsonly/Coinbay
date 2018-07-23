@@ -56,7 +56,14 @@ module.exports = {
           as: 'userId',
         },
       },
-
+      buyerId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Users',
+          key: 'id',
+          as: 'buyerId',
+        },
+      }
     });
   },
   down: (queryInterface, Sequelize) => {
