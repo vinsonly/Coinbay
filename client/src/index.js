@@ -1,26 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-
-import App from './App';
-import Navigation from './components/Navigation';
+import Navigation from './components/navigation/Navigation';
 import Posts from './components/posts/Posts';
-import Item from './components/Item';
-import Transaction from './components/Transaction';
-import Whoops404 from './components/Whoops404';
-
-
-import registerServiceWorker from './registerServiceWorker';
+import Transaction from './components/transaction/Transaction';
+import Whoops404 from './components/whoops404/Whoops404';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import Post from "./components/posts/Posts.js"
-
-import SinglePosting from "./components/postingSingle"
+import SinglePosting from './components/postingSingle';
+import registerServiceWorker from './registerServiceWorker';
+import './index.css';
 
 ReactDOM.render(
 	<Navigation/>,
 	document.getElementById('navigation')
 );
-
 
 ReactDOM.render((
 	<BrowserRouter>
@@ -38,4 +30,3 @@ ReactDOM.render((
 );
 
 registerServiceWorker();
-
