@@ -2,8 +2,8 @@ import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
-
-import './postingSingle.css'
+import { Link } from 'react-router-dom';
+import './postingSingle.css';
 
 const styles = theme => ({
   root: {
@@ -69,9 +69,7 @@ class SinglePosting extends React.Component {
                       star_rate
                     </i>
                   </div>
-                  <Button variant="contained" color="primary" className={this.props.button}>
-                    Buy Now
-                  </Button>
+                  <Link to ={"/freddy/transaction/" + this.props.match.params.id}><Button variant="contained" color="primary" className={this.props.button}>Buy Now</Button></Link>
               </div>
           </Grid>
   

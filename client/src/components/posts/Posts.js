@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import SimpleMediaCard from '../SimpleMediaCard';
-import './posts.css';
-
+import SimpleMediaCard from '../simpleMediaCard/SimpleMediaCard';
 import 'bootstrap/dist/css/bootstrap.css'
 import 'mdbreact/dist/css/mdb.css'
+import './posts.css';
 
 class Posts extends Component {
   render() {
