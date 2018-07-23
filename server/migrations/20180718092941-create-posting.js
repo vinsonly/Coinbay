@@ -56,7 +56,6 @@ module.exports = {
           as: 'userId',
         },
       },
-
     });
   },
   down: (queryInterface, Sequelize) => {
