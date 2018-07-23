@@ -16,6 +16,8 @@ import Post from "./components/posts/Posts.js"
 
 import SinglePosting from "./components/postingSingle"
 
+import Login from "./components/login"
+
 ReactDOM.render(
 	<Navigation/>,
 	document.getElementById('navigation')
@@ -30,6 +32,7 @@ ReactDOM.render((
 				<Route path="/posts/:id" render={props => <SinglePosting {...props} /> }/>
 				<Route path="/posts/" component={Posts}/>
 				<Route path="/:user/transaction/:item" render={props => <Transaction {...props} /> }/>
+				<Route path="/login" component={Login}/>
 				<Route component={Whoops404}/>
 			</Switch>
 		</div>
