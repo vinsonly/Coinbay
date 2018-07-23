@@ -20,6 +20,21 @@ class SinglePosting extends React.Component {
 
   constructor(props) {
     super(props);
+
+    console.log(props.match.params.id)
+    this.state = {
+      id: props.match.params.id
+    }
+    // get the postings from the database
+    fetch(`/api/posting/${this.state.id}`)
+      .then(res => {
+        console.log(res);
+        return res.json();
+      })
+      .then(body => {
+        console.log(body);
+      })
+
   }
 
   render() {

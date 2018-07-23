@@ -85,38 +85,47 @@
                 - declines the deposit if the amount is not met
                 - checks the address (buyer or seller) then increments amountDeposited for the appropriate user
                 - If both users have deposited, state is set to "active"
+                - emit event deposited
 
         - cancel() 
+            - checks if transaction is not cancelled or fulfilled
             - check that 2 hours since contract creation time has elapsed
             - checks that the msg.sender is a buyer or sender
             - checks that the user has deposited into the contract and that other user has not
             - changes the state of the contract to "cancelled"
             - returns the deposited amount to the msg.sender
+            - emit event cancelled
         
         - confirmTransaction(otherUsersPasscode)
             - checks the passcode
+            - checks if the transaction is "active"
             - if msg.sender is a buyer or seller, they can confirm the transaction on their end
             - if both users confirmed the transaction
                 - deposit for both users is returned
                 - itemCost is sent to the seller
                 - state of the transaction is changed to "fulfilled"
+                - emit event confirmed
             - if other user has declined transaction
                 - deposit for both users is returned
                 - state of the transaction is changed to "cancelled"
+                - emit event cancelled
 
         - declineTransaction(otherUsersPasscode)
             - checks the passcode
+            - checks if transaction is "active"
             - if msg.sender is a buyer or seller, they can decline the transaction on their end
             - if other user declined the transaction
                 - deposit for both users is returned
                 - itemCost is returned to the buyer
                 - state of the msg.sender is set to "declined"
                 - state of the transaction is changed to "cancelled"
+                - emit event cancelled
             - else
                 - state of the msg.sender is set to "declined"
 
-        - withdrawFee(passcode)
+        - withdraw(passcode)
             - checks if 2 hours past transaction time has passed
+            - checks if the transaction is fulfilled
             - if msg.sender is seller
                 - check if passcode is buyer's
                 - if 1 day has passed    
@@ -124,10 +133,15 @@
                 - else
                     - withdraw seller deposit
                 - decrement amountDeposited appropriately 
-            - else 
+            - else if msg.sender is buyer
                 - check if passcode is seller's
                 - if 1 day has passed    
                     - withdraw seller deposit, buyer deposit
                 - else
                     - withdraw seller deposit
                 - decrement amountDeposited appropriately
+                - if the transaction is not "confirmed"
+                    - withdraw the itemCost
+            - else if msg.sender is contract owner
+                - if 1 week has passed
+                    - withdraw the deposits from both the buyers and sellers
