@@ -1,58 +1,29 @@
+//20180722234612-demo-user.js
 'use strict';
+const faker = require('faker');
+
+var array = [];
+
+for (var i = 0; i<100; i++){
+  array.push({
+    email: faker.internet.email(),
+    username: faker.internet.userName(),
+    password: faker.internet.password(),
+    phone: faker.phone.phoneNumber(),
+    crypto: faker.finance.bitcoinAddress(),
+    rating: Math.floor(Math.random() * 10),
+    createdAt: faker.date.past(),
+    updatedAt: new Date()
+  });
+};
+
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.bulkInsert('Users', [{
-      email: 'demo@demo.com',
-      username: 'Demo1',
-      password: 'password',
-      phone: '604-123-9123',
-      crypto: '0x976d50052bec3578408d060Ea212f03C192FA393',
-      rating: 8,
-      createdAt: new Date(),
-      updatedAt: new Date()
-    },
-    {
-      email: 'demo@demo.com',
-      username: 'Demo2',
-      password: 'password',
-      phone: '604-123-9123',
-      crypto: '0x976d50052bec3578408d060Ea212f03C192FA393',
-      rating: 8,
-      createdAt: new Date(),
-      updatedAt: new Date()
-    },
-    {
-      email: 'demo@demo.com',
-      username: 'Demo3',
-      password: 'password',
-      phone: '604-123-9123',
-      crypto: '0x976d50052bec3578408d060Ea212f03C192FA393',
-      rating: 8,
-      createdAt: new Date(),
-      updatedAt: new Date()
-    }], {});
-
-    /*
-      Add altering commands here.
-      Return a promise to correctly handle asynchronicity.
-
-      Example:
-      return queryInterface.bulkInsert('Person', [{
-        name: 'John Doe',
-        isBetaMember: false
-      }], {});
-    */
+    return queryInterface.bulkInsert('Users', array, {});
   },
 
   down: (queryInterface, Sequelize) => {
     return queryInterface.bulkDelete('Users', null, {});
-    /*
-      Add reverting commands here.
-      Return a promise to correctly handle asynchronicity.
-
-      Example:
-      return queryInterface.bulkDelete('Person', null, {});
-    */
   }
 };

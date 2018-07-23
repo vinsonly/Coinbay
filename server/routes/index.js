@@ -20,6 +20,7 @@ module.exports = (app) => {
     app.post('/api/posting/update', postingsController.update);
     app.post('/api/posting/delete', postingsController.delete);
     app.get('/api/posting/:id', postingsController.findById);
+    // app.get('/api/postings/?=asdsadsadsad', postingsController.search); //read the query string from the URL and query the database
 
 
     app.get('/api/adminusers', adminusersController.read);
