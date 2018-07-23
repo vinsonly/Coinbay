@@ -174,7 +174,8 @@ module.exports = {
                     as: 'boughtPosts',
                     where: {
                         buyerId: id
-                    }
+                    },
+                    required: false
                 }]
             }, )
                 .then(user => {
