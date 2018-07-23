@@ -39,6 +39,10 @@ module.exports = (sequelize, DataTypes) => {
     Posting.belongsTo(models.User, {
       foreignKey: 'userId'
     });
+
+    Posting.belongsTo(models.User, {
+      foreignKey: 'buyerId'
+    });
   };
   return Posting;
 };
