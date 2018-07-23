@@ -6,6 +6,13 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'mdbreact/dist/css/mdb.css'
 
 class Posts extends Component {
+	constructor(props) {
+		super(props);
+
+		
+
+	} 
+
   render() {
     return (
     	<div>
