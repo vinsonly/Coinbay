@@ -33,7 +33,7 @@ module.exports = {
       description: 'description',
       createdAt: new Date(),
       updatedAt: new Date(),
-      userId: 4
+      userId: 1
     },
     {
       postingTitle: 'DemoPosting4',
@@ -44,7 +44,7 @@ module.exports = {
       description: 'description',
       createdAt: new Date(),
       updatedAt: new Date(),
-      userId: 5
+      userId: 3
     },
     {
       postingTitle: 'DemoPosting5',
@@ -88,7 +88,7 @@ module.exports = {
       description: 'description',
       createdAt: new Date(),
       updatedAt: new Date(),
-      userId: 4
+      userId: 1
     },
     {
       postingTitle: 'DemoPosting9',
@@ -99,7 +99,7 @@ module.exports = {
       description: 'description',
       createdAt: new Date(),
       updatedAt: new Date(),
-      userId: 5
+      userId: 2
     },
     {
       postingTitle: 'DemoPosting10',
@@ -110,7 +110,7 @@ module.exports = {
       description: 'description',
       createdAt: new Date(),
       updatedAt: new Date(),
-      userId: 5
+      userId: 3
     }], {});
     /*
       Add altering commands here.
