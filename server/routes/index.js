@@ -12,6 +12,7 @@ module.exports = (app) => {
     app.post('/api/user/update', usersController.update);
     app.post('/api/user/delete', usersController.delete);
     app.get('/api/user/:id', usersController.findById);
+    app.get('/api/user/:id/boughtPosts', usersController.findBoughtPostsByUserId);
 
     app.get('/api/user/postings/:userId', postingsController.findByUser);
 

@@ -177,7 +177,7 @@ module.exports = {
                 },
                 include: [{
                     model: User,
-                    required: false
+                    required: true,
                 }]
             })
                 .then((postings) => {
