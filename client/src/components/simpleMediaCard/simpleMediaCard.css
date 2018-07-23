@@ -1,0 +1,27 @@
+.resize {
+	width: 20em;
+    margin:0;
+    padding:0
+}
+
+.center-button {
+    display: flex;
+    justify-content: center;
+    align-items: center
+}
+
+button.btn.btn-default.Ripple-parent {
+	font-size: 0.9em;
+}
+
+.card-text {
+	font-size: 1.1em !important
+}
+
+.right-text-float {
+	display: inline;
+	float: right;
+	margin: 0;
+	font-size: 0.75em;
+	color: #85bb65
+}
