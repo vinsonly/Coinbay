@@ -26,11 +26,8 @@ ReactDOM.render((
 				<Route path="/posts/:id" render={props => <SinglePosting {...props} /> }/>
 				<Route path="/posts/" component={Posts}/>
 				<Route path="/:user/transaction/:item" render={props => <Transaction {...props} /> }/>
-<<<<<<< HEAD
 				<Route path="/metacoin/" component={MetaCoin}/>
-=======
 				<Route path="/login" component={Login}/>
->>>>>>> cwkuan/login-auth
 				<Route component={Whoops404}/>
 			</Switch>
 		</div>
