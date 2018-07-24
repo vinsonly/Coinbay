@@ -14,7 +14,8 @@ for (var i = 0; i<100; i++){
     createdAt: faker.date.past(),
     updatedAt: new Date(),
     // to randomize use: userId: Math.floor(Math.random() * 100)
-    userId: i + 1
+    userId: i + 1,
+    buyerId: 2 // random user from 0 to 10
   });
 };
 

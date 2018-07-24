@@ -1,4 +1,5 @@
 const User = require('../models/').User;
+const Posting = require('../models/').Posting;
 
 console.log(User);
 
@@ -137,7 +138,9 @@ module.exports = {
                     console.log(error);
                     res.status(400).send(error)
                 });
-    },    deleteAll(req, res) {
+    },    
+    
+    deleteAll(req, res) {
         return user
             .destroy({
                 where: {
@@ -156,7 +159,40 @@ module.exports = {
                 .catch((error) => {
                     return res.status(400).send(error);
                 })
-    }
+    },
+
+    findBoughtPostsByUserId(req, res) {
+        let id = parseInt(req.params.id);
+        
+        return User 
+            .findOne({
+                where: {
+                    id: id
+                }, 
+                include: [{
+                    model: Posting,
+                    as: 'boughtPosts',
+                    where: {
+                        buyerId: id
+                    },
+                    required: false
+                }]
+            }, )
+                .then(user => {
+                    if(!user) {
+                        return res.status(404).send({
+                            message: `user with id: ${id} not found.`
+                        })
+                    } else {
+                        return res.send(user)
+                    }
+                })
+                .catch(error => {
+                    console.log("Opps, we have encountered an error");
+                    console.log(error);
+                    res.status(400).send(error)
+                });
+    },    
 
 }
 
