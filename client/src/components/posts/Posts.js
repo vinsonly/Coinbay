@@ -12,7 +12,7 @@ class Posts extends Component {
 
     this.state = {};
 
-    fetch(`/api/postings`)
+    fetch(`/api/postings_with_users`)
       .then(res => {
         console.log(res);
         postingStatus = res.status;
@@ -52,30 +52,11 @@ class Posts extends Component {
 						{this.state.postings.map(posting => {
 							return (
 								<div className="items">
-									<SimpleMediaCard post={posting.id} title={posting.postingTitle} description={posting.description} price={posting.price}/>
+									<SimpleMediaCard post={posting.id} title={posting.postingTitle} description={posting.description} price={posting.price} username={posting.User.username} rating={posting.User.rating}/>
 								</div>
 							)
 						})}
 
-
-						{/* <div className="items">
-							<SimpleMediaCard post={1}/>
-						</div>
-						<div className="items">
-							<SimpleMediaCard post={2}/>
-						</div>
-						<div className="items">
-							<SimpleMediaCard post={3}/>
-						</div>
-						<div className="items">
-							<SimpleMediaCard post={4}/>
-						</div>
-						<div className="items">
-							<SimpleMediaCard post={5}/>
-						</div>
-						<div className="items">
-							<SimpleMediaCard post={6}/>
-						</div> */}
 					</div>
 				</div>
 			);
