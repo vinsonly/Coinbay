@@ -34,7 +34,7 @@ class SimpleMediaCard extends Component {
     return (
         <div className="resize">
           <Card>
-            <CardImage className="img-fluid" src="/iphone.png" waves />
+            <CardImage className="img-fluid" src={this.props.image} waves />
             <CardBody>
                 <CardTitle>{this.props.title}<p className="right-text-float">${this.props.price}</p></CardTitle>
                 <CardText>{this.props.description}</CardText>
