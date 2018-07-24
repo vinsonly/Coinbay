@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Navigation from './components/navigation/Navigation';
+import CatNavigation from './components/catNavigation/catNavigation';
 import Posts from './components/posts/Posts';
 import Transaction from './components/transaction/Transaction';
 import Whoops404 from './components/whoops404/Whoops404';
@@ -14,7 +15,10 @@ import MetaCoin from "./components/ethComponents/metacoin.js"
 import Login from "./components/login"
 
 ReactDOM.render(
-	<Navigation/>,
+	<div>
+		<Navigation/>
+		<CatNavigation/>
+	</div>,
 	document.getElementById('navigation')
 );
 
