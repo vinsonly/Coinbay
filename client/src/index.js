@@ -11,6 +11,8 @@ import './index.css';
 
 import MetaCoin from "./components/ethComponents/metacoin.js"
 
+import Login from "./components/login"
+
 ReactDOM.render(
 	<Navigation/>,
 	document.getElementById('navigation')
@@ -25,6 +27,7 @@ ReactDOM.render((
 				<Route path="/posts/" component={Posts}/>
 				<Route path="/:user/transaction/:item" render={props => <Transaction {...props} /> }/>
 				<Route path="/metacoin/" component={MetaCoin}/>
+				<Route path="/login" component={Login}/>
 				<Route component={Whoops404}/>
 			</Switch>
 		</div>
