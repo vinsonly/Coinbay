@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Navigation from './components/navigation/Navigation';
+import Search from './components/search/Search';
 import CatNavigation from './components/catNavigation/catNavigation';
 import Posts from './components/posts/Posts';
 import Transaction from './components/transaction/Transaction';
@@ -16,6 +17,7 @@ ReactDOM.render(
 	<div>
 		<Navigation/>
 		<CatNavigation/>
+		<Search/>
 	</div>,
 	document.getElementById('navigation')
 );

@@ -14,18 +14,18 @@ class Posts extends Component {
 
     fetch(`/api/postings`)
       .then(res => {
-        console.log(res);
+        // console.log(res);
         postingStatus = res.status;
         return res.json();
       })
       .then(body => {
-        console.log(body);
-        console.log("postingStatus", postingStatus);
+        // console.log(body);
+        // console.log("postingStatus", postingStatus);
         if(postingStatus == 200) {
           this.setState({
 						postings: body
 					});
-          console.log(this.state);
+          // console.log(this.state);
         }
         return body;
 			})
@@ -33,12 +33,12 @@ class Posts extends Component {
 				console.log("ERROR!!");
 				console.log(err);
 			})
-		
-	} 
+
+	}
 
   render() {
 
-		console.log(this.state);
+		// console.log(this.state);
 		window.state = this.state;
 
 		if(!this.state.postings) {
