@@ -46,7 +46,6 @@ class Posts extends Component {
 		} else {
 			return (
 				<div>
-				<h2>This is going to be our page with all the posts.</h2>
 				<div className="container">
 
 						{this.state.postings.map(posting => {
