@@ -13,7 +13,8 @@ class Register extends React.Component  {
       username: "",
       email: "",
       emailConfirm: "",
-      password: ""
+      password: "",
+      passwordConfirm: ""
     }
 
   }
@@ -26,16 +27,21 @@ class Register extends React.Component  {
       alert("Your emails must match");
       return;
     }
-
-    if(this.state.username.length < 1 ||
-    this.state.email.length < 1 ||
-    this.state.emailConfirm.length < 1 ||
-    this.state.password.length < 1) {
-      alert("All fields mandatory");
+    if(this.state.password != this.state.passwordConfirm) {
+      alert("Your passwords must match");
       return;
     }
 
-    // post to the database
+    if(this.state.username.length < 1 ||
+       this.state.email.length < 1 ||
+       this.state.emailConfirm.length < 1 ||
+       this.state.password.length < 1 ||
+       this.state.passwordConfirm.length < 1) {  
+      alert("All fields are required");
+      return;
+    }
+
+    // Post to the database
 
     let data = this.state;
     let status;
@@ -95,6 +101,12 @@ class Register extends React.Component  {
           password: event.target.value
         })
         break;
+
+      case 'password-confirm':
+        this.setState({
+          passwordConfirm: event.target.value
+        })
+        break;
     }
   }
   
@@ -110,6 +122,7 @@ class Register extends React.Component  {
                 <Input onChange={this.handleChange} name="email" value={this.state.email} label="Your email" icon="envelope" group type="email" validate error="wrong" success="right"/>
                 <Input onChange={this.handleChange} name="email-confirm" value={this.state.emailConfirm} label="Confirm your email" icon="exclamation-triangle" group type="text" validate error="wrong" success="right"/>
                 <Input onChange={this.handleChange} name="password" value={this.state.password} label="Your password" icon="lock" group type="password" validate/>
+                <Input onChange={this.handleChange} name="password-confirm" value={this.state.passwordConfirm} label="Confirm your password" icon="exclamation-triangle" group type="password" validate/>
               </div>
               <div className="text-center">
                 <Button color="primary" onClick={this.handleSubmit} >Register</Button>
