@@ -12,8 +12,8 @@ import './index.css';
 
 import MetaCoin from "./components/ethComponents/metacoin.js"
 
-import Login from "./components/login"
-import Register from "./components/register"
+import Login from "./components/login/Login"
+import Register from "./components/register/Register"
 
 ReactDOM.render(
 	<div>
