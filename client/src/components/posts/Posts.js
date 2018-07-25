@@ -51,7 +51,7 @@ class Posts extends Component {
 						{this.state.postings.map(posting => {
 							return (
 								<div className="items">
-									<SimpleMediaCard post={posting.id} title={posting.postingTitle} description={posting.description} price={posting.price} username={posting.User.username} rating={posting.User.rating}/>
+									<SimpleMediaCard format={"grid"} post={posting.id} title={posting.postingTitle} description={posting.description} price={posting.price} username={posting.User.username} rating={posting.User.rating}/>
 								</div>
 							)
 						})}

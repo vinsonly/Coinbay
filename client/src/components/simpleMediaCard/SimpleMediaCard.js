@@ -31,47 +31,58 @@ class SimpleMediaCard extends Component {
       return(<div>Loading...</div>)
     }
 
-    return (
-        <div className="resize">
-          <Card>
-            <CardImage className="img-fluid" src="/iphone.png" waves />
-            <CardBody>
-                <CardTitle>{this.props.title}<p className="right-text-float">${this.props.price}</p></CardTitle>
-                <CardText>{this.props.description}</CardText>
-                <div className="center-button">
-                  <Link to={"/posts/" + this.props.post}><Button>More Details</Button></Link>
-                </div>
-                <p className="seller-info">{this.props.username}</p>
-                <p className="seller-info">
-                  {this.state.blackStarArray.map((x, index) => {
-                    return (
-                     <i className="material-icons" key={index}>
-                      star
-                     </i>
-                    ) 
-                  })}
+    if(this.props.format == "grid") {
+      return (
+          <div className="resize">
+            <Card>
+              <CardImage className="img-fluid" src="/iphone.png" waves />
+              <CardBody>
+                  <CardTitle>{this.props.title}<p className="right-text-float">${this.props.price}</p></CardTitle>
+                  <CardText>{this.props.description}</CardText>
+                  <div className="center-button">
+                    <Link to={"/posts/" + this.props.post}><Button>More Details</Button></Link>
+                  </div>
+                  <p className="seller-info">{this.props.username}</p>
+                  <p className="seller-info">
+                    {this.state.blackStarArray.map((x, index) => {
+                      return (
+                       <i className="material-icons" key={index}>
+                        star
+                       </i>
+                      ) 
+                    })}
 
-                  {this.state.halfStarArray.map((x, index) => {
-                    return (
-                      <i className="material-icons" key={index}>
-                      star_half
-                      </i>
-                    ) 
-                  })}
+                    {this.state.halfStarArray.map((x, index) => {
+                      return (
+                        <i className="material-icons" key={index}>
+                        star_half
+                        </i>
+                      ) 
+                    })}
 
-                  {this.state.emptyStarArray.map((x, index) => {
-                    return (
-                      <i className="material-icons" key={index} >
-                      star_border
-                      </i>
-                    ) 
-                  })}
+                    {this.state.emptyStarArray.map((x, index) => {
+                      return (
+                        <i className="material-icons" key={index} >
+                        star_border
+                        </i>
+                      ) 
+                    })}
 
-                </p>
-            </CardBody>
-          </Card>
-        </div>
-    );
+                  </p>
+              </CardBody>
+            </Card>
+          </div>
+      );
+    } else if (false) {
+      return (
+        <p>list</p>
+      );
+    }
+    else {
+      return (
+        <p>simple list</p>
+      );
+    }
   }
 }
 
