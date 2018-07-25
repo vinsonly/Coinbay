@@ -2,20 +2,46 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import './search.css';
 import Autosuggest from 'react-autosuggest';
+import AutosuggestHighlightMatch from 'autosuggest-highlight/match';
+import AutosuggestHighlightParse from 'autosuggest-highlight/parse';
 
 function escapeRegexCharacters(str) {
   return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
 function getSuggestionValue(suggestion) {
-  return suggestion.name;
+  return suggestion.postingTitle;
 }
+//
+// function renderSuggestion(suggestion) {
+//   return (
+//     <span>{suggestion.postingTitle}</span>
+//   );
+// }
 
-function renderSuggestion(suggestion) {
+function renderSuggestion(suggestion, { query }) {
+  const suggestionText = `${suggestion.postingTitle}`;
+  const matches = AutosuggestHighlightMatch(suggestionText, query);
+  const parts = AutosuggestHighlightParse(suggestionText, matches);
+
   return (
-    <span>{suggestion.postingTitle}</span>
+    <span>
+      <span className="name">
+        {
+          parts.map((part, index) => {
+            const className = part.highlight ? 'highlight' : null;
+
+            return (
+              <span className={className} key={index}>{part.text}</span>
+            );
+          })
+        }
+      </span>
+    </span>
   );
 }
+
+
 
 
 class Search extends Component {
@@ -60,9 +86,9 @@ class Search extends Component {
       return [];
     }
 
-    const regex = new RegExp('^' + escapedValue, 'i');
+    const regex = new RegExp('\\b' + escapedValue, 'i');
 
-    return this.state.postings.filter(postings => regex.test(postings.postingTitle));
+    return this.state.postings.filter(posting => regex.test(posting.postingTitle));
   }
 
     onChange = (event, { newValue, method }) => {
@@ -88,7 +114,7 @@ class Search extends Component {
     render() {
       const { value, suggestions } = this.state;
       const inputProps = {
-        placeholder: "Type 'c'",
+        placeholder: "Search",
         value,
         onChange: this.onChange
       };
@@ -108,11 +134,11 @@ class Search extends Component {
               renderSuggestion={renderSuggestion}
               inputProps={inputProps} />
 
-              {this.state.postings.map(posting => {
+              {/* {this.state.postings.map(posting => {
                 return (
                   <p>{posting.postingTitle}</p>
                 )
-              })}
+              })} */}
           </div>
         )
       }
