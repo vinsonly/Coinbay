@@ -48,6 +48,14 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       },
+      buyerId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Users',
+          key: 'id',
+          as: 'buyerId',
+        },
+      },
       userId: {
         type: Sequelize.INTEGER,
         references: {
@@ -56,7 +64,6 @@ module.exports = {
           as: 'userId',
         },
       },
-
     });
   },
   down: (queryInterface, Sequelize) => {

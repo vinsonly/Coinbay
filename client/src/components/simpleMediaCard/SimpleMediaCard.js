@@ -3,20 +3,71 @@ import { Link } from 'react-router-dom';
 import { Button, Card, CardBody, CardImage, CardTitle, CardText } from 'mdbreact';
 import './simpleMediaCard.css';
 
+import setUpRatingArrays from '../../helpers/postings.js';
+
 class SimpleMediaCard extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {}
+
+    console.log(props.description);
+
+    this.arraySetupWrapper = this.arraySetupWrapper.bind(this);
+
+    this.arraySetupWrapper();
+  }
+
+  async arraySetupWrapper() {
+    let result = await setUpRatingArrays(this.props.rating);
+    this.setState(result);
+  }
+
   render() {
+
+    window.state = this.state;
+
+    if(!this.props.description || this.state.halfStarArray == null || this.state.blackStarArray == null || this.state.emptyStarArray == null) {
+      return(<div>Loading...</div>)
+    }
+
     return (
         <div className="resize">
           <Card>
             <CardImage className="img-fluid" src="/iphone.png" waves />
             <CardBody>
-                <CardTitle>iPhone X<p className="right-text-float">$450</p></CardTitle>
-                <CardText>The iPhone X is Apple's new flagship 10th anniversary iPhone featuring a 5.8-inch OLED display, facial recognition
-                and 3D camera functionality, a glass body, and an A11 Bionic processor. Launched November 3, 2017.
-            </CardText>
+                <CardTitle>{this.props.title}<p className="right-text-float">${this.props.price}</p></CardTitle>
+                <CardText>{this.props.description}</CardText>
                 <div className="center-button">
                   <Link to={"/posts/" + this.props.post}><Button>More Details</Button></Link>
                 </div>
+                <p className="seller-info">{this.props.username}</p>
+                <p className="seller-info">
+                  {this.state.blackStarArray.map((x, index) => {
+                    return (
+                     <i className="material-icons" key={index}>
+                      star
+                     </i>
+                    ) 
+                  })}
+
+                  {this.state.halfStarArray.map((x, index) => {
+                    return (
+                      <i className="material-icons" key={index}>
+                      star_half
+                      </i>
+                    ) 
+                  })}
+
+                  {this.state.emptyStarArray.map((x, index) => {
+                    return (
+                      <i className="material-icons" key={index} >
+                      star_border
+                      </i>
+                    ) 
+                  })}
+
+                </p>
             </CardBody>
           </Card>
         </div>

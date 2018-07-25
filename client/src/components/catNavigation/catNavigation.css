@@ -1,0 +1,35 @@
+#no-padding {
+	padding: 0
+}
+
+#tabs {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  overflow: hidden;
+  height: 3em
+}
+
+#tabs > button {
+	background-color: #2bbbad;
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 1em;
+    margin: 0em 0.25em 0.3em 0.25em;
+    padding: 0.5em 1.5em 0.5em 1.5em;
+    border-radius: 0.25em
+}
+
+#tabs.expand {
+  overflow: visible;
+  height: auto
+}
+
+#expand {
+  margin-right: 1em;
+  float: right;
+  position: relative;
+}
