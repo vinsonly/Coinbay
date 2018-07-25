@@ -5,6 +5,9 @@ import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
 import './postingSingle.css';
 
+import setUpRatingArrays from '../../helpers/postings.js';
+
+
 const styles = theme => ({
   root: {
     flexGrow: 1,
@@ -28,6 +31,8 @@ class SinglePosting extends React.Component {
     let userStatus;
 
     this.state = {};
+
+    this.arraySetupWrapper = this.arraySetupWrapper.bind(this);
 
     fetch(`/api/posting/${postingId}`)
       .then(res => {
@@ -63,13 +68,23 @@ class SinglePosting extends React.Component {
             }
             return body;
           })
+          .then((body) => {
+            this.arraySetupWrapper(this.state.user.rating);
+          })
       })
+
+  }
+
+  async arraySetupWrapper() {
+    let result = await setUpRatingArrays(this.state.user.rating);
+    console.log(result);
+    this.setState(result);
   }
 
   render() {
 
     window.state = this.state;
-    if(!this.state.posting || !this.state.user) {
+    if(!this.state.posting || !this.state.user || this.state.halfStarArray == null || this.state.blackStarArray == null || this.state.emptyStarArray == null ) {
       return(<div></div>);
     }
 
@@ -89,21 +104,32 @@ class SinglePosting extends React.Component {
                     <h3>Seller: {this.state.user.username}</h3>
                     <div className="sellerRating">
                       <h3>Rating</h3>
-                      <i className="material-icons">
-                        star_rate
-                      </i>
-                      <i className="material-icons">
-                        star_rate
-                      </i>
-                      <i className="material-icons">
-                        star_rate
-                      </i>
-                      <i className="material-icons">
-                        star_rate
-                      </i>
-                      <i className="material-icons">
-                        star_rate
-                      </i>
+               
+                      {this.state.blackStarArray.map((x, index) => {
+                        return (
+                        <i className="material-icons" key={index}>
+                          star
+                        </i>
+                        ) 
+                      })}
+
+                      {this.state.halfStarArray.map((x, index) => {
+                        return (
+                          <i className="material-icons" key={index}>
+                          star_half
+                          </i>
+                        ) 
+                      })}
+
+                      {this.state.emptyStarArray.map((x, index) => {
+                        return (
+                          <i className="material-icons" key={index} >
+                          star_border
+                          </i>
+                        ) 
+                      })}
+
+
                     </div>
                     <Button variant="contained" color="primary" className={this.props.button}>
                       Buy Now

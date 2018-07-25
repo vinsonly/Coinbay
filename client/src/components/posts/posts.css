@@ -8,3 +8,23 @@
 	padding: 2em 1.5em 2em 1.5em;
 	cursor: pointer
 }
+
+.card .card-body .card-text {
+  height: 150px;
+}
+
+p.seller-info {
+  color: #000;
+  font-weight: 400;
+  font-size: 1.2em;
+  margin-bottom: 0.5rem;
+}
+
+p.seller-info i {
+  width: 25px;
+}
+
+div.center-button {
+  margin-bottom: 10px;
+}
+
