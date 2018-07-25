@@ -35,19 +35,26 @@ class Posts extends Component {
 			})
 		
 	}
-	changeFormat() {
-		if(this.state.format === "grid") {
-			this.setState(
-				(prevState,props)=>{
-				return {format: "list"};
-				}
-			);
-		} else {
+	changeFormat(form) {
+		if (form == "grid" && this.state.format !== "grid") {
 			this.setState(
 				(prevState,props)=>{
 				return {format: "grid"};
 				}
 			);			
+		} else if (form == "list" && this.state.format !== "list") {
+			this.setState(
+				(prevState,props)=>{
+				return {format: "list"};
+				}
+			);
+		} else if (form == "detailed-list" && this.state.format !== "detailed-list") {
+			this.setState(
+				(prevState,props)=>{
+				return {format: "detailed-list"};
+				}
+			);
+		} else {
 		}
 	}
  	render() {
@@ -55,19 +62,23 @@ class Posts extends Component {
 		window.state = this.state;
 
 		if(!this.state.postings) {
-			return (<div class="list">Loading</div>)
+			return (<div class="grid list detailed-list">Loading</div>)
 		} else {
 			return (
 				<div>
-				<p class="list" onClick={() => this.changeFormat()}>grid layout</p>
-				<div className="container">
-						{this.state.postings.map(posting => {
-							return (
-								<div className="items">
-									<SimpleMediaCard format={this.state.format} post={posting.id} title={posting.postingTitle} description={posting.description} price={posting.price} username={posting.User.username} rating={posting.User.rating}/>
-								</div>
-							)
-						})}
+					<div className="format-options">
+						<p class="grid" onClick={() => this.changeFormat("grid")}>grid layout&nbsp;&nbsp;&nbsp;</p>
+						<p class="list" onClick={() => this.changeFormat("list")}>list layout&nbsp;&nbsp;&nbsp;</p>
+						<p class="detailed-list" onClick={() => this.changeFormat("detailed-list")}>detailed list layout&nbsp;&nbsp;&nbsp;</p>
+					</div>
+					<div className="container">
+							{this.state.postings.map(posting => {
+								return (
+									<div className="items">
+										<SimpleMediaCard format={this.state.format} post={posting.id} title={posting.postingTitle} description={posting.description} price={posting.price} username={posting.User.username} rating={posting.User.rating}/>
+									</div>
+								)
+							})}
 					</div>
 				</div>
 			);

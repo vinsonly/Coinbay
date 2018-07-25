@@ -28,3 +28,6 @@ div.center-button {
   margin-bottom: 10px;
 }
 
+.format-options > p {
+  display: inline-block
+}
