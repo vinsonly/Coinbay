@@ -10,7 +10,7 @@ class Posts extends Component {
 
 		let postingStatus;
 
-    this.state = {};
+    this.state = { format: "grid" };
 
     fetch(`/api/postings_with_users`)
       .then(res => {
@@ -35,9 +35,14 @@ class Posts extends Component {
 			})
 		
 	} 
-
-  render() {
-
+	changeFormat() {
+		this.setState(
+			(prevState,props)=>{
+			return {format: "list"};
+			}
+		);
+	}
+ 	render() {
 		console.log(this.state);
 		window.state = this.state;
 
@@ -46,22 +51,20 @@ class Posts extends Component {
 		} else {
 			return (
 				<div>
+				<p id="list" onClick={() => this.changeFormat()}>grid layout</p>
 				<div className="container">
-
 						{this.state.postings.map(posting => {
 							return (
 								<div className="items">
-									<SimpleMediaCard format={"grid"} post={posting.id} title={posting.postingTitle} description={posting.description} price={posting.price} username={posting.User.username} rating={posting.User.rating}/>
+									<SimpleMediaCard format={this.state.format} post={posting.id} title={posting.postingTitle} description={posting.description} price={posting.price} username={posting.User.username} rating={posting.User.rating}/>
 								</div>
 							)
 						})}
-
 					</div>
 				</div>
 			);
 		}
-
-  }
+	}
 }
 
 export default Posts;

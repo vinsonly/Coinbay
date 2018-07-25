@@ -73,9 +73,16 @@ class SimpleMediaCard extends Component {
             </Card>
           </div>
       );
-    } else if (false) {
+    } else if (this.props.format == "list") {
       return (
-        <p>list</p>
+        <div className="resize">
+          <Card>
+            <CardBody>
+                <CardTitle>{this.props.title}<p className="right-text-float">${this.props.price}</p></CardTitle>
+                <CardText>{this.props.description}</CardText>
+            </CardBody>
+          </Card>
+        </div>
       );
     }
     else {
