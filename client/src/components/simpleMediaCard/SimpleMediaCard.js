@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Card, CardBody, CardImage, CardTitle, CardText } from 'mdbreact';
 import './simpleMediaCard.css';
-
 import setUpRatingArrays from '../../helpers/postings.js';
 
 class SimpleMediaCard extends Component {
@@ -22,7 +21,6 @@ class SimpleMediaCard extends Component {
     let result = await setUpRatingArrays(this.props.rating);
     this.setState(result);
   }
-
   render() {
 
     window.state = this.state;
@@ -75,11 +73,13 @@ class SimpleMediaCard extends Component {
       );
     } else if (this.props.format == "list") {
       return (
-        <div className="resize">
+        <div className="resize-list">
           <Card>
             <CardBody>
                 <CardTitle>{this.props.title}<p className="right-text-float">${this.props.price}</p></CardTitle>
-                <CardText>{this.props.description}</CardText>
+                <div className="card-text-list">
+                  <CardText>{this.props.description}</CardText>
+                </div>
             </CardBody>
           </Card>
         </div>

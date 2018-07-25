@@ -34,24 +34,32 @@ class Posts extends Component {
 				console.log(err);
 			})
 		
-	} 
+	}
 	changeFormat() {
-		this.setState(
-			(prevState,props)=>{
-			return {format: "list"};
-			}
-		);
+		if(this.state.format === "grid") {
+			this.setState(
+				(prevState,props)=>{
+				return {format: "list"};
+				}
+			);
+		} else {
+			this.setState(
+				(prevState,props)=>{
+				return {format: "grid"};
+				}
+			);			
+		}
 	}
  	render() {
 		console.log(this.state);
 		window.state = this.state;
 
 		if(!this.state.postings) {
-			return (<div>Loading</div>)
+			return (<div class="list">Loading</div>)
 		} else {
 			return (
 				<div>
-				<p id="list" onClick={() => this.changeFormat()}>grid layout</p>
+				<p class="list" onClick={() => this.changeFormat()}>grid layout</p>
 				<div className="container">
 						{this.state.postings.map(posting => {
 							return (
