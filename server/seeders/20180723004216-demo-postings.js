@@ -11,6 +11,7 @@ for (var i = 0; i<100; i++){
     price: faker.commerce.price(),
     status: 'active',
     description: faker.lorem.sentence(),
+    images: ["https://i.kinja-img.com/gawker-media/image/upload/s--zIoxCmxH--/c_scale,f_auto,fl_progressive,q_80,w_800/e83aktlptf1pybjfkcex.jpg"],
     createdAt: faker.date.past(),
     updatedAt: new Date(),
     // to randomize use: userId: Math.floor(Math.random() * 100)

@@ -32,6 +32,10 @@ module.exports = (sequelize, DataTypes) => {
     location: {
       type: DataTypes.JSONB,
       allowNull: true
+    },
+    images: {
+      type: DataTypes.ARRAY(DataTypes.STRING),
+      allowNull: true
     }
   }, {});
   Posting.associate = function(models) {
