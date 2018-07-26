@@ -40,6 +40,10 @@ module.exports = {
         type: Sequelize.JSONB,
         allowNull: true
       },
+      images: {
+        type: Sequelize.ARRAY(Sequelize.STRING),
+        allowNull: true,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

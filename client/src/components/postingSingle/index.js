@@ -94,7 +94,7 @@ class SinglePosting extends React.Component {
           <Grid container spacing={24}>
     
             <Grid item xs={12} md={6}>
-              <img id="postingPicture"src="https://i.kinja-img.com/gawker-media/image/upload/s--zIoxCmxH--/c_scale,f_auto,fl_progressive,q_80,w_800/e83aktlptf1pybjfkcex.jpg"></img>
+              <img id="postingPicture"src={this.state.posting.images[0]}></img>
             </Grid>
             <Grid item xs={12} md={6}>
                 <div className="postingInfo">
