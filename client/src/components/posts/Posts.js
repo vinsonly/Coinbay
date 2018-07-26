@@ -57,6 +57,12 @@ class Posts extends Component {
 		} else {
 		}
 	}
+	classFormat(form) {
+		if (this.state.format === "grid")
+			return "items";
+		else
+			return "items-list";
+	}
  	render() {
 		console.log(this.state);
 		window.state = this.state;
@@ -68,13 +74,13 @@ class Posts extends Component {
 				<div>
 					<div className="format-options">
 						<p class="grid" onClick={() => this.changeFormat("grid")}>grid layout&nbsp;&nbsp;&nbsp;</p>
-						<p class="list" onClick={() => this.changeFormat("list")}>list layout&nbsp;&nbsp;&nbsp;</p>
 						<p class="detailed-list" onClick={() => this.changeFormat("detailed-list")}>detailed list layout&nbsp;&nbsp;&nbsp;</p>
+						<p class="list" onClick={() => this.changeFormat("list")}>list layout&nbsp;&nbsp;&nbsp;</p>
 					</div>
 					<div className="container">
 							{this.state.postings.map(posting => {
 								return (
-									<div className="items">
+									<div className={this.classFormat(this.state.format)}>
 										<SimpleMediaCard format={this.state.format} post={posting.id} title={posting.postingTitle} description={posting.description} price={posting.price} username={posting.User.username} rating={posting.User.rating}/>
 									</div>
 								)

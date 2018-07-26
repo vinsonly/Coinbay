@@ -71,24 +71,42 @@ class SimpleMediaCard extends Component {
             </Card>
           </div>
       );
-    } else if (this.props.format == "list") {
+    } else if (this.props.format == "detailed-list") {
       return (
-        <div className="resize-list">
-          <Card>
-            <CardBody>
-                <CardTitle>{this.props.title}<p className="right-text-float">${this.props.price}</p></CardTitle>
-                <div className="card-text-list">
-                  <CardText>{this.props.description}</CardText>
-                </div>
-            </CardBody>
-          </Card>
+        <div className="resize-detailed-list">
+          <Link to={"/posts/" + this.props.post}>
+            <Card>
+              <CardBody>
+                  <div className="img-detailed">
+                    <CardImage className="img-fluid" src="/iphone.png" waves />
+                  </div>
+                  <div className="detailed-title">
+                    <CardTitle>{this.props.title}<p className="right-text-float">${this.props.price}</p></CardTitle>
+                  </div>
+                  <div className="detailed-text">
+                    <div className="card-text-list">
+                      <CardText>{this.props.description}</CardText>
+                    </div>
+                  </div>
+              </CardBody>
+            </Card>
+          </Link>
         </div>
       );
     }
-    else {
+    else if (this.props.format == "list") {
       return (
-        <p>simple list</p>
+        <div className="resize-detailed-list">
+        <Link to={"/posts/" + this.props.post}>
+          <Card>
+            <CardBody>
+                <CardTitle>{this.props.title}<p className="right-text-float">${this.props.price}</p></CardTitle>
+            </CardBody>
+          </Card>
+        </Link>
+        </div>
       );
+    } else {
     }
   }
 }
