@@ -36,8 +36,7 @@ class Posts extends Component {
 		
 	} 
 
-  render() {
-
+  render() {	
 		console.log(this.state);
 		window.state = this.state;
 
@@ -47,7 +46,6 @@ class Posts extends Component {
 			return (
 				<div>
 				<div className="container">
-
 						{this.state.postings.map(posting => {
 							return (
 								<div className="items">
@@ -55,7 +53,6 @@ class Posts extends Component {
 								</div>
 							)
 						})}
-
 					</div>
 				</div>
 			);

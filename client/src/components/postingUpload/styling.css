@@ -1,0 +1,52 @@
+.formContainer {
+    width: 100%;
+}
+
+#postingUploadContainer {
+    max-width: 500px;
+    width: 50%;
+    min-width: 300px;
+    margin: 30px auto;
+}
+
+div.dropzone div {
+    width: 100% !important;
+    height: 100px !important;
+}
+
+div.dropzone {
+    margin: 15px auto !important;
+}
+
+input.abstract {
+    margin: 10px auto;
+}
+
+input.meetingLocation {
+    margin: 10px auto;
+}
+
+p#dropDescription {
+    margin: 1rem;
+}
+
+div#priceContainer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+span#dollar {
+    margin: auto 5px;
+    font-size: 25px;
+}
+
+span#dot {
+    margin: 0 5px;
+    font-size: 25px;
+}
+
+input#priceDollars {
+    text-align: right;
+}
