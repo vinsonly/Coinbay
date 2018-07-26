@@ -4,6 +4,12 @@
     padding: 0
 }
 
+.resize-detailed-list {
+	width: 90em;
+	padding: 0em 0em 1em 0em;
+	display: inline-block
+}
+
 .center-button {
     display: flex;
     justify-content: center;
@@ -18,10 +24,36 @@ button.btn.btn-default.Ripple-parent {
 	font-size: 1.1em !important
 }
 
+.card-text-list {
+	font-size: 1.1em !important;
+	height: 1em !important	
+}
+
 .right-text-float {
 	display: inline;
 	float: right;
 	margin: 0;
 	font-size: 0.75em;
 	color: #85bb65
+}
+
+.img-detailed {
+	width: 10em !important;
+	display: inline-block
+}
+
+.width-resize {
+	float: right;
+	width: 40em;
+}
+
+.detailed-title {
+	width: 75em;
+	float: right
+}
+
+.detailed-text {
+	width: 75em;
+	float: right;
+	margin-top: -3em
 }
