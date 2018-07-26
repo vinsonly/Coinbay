@@ -6,7 +6,7 @@ import './login.css'
 class Login extends React.Component  {
   render() {
     return(
-      <Container>
+      <div className="container" id="loginContainer">
         <Row>
           <Col md="6">
             <form>
@@ -21,7 +21,7 @@ class Login extends React.Component  {
             </form>
           </Col>
         </Row>
-      </Container>
+      </div>
     );
   }
 };

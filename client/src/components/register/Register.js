@@ -112,7 +112,7 @@ class Register extends React.Component  {
   
   render() {
     return(
-      <Container>
+      <div className="container" id="registerContainer">
         <Row>
           <Col md="6">
             <form>
@@ -130,7 +130,7 @@ class Register extends React.Component  {
             </form>
           </Col>
         </Row>
-      </Container>
+      </div>
     );
   }
 };

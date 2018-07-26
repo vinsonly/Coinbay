@@ -1,9 +1,10 @@
-div.container {
+#loginContainer.container {
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100vw;
     min-width: 320px;
+    height: 85vh;
 }
 
 div.row {
@@ -11,13 +12,5 @@ div.row {
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-div#body-content {
-    height: 100vh;
-    width: 100vw;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
