@@ -31,5 +31,6 @@
 #expand {
   margin-right: 1em;
   float: right;
-  position: relative;
+  position: absolute;
+  right: 0px;
 }

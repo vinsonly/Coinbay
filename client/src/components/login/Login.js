@@ -3,10 +3,10 @@ import { Container, Row, Col, Input, Button } from 'mdbreact';
 
 import './login.css'
 
-class FormsPage extends React.Component  {
+class Login extends React.Component  {
   render() {
     return(
-      <Container>
+      <div className="container" id="loginContainer">
         <Row>
           <Col md="6">
             <form>
@@ -21,9 +21,9 @@ class FormsPage extends React.Component  {
             </form>
           </Col>
         </Row>
-      </Container>
+      </div>
     );
   }
 };
 
-export default FormsPage;
+export default Login;
