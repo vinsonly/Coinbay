@@ -123,6 +123,7 @@ class PostingUpload extends React.Component {
           .then((res) => {
             status = res.status;
             return res.json();
+            // redirect the user to their post
           })
           .then(body => {
             if(status != 201) {
