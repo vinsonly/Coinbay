@@ -1,4 +1,4 @@
-#loginContainer.container {
+#registerContainer.container {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -13,4 +13,3 @@ div.row {
     justify-content: center;
     align-items: center;
 }
-

@@ -64,7 +64,7 @@ module.exports = {
                                 username: req.body.username || user.username,
                                 password: req.body.password || user.password,
                                 phone: req.body.phone || user.phone,
-                                 crypto: req.body.crypto || user.crypto,
+                                crypto: req.body.crypto || user.crypto,
                                 rating: req.body.rating || user.rating 
                             })
                             .then(() => {

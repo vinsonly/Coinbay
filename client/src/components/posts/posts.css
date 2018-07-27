@@ -5,8 +5,13 @@
 }
 
 .items {
-	padding: 2em 1.5em 2em 1.5em;
+  padding: 2em 1.5em 2em 1.5em;
 	cursor: pointer
+}
+
+.items-list {
+  padding: 0.5em 0em 0.5em 0em;
+  cursor: pointer
 }
 
 .card .card-body .card-text {
@@ -28,3 +33,6 @@ div.center-button {
   margin-bottom: 10px;
 }
 
+.format-options > p {
+  display: inline-block
+}
