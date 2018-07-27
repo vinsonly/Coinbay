@@ -50,3 +50,18 @@ span#dot {
 input#priceDollars {
     text-align: right;
 }
+
+div.postingStatus {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+span.spanStatus {
+    margin-right: 15px;
+}
+
+span.mandatoryStar {
+    color: red;
+}
