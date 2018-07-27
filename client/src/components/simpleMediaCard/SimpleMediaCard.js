@@ -41,7 +41,12 @@ class SimpleMediaCard extends Component {
       return (
           <div className="resize">
             <Card>
-              <CardImage className="img-fluid" src="/iphone.png" waves />
+              <div className="relative-position">
+                <CardImage className="img-fluid" src="/iphone.png" waves />
+                <p className="time-position">{this.parseDate(this.props.date)}</p>
+                <p className="price-position">${this.props.price}</p>
+              </div>
+              <CardTitle className="title-padding">{this.props.title}</CardTitle>
               <CardBody>
                   <CardText>{this.props.description}</CardText>
                   <div className="center-button">
@@ -107,7 +112,7 @@ class SimpleMediaCard extends Component {
         <div className="resize-detailed-list">
         <Link to={"/posts/" + this.props.post}>
           <Card>
-            <CardBody>
+            <CardBody className="inline-display">
                 <p className="inline-display">{this.parseDate(this.props.date)}</p>
                 <CardTitle className="inline-display">&nbsp;&nbsp;&nbsp;{this.props.title}</CardTitle>
                 <p className="inline-display right-float">${this.props.price}</p>

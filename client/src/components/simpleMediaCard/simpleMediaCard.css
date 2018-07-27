@@ -1,3 +1,7 @@
+.title-padding {
+	padding: 0.5em 0em 0em 0.5em
+}
+
 .resize {
 	width: 20em;
     margin: 0;
@@ -8,6 +12,10 @@
 	width: 90em;
 	padding: 0em 0em 1em 0em;
 	display: inline-block
+}
+
+.relative-position {
+	position: relative
 }
 
 .center-button {
@@ -75,7 +83,18 @@ button.btn.btn-default.Ripple-parent {
 	top: -0.45em;
 	color: #1589FF;
 	background-color: rgba(0, 0, 0, 0.15);
-	padding: 0em 0.2em 0em 0.2em
+	padding: 0em 0.4em 0em 0.4em;
+	border-radius: 0.2em
+}
+
+.price-position {
+	position: absolute;
+	width: 100%;
+	text-align: right;
+	top: -0.45em;
+	padding: 0.5em 0.5em 0em 0em;
+	font-size: 1.3em;
+	color: #00B200
 }
 
 .inline-display {
