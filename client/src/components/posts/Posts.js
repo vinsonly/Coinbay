@@ -10,7 +10,9 @@ class Posts extends Component {
 
 		let postingStatus;
 
-    this.state = { format: "grid" };
+    this.state = { format: "grid",
+    				counter: 10 
+    			};
 
     fetch(`/api/postings_with_users`)
       .then(res => {
@@ -33,7 +35,20 @@ class Posts extends Component {
 				console.log("ERROR!!");
 				console.log(err);
 			})
-		
+	}
+	componentDidMount() {
+		window.addEventListener('scroll', function() {
+			if((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+				this.setState(
+					(prevState,props)=>{
+					return {counter: this.state.counter += 20};
+					}
+				);
+			}
+		}.bind(this));
+
+		// var myDiv = document.getElementById("body-content");
+		// alert(myDiv.scrollHeight);
 	}
 	changeFormat(form) {
 		if (form == "grid" && this.state.format !== "grid") {
@@ -78,7 +93,7 @@ class Posts extends Component {
 						<p class="list" onClick={() => this.changeFormat("list")}>list layout&nbsp;&nbsp;&nbsp;</p>
 					</div>
 					<div className="container">
-							{this.state.postings.map(posting => {
+							{this.state.postings.slice(0, this.state.counter).map(posting => {
 								return (
 									<div className={this.classFormat(this.state.format)}>
 										<SimpleMediaCard format={this.state.format} post={posting.id} title={posting.postingTitle} description={posting.description} price={posting.price} username={posting.User.username} rating={posting.User.rating} date={posting.createdAt}/>
