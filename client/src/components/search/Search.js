@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { BrowserRouter as Router, Redirect, Link} from 'react-router-dom';
 import './search.css';
 import Autosuggest from 'react-autosuggest';
-import AutosuggestHighlightMatch from 'autosuggest-highlight/match';
-import AutosuggestHighlightParse from 'autosuggest-highlight/parse';
 
 function escapeRegexCharacters(str) {
   return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -12,36 +10,40 @@ function escapeRegexCharacters(str) {
 function getSuggestionValue(suggestion) {
   return suggestion.postingTitle;
 }
-//
-// function renderSuggestion(suggestion) {
-//   return (
-//     <span>{suggestion.postingTitle}</span>
-//   );
-// }
 
 function renderSuggestion(suggestion, { query }) {
   const suggestionText = `${suggestion.postingTitle}`;
-  const matches = AutosuggestHighlightMatch(suggestionText, query);
-  const parts = AutosuggestHighlightParse(suggestionText, matches);
 
   return (
     <span>
-      <span className="name">
-        {
-          parts.map((part, index) => {
-            const className = part.highlight ? 'highlight' : null;
-
-            return (
-              <span className={className} key={index}>{part.text}</span>
-            );
-          })
-        }
-      </span>
+        <ListSpan text={suggestion.postingTitle} postingId={suggestion.id} postingImage={suggestion.images[0]}/>
     </span>
   );
 }
 
+class ListSpan extends Component {
+  constructor(props) {
+    super(props);
+    this.handleClick = this.handleClick.bind(this);
+  }
 
+  handleClick() {
+    console.log("redirecting...");
+    console.log(this.props.postingId);
+
+    window.location.replace("/posts/" + this.props.postingId);
+    // <Link to={"/posts/" + this.props.post}><Button>More Details</Button></Link>;
+  }
+
+  render() {
+    return(
+      <div className="searchElement" onClick={this.handleClick}>
+        <img className='imgStyling' src={this.props.postingImage}></img>
+        <span className="searchText">{this.props.text}</span>
+      </div>
+    )
+  }
+}
 
 
 class Search extends Component {
@@ -134,11 +136,6 @@ class Search extends Component {
               renderSuggestion={renderSuggestion}
               inputProps={inputProps} />
 
-              {/* {this.state.postings.map(posting => {
-                return (
-                  <p>{posting.postingTitle}</p>
-                )
-              })} */}
           </div>
         )
       }
