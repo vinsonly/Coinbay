@@ -8,6 +8,8 @@ class SimpleMediaCard extends Component {
   constructor(props) {
     super(props);
 
+    console.log(props);
+
     this.state = {}
 
     console.log(props.description);
@@ -42,7 +44,7 @@ class SimpleMediaCard extends Component {
           <div className="resize">
             <Card>
               <div className="relative-position">
-                <CardImage className="img-fluid" src="/iphone.png" waves />
+                <CardImage className="img-fluid" src={this.props.image} waves />
                 <p className="time-position">{this.parseDate(this.props.date)}</p>
                 <p className="price-position">${this.props.price}</p>
               </div>
@@ -90,7 +92,7 @@ class SimpleMediaCard extends Component {
             <Card>
               <CardBody>
                   <div className="img-detailed">
-                    <CardImage className="img-fluid" src="/iphone.png" waves />
+                    <CardImage className="img-fluid" src={this.props.image} waves />
                     <p className="time-position">{this.parseDate(this.props.date)}</p>
                   </div>
                   <div className="detailed-title">
