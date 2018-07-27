@@ -43,8 +43,6 @@ class SimpleMediaCard extends Component {
             <Card>
               <CardImage className="img-fluid" src="/iphone.png" waves />
               <CardBody>
-                  <p>{this.parseDate(this.props.date)}</p>
-                  <CardTitle>{this.props.title}<p className="right-text-float">${this.props.price}</p></CardTitle>
                   <CardText>{this.props.description}</CardText>
                   <div className="center-button">
                     <Link to={"/posts/" + this.props.post}><Button>More Details</Button></Link>
@@ -110,8 +108,9 @@ class SimpleMediaCard extends Component {
         <Link to={"/posts/" + this.props.post}>
           <Card>
             <CardBody>
-                <CardTitle>{this.props.title}<p className="right-text-float">${this.props.price}</p></CardTitle>
-                <p className="date-details-list">{this.parseDate(this.props.date)}</p>
+                <p className="inline-display">{this.parseDate(this.props.date)}</p>
+                <CardTitle className="inline-display">&nbsp;&nbsp;&nbsp;{this.props.title}</CardTitle>
+                <p className="inline-display right-float">${this.props.price}</p>
             </CardBody>
           </Card>
         </Link>

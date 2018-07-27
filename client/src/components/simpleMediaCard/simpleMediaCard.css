@@ -37,6 +37,11 @@ button.btn.btn-default.Ripple-parent {
 	color: #85bb65
 }
 
+.right-float {
+	float: right;
+	color: #85bb65
+}
+
 .img-detailed {
 	width: 10em !important;
 	display: inline-block;
@@ -68,5 +73,11 @@ button.btn.btn-default.Ripple-parent {
 .time-position {
 	position: absolute;
 	top: -0.45em;
-	background-color: blue;
+	color: #1589FF;
+	background-color: rgba(0, 0, 0, 0.15);
+	padding: 0em 0.2em 0em 0.2em
+}
+
+.inline-display {
+	display: inline-block
 }
