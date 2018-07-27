@@ -36,6 +36,7 @@ ReactDOM.render((
 				<Route path="/metacoin/" component={MetaCoin}/>
 				<Route path="/login" component={Login}/>
 				<Route path="/register" component={Register}/>
+				<Route path="/posts/search_results" render={props => <Posts {...props} />} />
 				<Route component={Whoops404}/>
 			</Switch>
 		</div>

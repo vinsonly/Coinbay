@@ -8,6 +8,8 @@ class Posts extends Component {
 	constructor(props) {
 		super(props);
 
+		console.log(props);
+
 		let postingStatus;
 
     this.state = { format: "grid" };

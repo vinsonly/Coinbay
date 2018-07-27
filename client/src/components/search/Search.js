@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Redirect, Link} from 'react-router-dom';
+import ReactDOM from 'react-dom';
+import { BrowserRouter as Router, Redirect, Link, withRouter} from 'react-router-dom';
 import './search.css';
 import Autosuggest from 'react-autosuggest';
 
@@ -21,10 +22,13 @@ function renderSuggestion(suggestion, { query }) {
   );
 }
 
+
+
 class ListSpan extends Component {
   constructor(props) {
     super(props);
     this.handleClick = this.handleClick.bind(this);
+    // this.testArray = [];
   }
 
   handleClick() {
@@ -35,7 +39,12 @@ class ListSpan extends Component {
     // <Link to={"/posts/" + this.props.post}><Button>More Details</Button></Link>;
   }
 
+  //if array contains == 1, then open straight to page
+
   render() {
+    // testArray.push(this.props.postingId);
+
+    // console.log(testArray);
     return(
       <div className="searchElement" onClick={this.handleClick}>
         <img className='imgStyling' src={this.props.postingImage}></img>
@@ -79,6 +88,7 @@ class Search extends Component {
     this.onChange = this.onChange.bind(this);
     this.onSuggestionsClearRequested = this.onSuggestionsClearRequested.bind(this);
     this.onSuggestionsFetchRequested = this.onSuggestionsFetchRequested.bind(this);
+    this.onSuggestionSelected = this.onSuggestionSelected.bind(this);
   }
 
  getSuggestions(value) {
@@ -111,7 +121,28 @@ class Search extends Component {
       });
     };
 
+    onSuggestionSelected = (event, { suggestion, suggestionValue, suggestionIndex, sectionIndex, method }) =>{
+       //Here you do whatever you want with the values
+       if (method == 'enter'){
+         // console.log(suggestion);
+         window.location.replace("/posts/" + suggestion.id);
+       }
+   };
 
+    handleSubmit(event) {
+      event.preventDefault();
+
+      let target = event.target;
+
+      let value = target.childNodes[0].childNodes[0].value;
+
+      // console.log(value)
+
+      // console.log(this.state.suggestions[0].id);
+      sessionStorage.setItem('itemDisplay', JSON.stringify(this.state.suggestions));
+      console.log(JSON.parse(sessionStorage.getItem('itemDisplay')));
+
+    }
 
     render() {
       const { value, suggestions } = this.state;
@@ -121,6 +152,7 @@ class Search extends Component {
         onChange: this.onChange
       };
 
+
       if(this.state.postings[0] == null) {
         return(<div>Loading</div>)
       }
@@ -128,13 +160,16 @@ class Search extends Component {
         return (
           <div>
             <br/>
-            <Autosuggest
+            <form onSubmit={this.handleSubmit.bind(this)}>
+              <Autosuggest
               suggestions={suggestions}
               onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
               onSuggestionsClearRequested={this.onSuggestionsClearRequested}
               getSuggestionValue={getSuggestionValue}
               renderSuggestion={renderSuggestion}
+              onSuggestionSelected={this.onSuggestionSelected}
               inputProps={inputProps} />
+            </form>
 
           </div>
         )
@@ -142,5 +177,12 @@ class Search extends Component {
     }
 }
 
+class RedirectComponent extends Component {
+  render() {
+    return(
+      <Redirect to="/posts/search_results" postings={this.props.postings}/>
+    )
+  }
+}
 
 export default Search;

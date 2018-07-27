@@ -85,6 +85,10 @@ body {
   color: #120000;
 }
 
+.react-autosuggest__suggestion--highlighted {
+  background-color: #ddd;
+}
+
 .imgStyling {
   align-self: flex-start;
   height: 50px;
