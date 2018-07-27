@@ -81,7 +81,7 @@ class Posts extends Component {
 							{this.state.postings.map(posting => {
 								return (
 									<div className={this.classFormat(this.state.format)}>
-										<SimpleMediaCard format={this.state.format} post={posting.id} title={posting.postingTitle} description={posting.description} price={posting.price} username={posting.User.username} rating={posting.User.rating}/>
+										<SimpleMediaCard format={this.state.format} post={posting.id} title={posting.postingTitle} description={posting.description} price={posting.price} username={posting.User.username} rating={posting.User.rating} date={posting.createdAt}/>
 									</div>
 								)
 							})}

@@ -39,7 +39,8 @@ button.btn.btn-default.Ripple-parent {
 
 .img-detailed {
 	width: 10em !important;
-	display: inline-block
+	display: inline-block;
+	position: relative
 }
 
 .width-resize {
@@ -56,4 +57,16 @@ button.btn.btn-default.Ripple-parent {
 	width: 75em;
 	float: right;
 	margin-top: -3em
+}
+
+.date-details-list {
+	float: right;
+	margin: 0;
+	padding: 0;
+}
+
+.time-position {
+	position: absolute;
+	top: -0.45em;
+	background-color: blue;
 }

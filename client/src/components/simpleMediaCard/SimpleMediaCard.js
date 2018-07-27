@@ -21,8 +21,16 @@ class SimpleMediaCard extends Component {
     let result = await setUpRatingArrays(this.props.rating);
     this.setState(result);
   }
-  render() {
+  parseDate(date) {
+    var d = new Date(Date.parse(date));
+    var month = d.getMonth();
+    var day = d.getDate();
+    var months = [ "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+    "July", "Aug", "Sep", "Oct", "Nov", "Dec" ];
 
+    return months[month] + ' ' + day; 
+  }
+  render() {
     window.state = this.state;
 
     if(!this.props.description || this.state.halfStarArray == null || this.state.blackStarArray == null || this.state.emptyStarArray == null) {
@@ -35,6 +43,7 @@ class SimpleMediaCard extends Component {
             <Card>
               <CardImage className="img-fluid" src="/iphone.png" waves />
               <CardBody>
+                  <p>{this.parseDate(this.props.date)}</p>
                   <CardTitle>{this.props.title}<p className="right-text-float">${this.props.price}</p></CardTitle>
                   <CardText>{this.props.description}</CardText>
                   <div className="center-button">
@@ -79,6 +88,7 @@ class SimpleMediaCard extends Component {
               <CardBody>
                   <div className="img-detailed">
                     <CardImage className="img-fluid" src="/iphone.png" waves />
+                    <p className="time-position">{this.parseDate(this.props.date)}</p>
                   </div>
                   <div className="detailed-title">
                     <CardTitle>{this.props.title}<p className="right-text-float">${this.props.price}</p></CardTitle>
@@ -101,6 +111,7 @@ class SimpleMediaCard extends Component {
           <Card>
             <CardBody>
                 <CardTitle>{this.props.title}<p className="right-text-float">${this.props.price}</p></CardTitle>
+                <p className="date-details-list">{this.parseDate(this.props.date)}</p>
             </CardBody>
           </Card>
         </Link>
