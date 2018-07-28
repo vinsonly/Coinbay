@@ -1,6 +1,8 @@
 const User = require('../models/').User;
 const Posting = require('../models/').Posting;
 
+const bcrypt = require('bcrypt');
+
 console.log(User);
 
 
@@ -12,22 +14,38 @@ module.exports = {
 
         console.log(req.body);
 
-        return User
-            .create({
-                email: req.body.email,
-                username: req.body.username,
-                password: req.body.password
-            })
-            .then((user) => {
-                console.log("Created a new user");
-                console.log(user);
-                res.status(201).send(user);
-            })
-            .catch((error) => {
-                console.log("Failed to create a new user");
-                console.log(error);
-                res.status(400).send(error)
-            })
+        let password = req.body.password;
+        let saltRounds = 10;
+        bcrypt.genSalt(saltRounds, function(err, salt) {
+            bcrypt.hash(password, salt, function(err, hash) {
+                if(err || !hash) {
+                    res.status(400).send(err.message);
+                } else {
+                    console.log("hash:");
+                    console.log(hash);
+
+                    // save hash into the database;
+                    User
+                        .create({
+                            email: req.body.email,
+                            username: req.body.username,
+                            password: hash
+                        })
+                        .then((user) => {
+                            console.log("Created a new user");
+                            console.log(user);
+                            res.status(201).send(user);
+                        })
+                        .catch((error) => {
+                            console.log("Failed to create a new user");
+                            console.log(error);
+                            res.status(400).send(error)
+                        })
+                }
+            });
+        });
+
+        return 
     },
 
     read(req, res) {

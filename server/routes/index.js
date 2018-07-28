@@ -1,6 +1,7 @@
 const usersController = require('../controllers').users;
 const postingsController = require('../controllers').postings;
 const adminusersController = require('../controllers').adminusers;
+const authController = require('../controllers').auth;
 
 module.exports = (app) => {
     app.get('/api', (req, res) => res.status(200).send({
@@ -30,6 +31,10 @@ module.exports = (app) => {
 
     
     // WRITE THE OTHER ENDPOINTS DOWN HERE
+
+    app.post('/login', authController.login);
+
+
 
     // EXAMPLES:
     //  //CREATE
