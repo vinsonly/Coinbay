@@ -61,14 +61,13 @@ module.exports = {
                             return res.status(400).send(err);
                         }
 
+                        // add { expiresIn: '1h' } as 3rd param to set the token to expire
                         if(result == true) {
-                            jwt.sign({user}, 'secretkey', { expiresIn: '1h' }, (err, token) => {
+                            jwt.sign({user}, 'secretkey', (err, token) => {
                                 if(err) {
                                     console.log(err);
                                     return res.status(400).send(err);
                                 }
-
-                                console.log(user);
 
                                 let response = user.dataValues;
                                 response.token = token;

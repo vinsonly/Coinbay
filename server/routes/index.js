@@ -8,7 +8,7 @@ module.exports = (app) => {
         message: 'Welcome to the Contacts API!'
       }));
 
-    app.post('/api/user', usersController.create);
+    app.post('/api/user', usersController.isExistingUser, usersController.create);
     app.get('/api/users', usersController.read);
     app.post('/api/user/update', usersController.update);
     app.post('/api/user/delete', usersController.delete);

@@ -2,16 +2,14 @@ const User = require('../models/').User;
 const Posting = require('../models/').Posting;
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-
-console.log(User);
-
+const Sequelize = require('sequelize');
+const {or, and, gt, lt} = Sequelize.Op;
 
 module.exports = {
     // define your route handlers here, see below for details
 
     create(req, res) {
         console.log("req.body:");
-
         console.log(req.body);
 
         let password = req.body.password;
@@ -213,8 +211,34 @@ module.exports = {
                 });
     },    
 
-}
+    // check if the user exists in our database
+    isExistingUser(req, res, next) {
+        
+        User.findAll({
+            where: {
+                [or]: {
+                    email: req.body.email,
+                    username: req.body.username
+                }
+            }
+        })
+        .then((users) => {
 
+            console.log(users);
+
+            if(users.length > 0) {
+                return res.status(400).send("Another user already exists with that username or password, please try again.");
+            } else {
+                next();
+            }
+        })
+        .catch(err => {
+            return res.status(400).send(err);
+        })
+
+    }
+
+}
 
 /*
 module.exports = {
