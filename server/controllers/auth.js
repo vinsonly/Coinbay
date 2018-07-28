@@ -63,14 +63,14 @@ module.exports = {
 
                         if(result == true) {
                             jwt.sign({user}, 'secretkey', { expiresIn: '1h' }, (err, token) => {
-
                                 if(err) {
                                     console.log(err);
                                     return res.status(400).send(err);
-                                    
                                 }
 
-                                let response = user;
+                                console.log(user);
+
+                                let response = user.dataValues;
                                 response.token = token;
                                 return res.send(response);
                             });
