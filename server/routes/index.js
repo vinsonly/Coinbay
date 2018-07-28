@@ -32,7 +32,7 @@ module.exports = (app) => {
     
     // WRITE THE OTHER ENDPOINTS DOWN HERE
 
-    app.post('/login', authController.login);
+    app.post('/api/login', authController.login);
 
 
 

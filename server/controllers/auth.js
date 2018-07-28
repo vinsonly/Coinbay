@@ -2,6 +2,8 @@ const User = require('../models/').User;
 const Posting = require('../models/').Posting;
 
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+
 
 console.log(User);
 
@@ -25,22 +27,70 @@ console.log(User);
 //   });
 
 module.exports = {
-    // define your route handlers here, see below for details
 
+    // username, password
     login(req, res) {
         console.log("req.body:");
         console.log(req.body);
-        console.log("logging out");
+        console.log("attempting to login");
 
         // verify the user's login information
 
+        let errMsg = "Username and password does not match.";
 
-        jwt.sign({user}, 'secretkey', { expiresIn: '30s' }, (err, token) => {
-            res.json({
-                token
-            });
-        });
+        return User
+            .findOne({
+                where: {
+                    username: req.body.username
+                }
+            })
+            .then(user => {
+                if(!user) {
+                    return res.status(404).send({
+                        message: "Can not find user with username: " + req.body.username
+                    })
+                } else {
 
+                    // verify the password of the user
+                    let plainTextPassword = req.body.password;
+                    let passwordHash = user.password
+                    bcrypt.compare(plainTextPassword, passwordHash, function(err, result) {
+
+                        if(err) {
+                            console.log(err);
+                            return res.status(400).send(err);
+                        }
+
+                        if(result == true) {
+                            jwt.sign({user}, 'secretkey', { expiresIn: '1h' }, (err, token) => {
+
+                                if(err) {
+                                    console.log(err);
+                                    return res.status(400).send(err);
+                                    
+                                }
+
+                                let response = user;
+                                response.token = token;
+                                return res.send(response);
+                            });
+                        } else {
+                            return res.status(404).send({
+                                message: errMsg
+                            })                     
+                        } 
+
+                    });
+
+                }
+            })
+            .catch((error) => {
+                console.log("Opps we ran into an error");
+                console.log(error);
+                res.status(400).send(error);
+            })
+
+        return
     },
 
     signout(req, res) {

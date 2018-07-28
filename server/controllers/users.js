@@ -1,7 +1,7 @@
 const User = require('../models/').User;
 const Posting = require('../models/').Posting;
-
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 console.log(User);
 
@@ -33,8 +33,9 @@ module.exports = {
                         })
                         .then((user) => {
                             console.log("Created a new user");
-                            console.log(user);
-                            res.status(201).send(user);
+                            // console.log(user);
+                            let successRes = user.dataValues;
+                            res.status(201).send(successRes);
                         })
                         .catch((error) => {
                             console.log("Failed to create a new user");
