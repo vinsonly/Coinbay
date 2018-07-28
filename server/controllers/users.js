@@ -227,7 +227,9 @@ module.exports = {
             console.log(users);
 
             if(users.length > 0) {
-                return res.status(400).send("Another user already exists with that username or password, please try again.");
+                return res.status(400).json({
+                    message: "Another user already exists with that username or password, please try again."
+                });
             } else {
                 next();
             }

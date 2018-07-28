@@ -66,13 +66,15 @@ class Register extends React.Component  {
     })
     .then(body => {
       console.log(body);
-      if(status != 200) {
-        alert(`Error: ${body.errors[0].message}`);
+      if(status != 201) {
+        alert(`Error: ${body.message}`);
+      } else {
+        alert(`User successfully created!`);
+        // redirect user here
       }
     })
     .catch(err => {
       console.error('ERROR', err);
-      
     })
   }
 
@@ -118,10 +120,10 @@ class Register extends React.Component  {
             <form>
               <p className="h5 text-center mb-4">Sign up</p>
               <div className="grey-text">
-                <Input onChange={this.handleChange} name="username" value={this.state.username} label="Your name" icon="user" group type="text" validate error="wrong" success="right"/>
-                <Input onChange={this.handleChange} name="email" value={this.state.email} label="Your email" icon="envelope" group type="email" validate error="wrong" success="right"/>
+                <Input onChange={this.handleChange} name="username" value={this.state.username} label="Username" icon="user" group type="text" validate error="wrong" success="right"/>
+                <Input onChange={this.handleChange} name="email" value={this.state.email} label="Email" icon="envelope" group type="email" validate error="wrong" success="right"/>
                 <Input onChange={this.handleChange} name="email-confirm" value={this.state.emailConfirm} label="Confirm your email" icon="exclamation-triangle" group type="text" validate error="wrong" success="right"/>
-                <Input onChange={this.handleChange} name="password" value={this.state.password} label="Your password" icon="lock" group type="password" validate/>
+                <Input onChange={this.handleChange} name="password" value={this.state.password} label="Password" icon="lock" group type="password" validate/>
                 <Input onChange={this.handleChange} name="password-confirm" value={this.state.passwordConfirm} label="Confirm your password" icon="exclamation-triangle" group type="password" validate/>
               </div>
               <div className="text-center">
