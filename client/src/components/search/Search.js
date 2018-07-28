@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter as Router, Redirect, Link, withRouter} from 'react-router-dom';
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
+
 import './search.css';
 import Autosuggest from 'react-autosuggest';
+import Posts from '../posts/Posts'
 
 function escapeRegexCharacters(str) {
   return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -61,7 +63,8 @@ class Search extends Component {
         this.state = {
             value: '',
             suggestions: [],
-            postings: []
+            postings: [],
+            toRedirect: false
         };
 
   let postingStatus;
@@ -142,6 +145,10 @@ class Search extends Component {
       sessionStorage.setItem('itemDisplay', JSON.stringify(this.state.suggestions));
       console.log(JSON.parse(sessionStorage.getItem('itemDisplay')));
 
+      this.setState({ 
+        toRedirect: true
+      })
+
     }
 
     render() {
@@ -152,6 +159,22 @@ class Search extends Component {
         onChange: this.onChange
       };
 
+      if(this.state.toRedirect) {
+        return(
+          <BrowserRouter>
+            <div>
+              <Switch>
+                <Route exact path="/" render={(props) => ( <Posts searchResults={this.state.suggestions}/> )} />
+              </Switch>
+            </div>
+          </BrowserRouter>
+          // <Router>
+          //   <Redirect to="/posts/" />
+          // <Router>
+          // <Route path='/posts' />
+          // <Route path="/posts" render={() => <Posts someProp={100}/>}/>
+        )
+      }
 
       if(this.state.postings[0] == null) {
         return(<div>Loading</div>)
@@ -175,14 +198,6 @@ class Search extends Component {
         )
       }
     }
-}
-
-class RedirectComponent extends Component {
-  render() {
-    return(
-      <Redirect to="/posts/search_results" postings={this.props.postings}/>
-    )
-  }
 }
 
 export default Search;
