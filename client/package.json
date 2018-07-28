@@ -5,17 +5,20 @@
   "dependencies": {
     "@material-ui/core": "^1.4.0",
     "@material-ui/icons": "^1.1.0",
+    "base64-img": "^1.0.4",
     "bootstrap": "^4.1.2",
     "mdbreact": "^4.6.0",
+    "openzeppelin-solidity": "^1.11.0",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
+    "react-dropzone": "^4.2.13",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.3.1",
     "react-scripts": "1.1.4",
+    "react-spinners": "^0.3.3",
     "redux": "^4.0.0",
     "typeface-roboto": "0.0.54",
-    "web3": "0.20.6",
-    "openzeppelin-solidity": "^1.11.0"
+    "web3": "0.20.6"
   },
   "scripts": {
     "start": "react-scripts start",

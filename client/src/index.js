@@ -7,6 +7,8 @@ import Transaction from './components/transaction/Transaction';
 import Whoops404 from './components/whoops404/Whoops404';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import SinglePosting from './components/postingSingle';
+import PostingUpload from './components/postingUpload';
+
 import registerServiceWorker from './registerServiceWorker';
 import './index.css';
 
@@ -32,6 +34,7 @@ ReactDOM.render((
 				<Route path="/posts/" component={Posts}/>
 				<Route path="/:user/transaction/:item" render={props => <Transaction {...props} /> }/>
 				<Route path="/metacoin/" component={MetaCoin}/>
+				<Route path="/new_posting/" component={PostingUpload}/>
 				<Route path="/login" component={Login}/>
 				<Route path="/register" component={Register}/>
 				<Route component={Whoops404}/>

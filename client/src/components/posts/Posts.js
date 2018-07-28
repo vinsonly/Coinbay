@@ -96,7 +96,7 @@ class Posts extends Component {
 							{this.state.postings.slice(0, this.state.counter).map(posting => {
 								return (
 									<div className={this.classFormat(this.state.format)}>
-										<SimpleMediaCard format={this.state.format} post={posting.id} title={posting.postingTitle} description={posting.description} price={posting.price} username={posting.User.username} rating={posting.User.rating} date={posting.createdAt}/>
+										<SimpleMediaCard format={this.state.format} post={posting.id} title={posting.postingTitle} description={posting.description} price={posting.price} username={posting.User.username} rating={posting.User.rating} date={posting.createdAt} image={posting.images[0]}/>
 									</div>
 								)
 							})}
