@@ -82,7 +82,7 @@ class Posts extends Component {
 		if(!this.state.postings) {
 			return (<div class="grid list detailed-list">Loading</div>)
 		} else {
-			if(idArr != null) {
+			if(idArr != null && idArr.length > 0) {
 				return (
 					<div>
 						<div className="format-options">

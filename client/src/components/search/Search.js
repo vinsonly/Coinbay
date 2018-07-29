@@ -1,10 +1,17 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
-
+import Navigation from '../navigation/Navigation';
+import CatNavigation from '../catNavigation/catNavigation';
+import Posts from '../posts/Posts';
+import Transaction from '../transaction/Transaction';
+import Whoops404 from '../whoops404/Whoops404';
+import SinglePosting from '../postingSingle';
+import MetaCoin from "../ethComponents/metacoin.js";
+import Login from "../login/Login";
+import Register from "../register/Register";
 import './search.css';
 import Autosuggest from 'react-autosuggest';
-import Posts from '../posts/Posts'
 
 function escapeRegexCharacters(str) {
   return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -160,20 +167,24 @@ class Search extends Component {
       };
 
       if(this.state.toRedirect) {
-        return(
-          <BrowserRouter>
-            <div>
-              <Switch>
-                <Route exact path="/" render={(props) => ( <Posts searchResults={this.state.suggestions}/> )} />
-              </Switch>
-            </div>
-          </BrowserRouter>
-          // <Router>
-          //   <Redirect to="/posts/" />
-          // <Router>
-          // <Route path='/posts' />
-          // <Route path="/posts" render={() => <Posts someProp={100}/>}/>
-        )
+        ReactDOM.render((
+            <BrowserRouter>
+              <div>
+                <Switch>
+                  <Route exact path="/" render={(props) => ( <Posts searchResults={this.state.suggestions}/> )} />
+                  <Route path="/posts/:id" render={props => <SinglePosting {...props} /> }/>
+                  <Route path="/posts/" component={Posts}/>
+                  <Route path="/:user/transaction/:item" render={props => <Transaction {...props} /> }/>
+                  <Route path="/metacoin/" component={MetaCoin}/>
+                  <Route path="/login" component={Login}/>
+                  <Route path="/register" component={Register}/>
+                  <Route path="/posts/search_results" render={props => <Posts {...props} />} />
+                  <Route component={Whoops404}/>
+                </Switch>
+              </div>
+            </BrowserRouter>),
+          document.getElementById('body-content')
+        );
       }
 
       if(this.state.postings[0] == null) {
