@@ -3,6 +3,8 @@ const Posting = require('../models/').Posting;
 
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const Sequelize = require('sequelize');
+const {or, and, gt, lt} = Sequelize.Op;
 
 
 console.log(User);
@@ -36,18 +38,21 @@ module.exports = {
 
         // verify the user's login information
 
-        let errMsg = "Username and password does not match.";
+        let errMsg = "Username/email and password does not match.";
 
         return User
             .findOne({
                 where: {
-                    username: req.body.username
+                    [or]: {
+                        email: req.body.user,
+                        username: req.body.user
+                    }
                 }
             })
             .then(user => {
                 if(!user) {
                     return res.status(404).send({
-                        message: "Can not find user with username: " + req.body.username
+                        message: "Can not find user with username/email: " + req.body.user
                     })
                 } else {
 
@@ -78,9 +83,7 @@ module.exports = {
                                 message: errMsg
                             })                     
                         } 
-
                     });
-
                 }
             })
             .catch((error) => {
