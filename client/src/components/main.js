@@ -81,7 +81,15 @@ class Main extends Component {
 
                     return (
                         // <Redirect to="/posts" />
-                        <Route path="/" render={props => <Posts searchResults={routeProps} />} />
+                        // <Route path="/posts" children={props => <Posts searchResults={routeProps} />} />
+                        <Redirect
+                            to={{
+                                pathname: "/posts",
+                                state: { 
+                                    searchResults: routeProps
+                                }
+                            }}
+                        />
                     )
             }
         }

@@ -43,7 +43,7 @@ class Navigation extends Component {
                 { !this.state.isWideEnough && <NavbarToggler onClick = { this.onClick } />}
                 <Collapse isOpen={ this.state.collapse } navbar>
                     <NavbarNav left>
-                      <NavItem active>
+                      <NavItem>
                           <NavLink to="/posts">Postings</NavLink>
                       </NavItem>
                       <NavItem>

@@ -73,11 +73,25 @@ class Posts extends Component {
  	render() {
 
 		console.log(this.props);
-
 		console.log(this.state);
 		window.state = this.state;
 		var idArr;
-		if (this.props.searchResults) {
+
+		// CHECK STATE
+		if(this.props.location.state) {
+				if(Array.isArray(this.props.location.state.searchResults)) {
+				idArr = [];
+
+				for(var index = 0; index < Object.keys(this.props.location.state.searchResults).length; index++) {
+					idArr.push(this.props.location.state.searchResults[index].id);
+				}
+
+				console.log(idArr);
+			}
+		}
+
+
+		else if (this.props.searchResults) {
 			idArr = [];
 
 			for(var index = 0; index < Object.keys(this.props.searchResults).length; index++) {
@@ -86,8 +100,6 @@ class Posts extends Component {
 
 			console.log(idArr);
 		}
-
-		console.log(this.state);
 
 		if(!this.state.postings) {
 			return (<div className="grid list detailed-list">Loading</div>)
