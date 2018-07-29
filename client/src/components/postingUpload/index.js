@@ -117,17 +117,22 @@ class PostingUpload extends React.Component {
             method: 'POST', // or 'PUT'
             body: JSON.stringify(data), // data can be `string` or {object}!
             headers:{
-              'Content-Type': 'application/json'
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer ' + localStorage.getItem('sessionToken')
             }
           })
           .then((res) => {
             status = res.status;
             return res.json();
-            // redirect the user to their post
           })
           .then(body => {
             if(status != 201) {
-              alert(`Error: ${body.errors[0].message}`);
+              alert(`Error: ${body.message}`);
+            } else {
+                alert("Posting created!");
+
+                console.log(body);
+                // redirect the user to their post
             }
           })
           .catch(err => {

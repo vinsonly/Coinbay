@@ -106,7 +106,7 @@ module.exports = {
     
         const bearerHeader = req.headers['authorization'];
     
-        console.log(bearerHeader);
+        let errMsg = "Authorization token invalid, you are not authorized to access this endpoint."
     
         // Check if bearer is undefined
         if(typeof bearerHeader !== 'undefined') {
@@ -116,11 +116,27 @@ module.exports = {
             const bearerToken = bearer[1];
             // Set the token
             req.token = bearerToken;
-            // Next middleware
-        next();
+
+            jwt.verify(req.token, 'secretkey', (err, authData) => {
+                if(err) {
+                    // Forbidden
+                    res.status(403).json({
+                        message: errMsg
+                    });
+                } else {
+                    // Next middleware, user verified, process the request
+                    // console.log("authData", authData);
+                    // console.log("user", authData.user)
+                    req.body.validatedUser = authData.user;
+                    
+                    next();
+                }
+            });  
         } else {
-        // Forbidden
-        res.status(403).send("Authorization token invalid, you are not authorized to access this endpoint.");
+            // Forbidden
+            res.status(403).json({
+                message: errMsg
+            });
         }
     }
 
