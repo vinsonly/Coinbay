@@ -5,6 +5,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'mdbreact/dist/css/mdb.css';
 import './navigation.css';
 
+
 class Navigation extends Component {
     constructor(props) {
         super(props);
@@ -13,6 +14,8 @@ class Navigation extends Component {
             isWideEnough: false,
             dropdownOpen: false
         };
+
+
     this.onClick = this.onClick.bind(this);
     this.toggle = this.toggle.bind(this);
     }
@@ -53,9 +56,9 @@ class Navigation extends Component {
                     </NavbarNav>
                     <NavbarNav right>
                       <NavItem>
-                        <form className="form-inline md-form mt-0">
+                          <form className="form-inline md-form mt-0">
                           <input className="form-control mr-sm-2 mb-0 text-white" type="text" placeholder="Search" aria-label="Search"/>
-                        </form>
+                          </form>
                       </NavItem>
                     </NavbarNav>
                 </Collapse>

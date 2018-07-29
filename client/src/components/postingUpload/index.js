@@ -5,8 +5,6 @@ import ReactSpinner from '../misc/reactspinner.js';
 
 import Dropzone from 'react-dropzone'
 
-var base64Img = require('base64-img');
-
 class PostingUpload extends React.Component {
 
     constructor(props) {

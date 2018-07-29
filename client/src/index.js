@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Navigation from './components/navigation/Navigation';
+import Search from './components/search/Search';
 import CatNavigation from './components/catNavigation/catNavigation';
 import Posts from './components/posts/Posts';
 import Transaction from './components/transaction/Transaction';
@@ -21,6 +22,7 @@ ReactDOM.render(
 	<div>
 		<Navigation/>
 		<CatNavigation/>
+		<Search/>
 	</div>,
 	document.getElementById('navigation')
 );
@@ -37,6 +39,7 @@ ReactDOM.render((
 				<Route path="/new_posting/" component={PostingUpload}/>
 				<Route path="/login" component={Login}/>
 				<Route path="/register" component={Register}/>
+				<Route path="/posts/search_results" render={props => <Posts {...props} />} />
 				<Route component={Whoops404}/>
 			</Switch>
 		</div>
