@@ -45,7 +45,6 @@ class ListSpan extends Component {
     console.log(this.props.postingId);
 
     window.location.replace("/posts/" + this.props.postingId);
-    // <Link to={"/posts/" + this.props.post}><Button>More Details</Button></Link>;
   }
 
   //if array contains == 1, then open straight to page
@@ -152,7 +151,8 @@ class Search extends Component {
       sessionStorage.setItem('itemDisplay', JSON.stringify(this.state.suggestions));
       console.log(JSON.parse(sessionStorage.getItem('itemDisplay')));
 
-      this.props.handleSearchCallback("/posts", this.state.suggestions);
+      console.log(this.props);
+      this.props.handleRouteCallback("/posts", this.state.suggestions);
 
     }
 

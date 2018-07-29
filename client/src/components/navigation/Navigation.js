@@ -34,9 +34,9 @@ class Navigation extends Component {
         });
     }
     render() {
+
       return (
-        <Router>
-            <Navbar color="indigo" dark expand="md" scrolling>
+            <Navbar color="grey" dark expand="md" scrolling>
                 <NavbarBrand href="/">
                     <strong>CryptoBay</strong>
                 </NavbarBrand>
@@ -44,17 +44,19 @@ class Navigation extends Component {
                 <Collapse isOpen={ this.state.collapse } navbar>
                     <NavbarNav left>
                       <NavItem active>
-                          <NavLink to="#">Postings</NavLink>
+                          <NavLink to="/posts">Postings</NavLink>
+                      </NavItem>
+                      <NavItem>
+                          <NavLink to="/new_posting">Create Posting</NavLink>
                       </NavItem>
                       <NavItem>
                           <NavLink to="#">Profile</NavLink>
                       </NavItem>
                       <NavItem>
-                          <NavLink to="#">About Us</NavLink>
+                          <NavLink to="/login">Login</NavLink>
                       </NavItem>
                       <NavItem>
-                          {/* <NavLink to="/new_posting">New Posting</NavLink> */}
-                          <Link to="/new_posting">New Posting</Link>
+                          <NavLink to="/register">Register</NavLink>
                       </NavItem>
                     </NavbarNav>
                     <NavbarNav right>
@@ -66,7 +68,6 @@ class Navigation extends Component {
                     </NavbarNav>
                 </Collapse>
             </Navbar>
-        </Router>
       );
     }
 }

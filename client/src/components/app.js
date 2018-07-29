@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import Main from './main';
 import Navigation from './navigation/Navigation';
 import Search from './search/Search'
+import CatNavigation from './catNavigation/catNavigation';
 
 class App extends Component {
 
@@ -10,7 +11,7 @@ class App extends Component {
         super(props);
 
         this.clearState = this.clearState.bind(this);
-        this.handleSearchCallback = this.handleSearchCallback.bind(this);
+        this.handleRouteCallback = this.handleRouteCallback.bind(this);
 
         this.clearState();
     }
@@ -22,7 +23,7 @@ class App extends Component {
         }
     }
 
-    handleSearchCallback(routePath, routeProps) {
+    handleRouteCallback(routePath, routeProps) {
         console.log('handle search callback');
         
         console.log("routePath", routePath);
@@ -38,8 +39,9 @@ class App extends Component {
     render() {
         return(
             <div id="app">
-                <Navigation />
-                <Search handleSearchCallback={this.handleSearchCallback}/>
+                <Navigation handleRouteCallback={this.handleRouteCallback}/>
+                <CatNavigation />
+                <Search handleRouteCallback={this.handleRouteCallback}/>
                 <Main routePath={this.state.routePath} routeProps={this.state.routeProps} clearRouteState={this.clearState}/>
             </div>
         )

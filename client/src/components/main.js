@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, Redirect     } from 'react-router-dom';
 
 import Navigation from './navigation/Navigation';
 import Search from './search/Search';
@@ -31,6 +31,8 @@ class Main extends Component {
         this.state = {
             reRenderFlag: false
         }
+
+        console.log(props);
 
     }
 
@@ -66,6 +68,7 @@ class Main extends Component {
         if(this.routePath && this.routePath.length > 1) {
 
             console.log(this.props);
+            console.log(this.routePath);
 
             // render the route at this path
             switch(this.routePath) {
@@ -74,10 +77,12 @@ class Main extends Component {
                     let routeProps = this.routeProps;
                     this.clearState();
                     console.log(routeProps);
+                    console.log(this.props);
+
                     return (
-                        <Route path="/posts" render={(props) => ( <Posts searchResults={routeProps}/> )} />
+                        // <Redirect to="/posts" />
+                        <Route path="/" render={props => <Posts searchResults={routeProps} />} />
                     )
-                    
             }
         }
 
@@ -86,13 +91,13 @@ class Main extends Component {
                 <Switch>
                     <Route exact path="/" component={Posts}/>
                     <Route path="/posts/:id" render={props => <SinglePosting {...props} /> }/>
+                    <Route path="/posts/search_results" component={Posts} />
                     <Route path="/posts/" component={Posts}/>
                     <Route path="/:user/transaction/:item" render={props => <Transaction {...props} /> }/>
                     <Route path="/metacoin/" component={MetaCoin}/>
                     <Route path="/new_posting/" component={PostingUpload}/>
                     <Route path="/login" component={Login}/>
                     <Route path="/register" component={Register}/>
-                    <Route path="/posts/search_results" render={props => <Posts {...props} />} />
                     <Route component={Whoops404}/>
                 </Switch>
             </main>

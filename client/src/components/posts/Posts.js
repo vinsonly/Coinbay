@@ -12,32 +12,36 @@ class Posts extends Component {
 
 		let postingStatus;
 
-    this.state = { format: "grid",
-    				counter: 10 
-    			};
+		this.state = { 
+			format: "grid",
+			counter: 10 
+		};
 
-    fetch(`/api/postings_with_users`)
-      .then(res => {
-        // console.log(res);
-        postingStatus = res.status;
-        return res.json();
-      })
-      .then(body => {
-        // console.log(body);
-        // console.log("postingStatus", postingStatus);
-        if(postingStatus == 200) {
-          this.setState({
-						postings: body
-					});
-          // console.log(this.state);
-        }
-        return body;
-			})
-			.catch(err => {
-				console.log("ERROR!!");
-				console.log(err);
-			})
+		fetch(`/api/postings_with_users`)
+		.then(res => {
+			// console.log(res);
+			postingStatus = res.status;
+			return res.json();
+		})
+		.then(body => {
+			// console.log(body);
+			// console.log("postingStatus", postingStatus);
+			if(postingStatus == 200) {
+			this.setState({
+				postings: body
+			});
+			// console.log(this.state);
+			}
+			return body;
+				})
+				.catch(err => {
+					console.log("ERROR!!");
+					console.log(err);
+				})
+
+		window.props = props;
 	}
+
 	changeFormat(form) {
 		if (form == "grid" && this.state.format !== "grid") {
 			this.setState(
@@ -67,6 +71,9 @@ class Posts extends Component {
 			return "items-list";
 	}
  	render() {
+
+		console.log(this.props);
+
 		console.log(this.state);
 		window.state = this.state;
 		var idArr;
@@ -83,15 +90,15 @@ class Posts extends Component {
 		console.log(this.state);
 
 		if(!this.state.postings) {
-			return (<div class="grid list detailed-list">Loading</div>)
+			return (<div className="grid list detailed-list">Loading</div>)
 		} else {
 			if(idArr != null && idArr.length > 0) {
 				return (
 					<div>
 						<div className="format-options">
-							<p class="grid" onClick={() => this.changeFormat("grid")}>grid layout&nbsp;&nbsp;&nbsp;</p>
-							<p class="detailed-list" onClick={() => this.changeFormat("detailed-list")}>detailed list layout&nbsp;&nbsp;&nbsp;</p>
-							<p class="list" onClick={() => this.changeFormat("list")}>list layout&nbsp;&nbsp;&nbsp;</p>
+							<p className="grid" onClick={() => this.changeFormat("grid")}>grid layout&nbsp;&nbsp;&nbsp;</p>
+							<p className="detailed-list" onClick={() => this.changeFormat("detailed-list")}>detailed list layout&nbsp;&nbsp;&nbsp;</p>
+							<p className="list" onClick={() => this.changeFormat("list")}>list layout&nbsp;&nbsp;&nbsp;</p>
 						</div>
 						<div className="container">
 								{this.state.postings.map(posting => {
@@ -111,9 +118,9 @@ class Posts extends Component {
 				return (
 					<div>
 						<div className="format-options">
-							<p class="grid" onClick={() => this.changeFormat("grid")}>grid layout&nbsp;&nbsp;&nbsp;</p>
-							<p class="detailed-list" onClick={() => this.changeFormat("detailed-list")}>detailed list layout&nbsp;&nbsp;&nbsp;</p>
-							<p class="list" onClick={() => this.changeFormat("list")}>list layout&nbsp;&nbsp;&nbsp;</p>
+							<p className="grid" onClick={() => this.changeFormat("grid")}>grid layout&nbsp;&nbsp;&nbsp;</p>
+							<p className="detailed-list" onClick={() => this.changeFormat("detailed-list")}>detailed list layout&nbsp;&nbsp;&nbsp;</p>
+							<p className="list" onClick={() => this.changeFormat("list")}>list layout&nbsp;&nbsp;&nbsp;</p>
 						</div>
 						<div className="container">
 								{this.state.postings.map(posting => {
