@@ -180,7 +180,6 @@ class SearchInner extends Component {
       else{
         return (
           <div>
-            <br/>
             <form onSubmit={this.handleSubmit.bind(this)}>
               <Autosuggest
               suggestions={suggestions}
@@ -191,7 +190,6 @@ class SearchInner extends Component {
               onSuggestionSelected={this.onSuggestionSelected}
               inputProps={inputProps} />
             </form>
-
           </div>
         )
       }

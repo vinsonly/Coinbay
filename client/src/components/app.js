@@ -41,7 +41,6 @@ class App extends Component {
             <div id="app">
                 <Navigation handleRouteCallback={this.handleRouteCallback}/>
                 <CatNavigation />
-                <Search handleRouteCallback={this.handleRouteCallback}/>
                 <Main routePath={this.state.routePath} routeProps={this.state.routeProps} clearRouteState={this.clearState}/>
             </div>
         )

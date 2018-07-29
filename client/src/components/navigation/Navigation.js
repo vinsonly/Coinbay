@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Navbar, NavbarBrand, NavbarNav, NavbarToggler, Collapse, NavItem, NavLink, Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'mdbreact';
-import { BrowserRouter as Router } from 'react-router-dom';
+import Search from '../search/Search'
 import 'bootstrap/dist/css/bootstrap.css';
 import 'mdbreact/dist/css/mdb.css';
 import './navigation.css';
@@ -17,9 +17,10 @@ class Navigation extends Component {
             dropdownOpen: false
         };
 
+        this.onClick = this.onClick.bind(this);
+        this.toggle = this.toggle.bind(this);
 
-    this.onClick = this.onClick.bind(this);
-    this.toggle = this.toggle.bind(this);
+        console.log(props);
     }
 
     onClick(){
@@ -36,7 +37,7 @@ class Navigation extends Component {
     render() {
 
       return (
-            <Navbar color="grey" dark expand="md" scrolling>
+            <Navbar color="grey" dark expand="lg" scrolling>
                 <NavbarBrand href="/">
                     <strong>CryptoBay</strong>
                 </NavbarBrand>
@@ -62,7 +63,7 @@ class Navigation extends Component {
                     <NavbarNav right>
                       <NavItem>
                           <form className="form-inline md-form mt-0">
-                          <input className="form-control mr-sm-2 mb-0 text-white" type="text" placeholder="Search" aria-label="Search"/>
+                          <Search handleRouteCallback={this.props.handleRouteCallback}/>
                           </form>
                       </NavItem>
                     </NavbarNav>
