@@ -96,7 +96,7 @@ class Posts extends Component {
 									if (idArr.includes(posting.id)) {
 										return (
 											<div className={this.classFormat(this.state.format)}>
-												<SimpleMediaCard format={this.state.format} post={posting.id} title={posting.postingTitle} description={posting.description} price={posting.price} username={posting.User.username} rating={posting.User.rating} date={posting.createdAt}/>
+												<SimpleMediaCard format={this.state.format} post={posting.id} title={posting.postingTitle} description={posting.description} price={posting.price} username={posting.User.username} rating={posting.User.rating} date={posting.createdAt} image={posting.images[0]}/>
 											</div>
 										)
 									}

@@ -1,33 +1,50 @@
 const User = require('../models/').User;
 const Posting = require('../models/').Posting;
-
-console.log(User);
-
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const Sequelize = require('sequelize');
+const {or, and, gt, lt} = Sequelize.Op;
 
 module.exports = {
     // define your route handlers here, see below for details
 
     create(req, res) {
         console.log("req.body:");
-
         console.log(req.body);
 
-        return User
-            .create({
-                email: req.body.email,
-                username: req.body.username,
-                password: req.body.password
-            })
-            .then((user) => {
-                console.log("Created a new user");
-                console.log(user);
-                res.status(201).send(user);
-            })
-            .catch((error) => {
-                console.log("Failed to create a new user");
-                console.log(error);
-                res.status(400).send(error)
-            })
+        let password = req.body.password;
+        let saltRounds = 10;
+        bcrypt.genSalt(saltRounds, function(err, salt) {
+            bcrypt.hash(password, salt, function(err, hash) {
+                if(err || !hash) {
+                    res.status(400).send(err.message);
+                } else {
+                    console.log("hash:");
+                    console.log(hash);
+
+                    // save hash into the database;
+                    User
+                        .create({
+                            email: req.body.email,
+                            username: req.body.username,
+                            password: hash
+                        })
+                        .then((user) => {
+                            console.log("Created a new user");
+                            // console.log(user);
+                            let successRes = user.dataValues;
+                            res.status(201).send(successRes);
+                        })
+                        .catch((error) => {
+                            console.log("Failed to create a new user");
+                            console.log(error);
+                            res.status(400).send(error)
+                        })
+                }
+            });
+        });
+
+        return 
     },
 
     read(req, res) {
@@ -194,8 +211,36 @@ module.exports = {
                 });
     },    
 
-}
+    // check if the user exists in our database
+    isExistingUser(req, res, next) {
+        
+        User.findAll({
+            where: {
+                [or]: {
+                    email: req.body.email,
+                    username: req.body.username
+                }
+            }
+        })
+        .then((users) => {
 
+            console.log(users);
+
+            if(users.length > 0) {
+                return res.status(400).json({
+                    message: "Another user already exists with that username or password, please try again."
+                });
+            } else {
+                next();
+            }
+        })
+        .catch(err => {
+            return res.status(400).send(err);
+        })
+
+    }
+
+}
 
 /*
 module.exports = {

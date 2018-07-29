@@ -1,13 +1,14 @@
 const usersController = require('../controllers').users;
 const postingsController = require('../controllers').postings;
 const adminusersController = require('../controllers').adminusers;
+const authController = require('../controllers').auth;
 
 module.exports = (app) => {
     app.get('/api', (req, res) => res.status(200).send({
         message: 'Welcome to the Contacts API!'
       }));
 
-    app.post('/api/user', usersController.create);
+    app.post('/api/user', usersController.isExistingUser, usersController.create);
     app.get('/api/users', usersController.read);
     app.post('/api/user/update', usersController.update);
     app.post('/api/user/delete', usersController.delete);
@@ -17,7 +18,7 @@ module.exports = (app) => {
     app.get('/api/user/postings/:userId', postingsController.findByUser);
 
     app.get('/api/postings', postingsController.read);
-    app.post('/api/posting', postingsController.create);
+    app.post('/api/posting', authController.verifyToken, postingsController.create);
     app.post('/api/posting/update', postingsController.update);
     app.post('/api/posting/delete', postingsController.delete);
     app.get('/api/posting/:id', postingsController.findById);
@@ -30,6 +31,10 @@ module.exports = (app) => {
 
     
     // WRITE THE OTHER ENDPOINTS DOWN HERE
+
+    app.post('/api/login', authController.login);
+
+
 
     // EXAMPLES:
     //  //CREATE

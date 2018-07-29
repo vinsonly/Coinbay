@@ -1,5 +1,20 @@
 const Posting = require('../models/').Posting;
 const User = require('../models/').User;
+const verifyToken = require('./auth').verifyToken;
+
+// verification example
+// app.post('/api/blah', verifyToken, (req, res) => {
+//   jwt.verify(req.token, 'secretkey', (err, authData) => {
+//     if(err) {
+//       res.sendStatus(403);
+//     } else {
+//       res.json({
+//         message: "BLAH",
+//         authData
+//       });
+//     }
+//   });  
+// });
 
 module.exports = {
     // define your route handlers here, see below for details
@@ -15,7 +30,7 @@ module.exports = {
             description: req.body.description,
             abstract: req.body.abstract,
             location: req.body.location,
-            userId: req.body.userId
+            userId: req.body.validatedUser.id
         }
 
         if(req.body.id) {
