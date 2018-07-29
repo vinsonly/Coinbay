@@ -152,9 +152,7 @@ class Search extends Component {
       sessionStorage.setItem('itemDisplay', JSON.stringify(this.state.suggestions));
       console.log(JSON.parse(sessionStorage.getItem('itemDisplay')));
 
-      this.setState({ 
-        toRedirect: true
-      })
+      this.props.handleSearchCallback("/posts", this.state.suggestions);
 
     }
 
@@ -167,24 +165,14 @@ class Search extends Component {
       };
 
       if(this.state.toRedirect) {
-        ReactDOM.render((
-            <BrowserRouter>
-              <div>
-                <Switch>
-                  <Route exact path="/" render={(props) => ( <Posts searchResults={this.state.suggestions}/> )} />
-                  <Route path="/posts/:id" render={props => <SinglePosting {...props} /> }/>
-                  <Route path="/posts/" component={Posts}/>
-                  <Route path="/:user/transaction/:item" render={props => <Transaction {...props} /> }/>
-                  <Route path="/metacoin/" component={MetaCoin}/>
-                  <Route path="/login" component={Login}/>
-                  <Route path="/register" component={Register}/>
-                  <Route path="/posts/search_results" render={props => <Posts {...props} />} />
-                  <Route component={Whoops404}/>
-                </Switch>
-              </div>
-            </BrowserRouter>),
-          document.getElementById('body-content')
-        );
+
+        console.log('redirecting');
+
+        console.log(this.state);
+        return(
+          // <Redirect to="/posts" />
+          <Route path="/posts/" render={(props) => ( <Posts searchResults={this.state.suggestions}/> )} />
+        )
       }
 
       if(this.state.postings[0] == null) {

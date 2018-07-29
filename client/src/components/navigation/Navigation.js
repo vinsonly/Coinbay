@@ -5,6 +5,8 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'mdbreact/dist/css/mdb.css';
 import './navigation.css';
 
+import { Link } from 'react-router-dom';
+
 
 class Navigation extends Component {
     constructor(props) {
@@ -51,7 +53,8 @@ class Navigation extends Component {
                           <NavLink to="#">About Us</NavLink>
                       </NavItem>
                       <NavItem>
-                          <NavLink to="/metacoin">Meta Coin</NavLink>
+                          {/* <NavLink to="/new_posting">New Posting</NavLink> */}
+                          <Link to="/new_posting">New Posting</Link>
                       </NavItem>
                     </NavbarNav>
                     <NavbarNav right>
