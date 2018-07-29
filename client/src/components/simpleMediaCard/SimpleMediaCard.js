@@ -8,11 +8,11 @@ class SimpleMediaCard extends Component {
   constructor(props) {
     super(props);
 
-    console.log(props);
+    // console.log(props);
 
     this.state = {}
 
-    console.log(props.description);
+    // console.log(props.description);
 
     this.arraySetupWrapper = this.arraySetupWrapper.bind(this);
 

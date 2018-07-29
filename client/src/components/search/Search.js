@@ -1,17 +1,9 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
-import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
-import Navigation from '../navigation/Navigation';
-import CatNavigation from '../catNavigation/catNavigation';
+import { BrowserRouter, Route, Switch, Redirect, withRouter } from 'react-router-dom';
 import Posts from '../posts/Posts';
-import Transaction from '../transaction/Transaction';
-import Whoops404 from '../whoops404/Whoops404';
-import SinglePosting from '../postingSingle';
-import MetaCoin from "../ethComponents/metacoin.js";
-import Login from "../login/Login";
-import Register from "../register/Register";
 import './search.css';
 import Autosuggest from 'react-autosuggest';
+
 
 function escapeRegexCharacters(str) {
   return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -33,19 +25,21 @@ function renderSuggestion(suggestion, { query }) {
 
 
 
-class ListSpan extends Component {
+class ListSpanInner extends Component {
   constructor(props) {
     super(props);
     this.handleClick = this.handleClick.bind(this);
     // this.testArray = [];
+
+    console.log(props);
   }
 
   handleClick() {
     console.log("redirecting...");
     console.log(this.props.postingId);
 
-    window.location.replace("/posts/" + this.props.postingId);
-    // <Link to={"/posts/" + this.props.post}><Button>More Details</Button></Link>;
+    this.props.history.push("/posts/" + this.props.postingId);
+
   }
 
   //if array contains == 1, then open straight to page
@@ -63,8 +57,10 @@ class ListSpan extends Component {
   }
 }
 
+const ListSpan = withRouter(ListSpanInner);
 
-class Search extends Component {
+
+class SearchInner extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -101,7 +97,7 @@ class Search extends Component {
     this.onSuggestionSelected = this.onSuggestionSelected.bind(this);
   }
 
- getSuggestions(value) {
+  getSuggestions(value) {
     const escapedValue = escapeRegexCharacters(value.trim());
 
     if (escapedValue === '') {
@@ -113,50 +109,51 @@ class Search extends Component {
     return this.state.postings.filter(posting => regex.test(posting.postingTitle));
   }
 
-    onChange = (event, { newValue, method }) => {
-      this.setState({
-        value: newValue
-      });
-    };
+  onChange = (event, { newValue, method }) => {
+    this.setState({
+      value: newValue
+    });
+  };
 
-    onSuggestionsFetchRequested = ({ value }) => {
-      this.setState({
-        suggestions: this.getSuggestions(value)
-      });
-    };
+  onSuggestionsFetchRequested = ({ value }) => {
+    this.setState({
+      suggestions: this.getSuggestions(value)
+    });
+  };
 
-    onSuggestionsClearRequested = () => {
-      this.setState({
-        suggestions: []
-      });
-    };
+  onSuggestionsClearRequested = () => {
+    this.setState({
+      suggestions: []
+    });
+  };
 
-    onSuggestionSelected = (event, { suggestion, suggestionValue, suggestionIndex, sectionIndex, method }) =>{
-       //Here you do whatever you want with the values
-       if (method == 'enter'){
-         // console.log(suggestion);
-         window.location.replace("/posts/" + suggestion.id);
-       }
-   };
+  onSuggestionSelected = (event, { suggestion, suggestionValue, suggestionIndex, sectionIndex, method }) =>{
+      //Here you do whatever you want with the values
 
-    handleSubmit(event) {
-      event.preventDefault();
+      if (method == 'enter'){
+        // this.props.history.push(`/posts/ + ${suggestion.id}`);
+        window.location.replace("/posts/" + suggestion.id);
+      }
 
-      let target = event.target;
+      // this.props.history.push(`/posts/ + ${suggestion.id}`);
+      // can be refactored with react router but need to also refactor handleSubmit
+  };
 
-      let value = target.childNodes[0].childNodes[0].value;
+  handleSubmit(event) {
+    event.preventDefault();
 
-      // console.log(value)
+    let target = event.target;
 
-      // console.log(this.state.suggestions[0].id);
-      sessionStorage.setItem('itemDisplay', JSON.stringify(this.state.suggestions));
-      console.log(JSON.parse(sessionStorage.getItem('itemDisplay')));
+    let value = target.childNodes[0].childNodes[0].value;
 
-      this.setState({ 
-        toRedirect: true
-      })
+    console.log(this.state);
 
-    }
+    // sessionStorage.setItem('itemDisplay', JSON.stringify(this.state.suggestions));
+
+    console.log(this.props);
+      this.props.handleRouteCallback("/posts", this.state.suggestions);
+
+  }
 
     render() {
       const { value, suggestions } = this.state;
@@ -167,24 +164,14 @@ class Search extends Component {
       };
 
       if(this.state.toRedirect) {
-        ReactDOM.render((
-            <BrowserRouter>
-              <div>
-                <Switch>
-                  <Route exact path="/" render={(props) => ( <Posts searchResults={this.state.suggestions}/> )} />
-                  <Route path="/posts/:id" render={props => <SinglePosting {...props} /> }/>
-                  <Route path="/posts/" component={Posts}/>
-                  <Route path="/:user/transaction/:item" render={props => <Transaction {...props} /> }/>
-                  <Route path="/metacoin/" component={MetaCoin}/>
-                  <Route path="/login" component={Login}/>
-                  <Route path="/register" component={Register}/>
-                  <Route path="/posts/search_results" render={props => <Posts {...props} />} />
-                  <Route component={Whoops404}/>
-                </Switch>
-              </div>
-            </BrowserRouter>),
-          document.getElementById('body-content')
-        );
+
+        console.log('redirecting');
+
+        console.log(this.state);
+        return(
+          // <Redirect to="/posts" />
+          <Route path="/posts/" render={(props) => ( <Posts searchResults={this.state.suggestions}/> )} />
+        )
       }
 
       if(this.state.postings[0] == null) {
@@ -193,7 +180,6 @@ class Search extends Component {
       else{
         return (
           <div>
-            <br/>
             <form onSubmit={this.handleSubmit.bind(this)}>
               <Autosuggest
               suggestions={suggestions}
@@ -204,11 +190,12 @@ class Search extends Component {
               onSuggestionSelected={this.onSuggestionSelected}
               inputProps={inputProps} />
             </form>
-
           </div>
         )
       }
     }
 }
+
+const Search = withRouter(SearchInner);
 
 export default Search;

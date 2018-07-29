@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { Navbar, NavbarBrand, NavbarNav, NavbarToggler, Collapse, NavItem, NavLink, Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'mdbreact';
-import { BrowserRouter as Router } from 'react-router-dom';
+import Search from '../search/Search'
 import 'bootstrap/dist/css/bootstrap.css';
 import 'mdbreact/dist/css/mdb.css';
 import './navigation.css';
+
+import { Link } from 'react-router-dom';
 
 
 class Navigation extends Component {
@@ -15,9 +17,10 @@ class Navigation extends Component {
             dropdownOpen: false
         };
 
+        this.onClick = this.onClick.bind(this);
+        this.toggle = this.toggle.bind(this);
 
-    this.onClick = this.onClick.bind(this);
-    this.toggle = this.toggle.bind(this);
+        console.log(props);
     }
 
     onClick(){
@@ -32,38 +35,40 @@ class Navigation extends Component {
         });
     }
     render() {
+
       return (
-        <Router>
-            <Navbar color="indigo" dark expand="md" scrolling>
+            <Navbar color="grey" dark expand="lg" scrolling>
                 <NavbarBrand href="/">
                     <strong>CryptoBay</strong>
                 </NavbarBrand>
                 { !this.state.isWideEnough && <NavbarToggler onClick = { this.onClick } />}
                 <Collapse isOpen={ this.state.collapse } navbar>
                     <NavbarNav left>
-                      <NavItem active>
-                          <NavLink to="#">Postings</NavLink>
+                      <NavItem>
+                          <NavLink to="/posts">Postings</NavLink>
+                      </NavItem>
+                      <NavItem>
+                          <NavLink to="/new_posting">Create Posting</NavLink>
                       </NavItem>
                       <NavItem>
                           <NavLink to="#">Profile</NavLink>
                       </NavItem>
                       <NavItem>
-                          <NavLink to="#">About Us</NavLink>
+                          <NavLink to="/login">Login</NavLink>
                       </NavItem>
                       <NavItem>
-                          <NavLink to="/metacoin">Meta Coin</NavLink>
+                          <NavLink to="/register">Register</NavLink>
                       </NavItem>
                     </NavbarNav>
                     <NavbarNav right>
                       <NavItem>
                           <form className="form-inline md-form mt-0">
-                          <input className="form-control mr-sm-2 mb-0 text-white" type="text" placeholder="Search" aria-label="Search"/>
+                          <Search handleRouteCallback={this.props.handleRouteCallback}/>
                           </form>
                       </NavItem>
                     </NavbarNav>
                 </Collapse>
             </Navbar>
-        </Router>
       );
     }
 }

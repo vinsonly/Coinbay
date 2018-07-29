@@ -18,18 +18,20 @@ import MetaCoin from "./components/ethComponents/metacoin.js"
 import Login from "./components/login/Login"
 import Register from "./components/register/Register"
 
-ReactDOM.render(
-	<div>
-		<Navigation/>
-		<CatNavigation/>
-		<Search/>
-	</div>,
-	document.getElementById('navigation')
-);
+import App from './components/app';
+
+// ReactDOM.render(
+// 	<div>
+// 		<Navigation/>
+// 		<CatNavigation/>
+// 		<Search/>
+// 	</div>,
+// 	document.getElementById('navigation')
+// );
 
 ReactDOM.render((
 	<BrowserRouter>
-		<div>
+		{/* <div>
 			<Switch>
 				<Route exact path="/" component={Posts}/>
 				<Route path="/posts/:id" render={props => <SinglePosting {...props} /> }/>
@@ -42,9 +44,11 @@ ReactDOM.render((
 				<Route path="/posts/search_results" render={props => <Posts {...props} />} />
 				<Route component={Whoops404}/>
 			</Switch>
-		</div>
+		</div> */}
+		<App />
+
 	</BrowserRouter>),
-	document.getElementById('body-content')
+	document.getElementById('root')
 );
 
 registerServiceWorker();

@@ -7,7 +7,7 @@ body {
 }
 
 .react-autosuggest__input {
-  width: 540px;
+  width: 320px;
   height: 30px;
   padding: 10px 20px;
   font-family: Helvetica, sans-serif;
@@ -34,7 +34,7 @@ body {
   display: block;
   position: absolute;
   top: 51px;
-  width: 500px;
+  width: 300px;
   border: 1px solid #aaa;
   background-color: #fff;
   font-family: Helvetica, sans-serif;
