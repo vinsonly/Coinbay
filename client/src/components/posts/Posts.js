@@ -38,6 +38,17 @@ class Posts extends Component {
 				console.log(err);
 			})
 	}
+	componentDidMount() {
+		window.addEventListener('scroll', function() {
+			if((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+				this.setState(
+					(prevState,props)=>{
+					return {counter: this.state.counter += 20};
+					}
+				);
+			}
+		}.bind(this));
+	}
 	changeFormat(form) {
 		if (form == "grid" && this.state.format !== "grid") {
 			this.setState(
@@ -113,7 +124,7 @@ class Posts extends Component {
 							<p class="list" onClick={() => this.changeFormat("list")}>list layout&nbsp;&nbsp;&nbsp;</p>
 						</div>
 						<div className="container">
-								{this.state.postings.map(posting => {
+								{this.state.postings.slice(0, this.state.counter).map(posting => {
 									return (
 										<div className={this.classFormat(this.state.format)}>
 											<SimpleMediaCard format={this.state.format} post={posting.id} title={posting.postingTitle} description={posting.description} price={posting.price} username={posting.User.username} rating={posting.User.rating} date={posting.createdAt} image={posting.images}/>
