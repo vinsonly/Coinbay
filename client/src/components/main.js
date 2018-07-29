@@ -19,42 +19,63 @@ class Main extends Component {
 
     constructor(props) {
         super(props);
+        
+        this.routePath = props.routePath || "";
+        this.routeProps = props.routeProps || {};
+        this.oldRoutePath = this.routePath;
+        this.oldRouteProps = this.routeProps;
+
+        this.clearState = this.clearState.bind(this);
+        this.isPropsDifferent = this.isPropsDifferent.bind(this);
+
         this.state = {
             reRenderFlag: false
         }
-        this.path = null;
-        this.pathProps = null;
-        this.handleRoute = this.handleRoute.bind(this);
+
     }
 
-    // routes to the specified and passes in the specified props to the component to be rendered
-    handleRoute(path, props) {
-        let reRenderFlag = this.state.reRenderFlag;
-        console.log("handlingRoute");
-        console.log("path", path);
-        console.log("props", props);
+    clearState() {
+        this.routePath = "";
+        this.routeProps = {};
+    }
 
-        this.path = path;
-        this.pathProps = props;
+    isPropsDifferent() {
+        console.log(this.oldRoutePath);
+        console.log(this.oldRouteProps);
 
-        this.setState({
-            reRenderFlag: !reRenderFlag
-        })
+        let pathSame = this.oldRoutePath == this.props.routePath;
+        let propsSame = JSON.stringify(this.oldRouteProps) == JSON.stringify(this.props.routeProps);
+
+        if(!(pathSame && propsSame)) {
+            console.log(true);
+            return true;
+        }
     }
 
     render() {
 
-        if(this.props.routePath && this.props.routePath.length > 1) {
+        //check if props are different
+        if(this.isPropsDifferent()) {
+            this.routePath = this.props.routePath,
+            this.routeProps = this.props.routeProps
+
+            this.oldRoutePath = this.routePath;
+            this.oldRouteProps = this.routeProps;
+        } 
+
+        if(this.routePath && this.routePath.length > 1) {
+
+            console.log(this.props);
+
             // render the route at this path
-            switch(this.props.routePath) {
-                case "/":
-                    return (
-                        <Route exact path="/" component={Posts}/>
-                    )
-                    
+            switch(this.routePath) {
                 case "/posts":
+                    console.log("inside posts");
+                    let routeProps = this.routeProps;
+                    this.clearState();
+                    console.log(routeProps);
                     return (
-                        <Route path="/posts" render={(props) => ( <Posts searchResults={this.props.routeProps}/> )} />
+                        <Route path="/posts" render={(props) => ( <Posts searchResults={routeProps}/> )} />
                     )
                     
             }

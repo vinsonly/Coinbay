@@ -25,6 +25,9 @@ class App extends Component {
     handleSearchCallback(routePath, routeProps) {
         console.log('handle search callback');
         
+        console.log("routePath", routePath);
+        console.log("routeProps", routeProps);
+
         // call the function to route
         this.setState({
             routePath: routePath,

@@ -69,9 +69,9 @@ class Posts extends Component {
  	render() {
 		console.log(this.state);
 		window.state = this.state;
-		
+		var idArr;
 		if (this.props.searchResults) {
-			var idArr = [];
+			idArr = [];
 
 			for(var index = 0; index < Object.keys(this.props.searchResults).length; index++) {
 				idArr.push(this.props.searchResults[index].id);
@@ -79,6 +79,8 @@ class Posts extends Component {
 
 			console.log(idArr);
 		}
+
+		console.log(this.state);
 
 		if(!this.state.postings) {
 			return (<div class="grid list detailed-list">Loading</div>)
@@ -105,6 +107,7 @@ class Posts extends Component {
 					</div>
 				);
 			} else {
+				console.log("blah")
 				return (
 					<div>
 						<div className="format-options">
