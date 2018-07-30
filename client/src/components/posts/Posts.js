@@ -136,14 +136,30 @@ class Posts extends Component {
 						</div>
 					</div>
 				);
-			} else if (this.props.category != null) {
+			} else if (this.props.match.params.category != null) {
 				return (
-					<p>lol</p>
-				)
+					<div>
+						<div className="format-options">
+							<p className="grid" onClick={() => this.changeFormat("grid")}>grid layout&nbsp;&nbsp;&nbsp;</p>
+							<p className="detailed-list" onClick={() => this.changeFormat("detailed-list")}>detailed list layout&nbsp;&nbsp;&nbsp;</p>
+							<p className="list" onClick={() => this.changeFormat("list")}>list layout&nbsp;&nbsp;&nbsp;</p>
+						</div>
+						<div className="container">
+								{this.state.postings.map(posting => {
+									if (posting.category == this.props.match.params.category) {
+										return (
+											<div className={this.classFormat(this.state.format)}>
+												<SimpleMediaCard format={this.state.format} post={posting.id} title={posting.postingTitle} description={posting.description} price={posting.price} username={posting.User.username} rating={posting.User.rating} date={posting.createdAt} image={posting.images[0]}/>
+											</div>
+										)
+									}
+								})}
+						</div>
+					</div>
+				);
 			} else {
 				return (
 					<div>
-						{this.props.category}
 						<div className="format-options">
 							<p className="grid" onClick={() => this.changeFormat("grid")}>grid layout&nbsp;&nbsp;&nbsp;</p>
 							<p className="detailed-list" onClick={() => this.changeFormat("detailed-list")}>detailed list layout&nbsp;&nbsp;&nbsp;</p>
