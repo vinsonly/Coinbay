@@ -31,22 +31,7 @@ import App from './components/app';
 
 ReactDOM.render((
 	<BrowserRouter>
-		{/* <div>
-			<Switch>
-				<Route exact path="/" component={Posts}/>
-				<Route path="/posts/:id" render={props => <SinglePosting {...props} /> }/>
-				<Route path="/posts/" component={Posts}/>
-				<Route path="/:user/transaction/:item" render={props => <Transaction {...props} /> }/>
-				<Route path="/metacoin/" component={MetaCoin}/>
-				<Route path="/new_posting/" component={PostingUpload}/>
-				<Route path="/login" component={Login}/>
-				<Route path="/register" component={Register}/>
-				<Route path="/posts/search_results" render={props => <Posts {...props} />} />
-				<Route component={Whoops404}/>
-			</Switch>
-		</div> */}
 		<App />
-
 	</BrowserRouter>),
 	document.getElementById('root')
 );

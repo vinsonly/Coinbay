@@ -47,7 +47,8 @@ class Login extends React.Component  {
           
           //redirect user to main postings page
           console.log(this.props);
-          this.props.history.push('/posts');
+          // this.props.history.push('/posts');
+          window.location.replace('/');
         }
       })
       .catch(err => {

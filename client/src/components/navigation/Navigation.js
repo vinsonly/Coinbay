@@ -63,7 +63,7 @@ class Navigation extends Component {
             console.log(body);
 
             if(status != 200) {
-                alert('ERROR:' + body.message);
+                console.log('ERROR:' + body.message);
             } else {
                 console.log("token is valid");
                 this.setState({
@@ -72,17 +72,13 @@ class Navigation extends Component {
                 console.log(this.state);
             }
         })
-
-
-
-
     }
 
     render() {
 
         console.log(this.state);
 
-        console.log(this.state.user);
+        console.log(this.props.loggedInUser);
 
       return (
             <Navbar color="grey" dark expand="lg" scrolling>
@@ -98,27 +94,30 @@ class Navigation extends Component {
                       <NavItem>
                           <NavLink to="/new_posting">Create Posting</NavLink>
                       </NavItem>
-                       {
-                            (!this.state.user) ? (
-                            <div>                   
-                                <NavItem>
-                                    <NavLink to="/login">Login</NavLink>
-                                </NavItem>
+                        {
+                            (!this.props.loggedInUser.id) ? (        
                                 <NavItem>
                                     <NavLink to="/register">Register</NavLink>
                                 </NavItem>
-                            </div>) : (<div></div>)
+                            ) : (<div></div>)
                         }    
 
+                        {
+                            (!this.props.loggedInUser.id) ? (
+                                <NavItem>
+                                    <NavLink to="/login">Login</NavLink>
+                                </NavItem>
+                            ) : (<div></div>)
+                        }   
                     </NavbarNav>
                     <NavbarNav right>
                         {
-                            (this.state.user) ? (<NavItem>
+                            (this.props.loggedInUser.id) ? (<NavItem>
                                 <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
-                                <DropdownToggle nav caret>{this.state.user.username}</DropdownToggle>
+                                <DropdownToggle nav caret>{this.props.loggedInUser.username}</DropdownToggle>
                                 <DropdownMenu>
-                                    <DropdownItem href="#">Profile</DropdownItem>
-                                    <DropdownItem href="#">Sign Out</DropdownItem>
+                                    <DropdownItem><NavLink to="/profile">Profile</NavLink></DropdownItem>
+                                    <DropdownItem><button onClick={this.props.signOut}>Sign Out</button></DropdownItem>
                                 </DropdownMenu>
                                 </Dropdown>
                             </NavItem>  ) : (<div></div>)
@@ -134,5 +133,7 @@ class Navigation extends Component {
       );
     }
 }
+
+{/* <NavLink to="/sign_out">Sign Out</NavLink> */}
 
 export default Navigation;
