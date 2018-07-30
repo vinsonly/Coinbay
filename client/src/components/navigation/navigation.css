@@ -1,0 +1,17 @@
+form#searchForm {
+    margin: 0;
+}
+
+li.nav-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+div.dropdown {
+    width: 150px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

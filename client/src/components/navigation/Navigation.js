@@ -19,8 +19,12 @@ class Navigation extends Component {
 
         this.onClick = this.onClick.bind(this);
         this.toggle = this.toggle.bind(this);
+        this.checkUserLoggedIn = this.checkUserLoggedIn.bind(this);
 
         console.log(props);
+
+        this.checkUserLoggedIn();
+
     }
 
     onClick(){
@@ -34,7 +38,51 @@ class Navigation extends Component {
             dropdownOpen: !this.state.dropdownOpen
         });
     }
+
+    checkUserLoggedIn() {
+        let sessionToken = localStorage.getItem('sessionToken');
+
+        let data = {
+            token: sessionToken
+        }
+
+        let status;
+        fetch('/api/validateToken', {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then((res) => {
+            console.log(res);
+            status = res.status;
+            return res.json()
+        })
+        .then(body => {
+            console.log(body);
+
+            if(status != 200) {
+                alert('ERROR:' + body.message);
+            } else {
+                console.log("token is valid");
+                this.setState({
+                    user: body
+                })
+                console.log(this.state);
+            }
+        })
+
+
+
+
+    }
+
     render() {
+
+        console.log(this.state);
+
+        console.log(this.state.user);
 
       return (
             <Navbar color="grey" dark expand="lg" scrolling>
@@ -50,22 +98,36 @@ class Navigation extends Component {
                       <NavItem>
                           <NavLink to="/new_posting">Create Posting</NavLink>
                       </NavItem>
-                      <NavItem>
-                          <NavLink to="#">Profile</NavLink>
-                      </NavItem>
-                      <NavItem>
-                          <NavLink to="/login">Login</NavLink>
-                      </NavItem>
-                      <NavItem>
-                          <NavLink to="/register">Register</NavLink>
-                      </NavItem>
+                       {
+                            (!this.state.user) ? (
+                            <div>                   
+                                <NavItem>
+                                    <NavLink to="/login">Login</NavLink>
+                                </NavItem>
+                                <NavItem>
+                                    <NavLink to="/register">Register</NavLink>
+                                </NavItem>
+                            </div>) : (<div></div>)
+                        }    
+
                     </NavbarNav>
                     <NavbarNav right>
-                      <NavItem>
-                          <form className="form-inline md-form mt-0">
-                          <Search handleRouteCallback={this.props.handleRouteCallback}/>
+                        {
+                            (this.state.user) ? (<NavItem>
+                                <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
+                                <DropdownToggle nav caret>{this.state.user.username}</DropdownToggle>
+                                <DropdownMenu>
+                                    <DropdownItem href="#">Profile</DropdownItem>
+                                    <DropdownItem href="#">Sign Out</DropdownItem>
+                                </DropdownMenu>
+                                </Dropdown>
+                            </NavItem>  ) : (<div></div>)
+                        }         
+                       <NavItem>
+                          <form className="form-inline md-form mt-0" id="searchForm">
+                            <Search handleRouteCallback={this.props.handleRouteCallback}/>
                           </form>
-                      </NavItem>
+                       </NavItem>  
                     </NavbarNav>
                 </Collapse>
             </Navbar>

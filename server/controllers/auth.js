@@ -138,6 +138,29 @@ module.exports = {
                 message: errMsg
             });
         }
+    },
+
+    checkToken(req, res) {
+        let token = req.body.token;
+
+        let errMsg = "This token is invalid";
+        
+        jwt.verify(token, 'secretkey', (err, authData) => {
+            if(err) {
+                // Forbidden
+                res.status(403).json({
+                    message: errMsg
+                });
+            } else {
+                // Next middleware, user verified, process the request
+                // console.log("authData", authData);
+                // console.log("user", authData.user)
+                
+                console.log(authData);
+                res.send(authData.user);
+
+            }
+        }); 
     }
 
 }
