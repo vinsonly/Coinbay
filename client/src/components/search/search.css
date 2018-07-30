@@ -34,7 +34,7 @@ body {
   display: block;
   position: absolute;
   top: 51px;
-  width: 300px;
+  width: 360px;
   border: 1px solid #aaa;
   background-color: #fff;
   font-family: Helvetica, sans-serif;
@@ -100,4 +100,15 @@ div.searchElement {
   justify-content: space-between;
   align-items: center;
   width: 100%;
+}
+
+@media (max-width: 400px) {
+  .react-autosuggest__input {
+    width: 250px;
+  }
+
+  .react-autosuggest__container--open .react-autosuggest__suggestions-container {
+    width: 310px;
+  }
+  
 }

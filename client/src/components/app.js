@@ -12,15 +12,69 @@ class App extends Component {
 
         this.clearState = this.clearState.bind(this);
         this.handleRouteCallback = this.handleRouteCallback.bind(this);
+        this.getLoggedInUser = this.getLoggedInUser.bind(this);
+        this.signOut = this.signOut.bind(this);
+
+        this.state = {
+            loggedInUser: {}
+        }
 
         this.clearState();
+        this.getLoggedInUser();
     }
 
     clearState() {
-        this.state = {
+        this.setState({
             routePath: "",
             routeProps: {}
+        });
+    }
+
+    getLoggedInUser() {
+        let sessionToken = localStorage.getItem('sessionToken');
+
+        if(sessionToken && this.state.user == null)  {
+            // fetch the user from the database
+            let data = {
+                token: sessionToken
+            }
+    
+            let status;
+            fetch('/api/validateToken', {
+                method: 'POST',
+                body: JSON.stringify(data),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then((res) => {
+                console.log(res);
+                status = res.status;
+                return res.json()
+            })
+            .then(body => {
+                console.log(body);
+    
+                if(status != 200) {
+                    console.log('ERROR:' + body.message);
+                } else {
+                    console.log("token is valid");
+                    this.setState({
+                        loggedInUser: body
+                    })
+                    console.log(this.state);
+                }
+            })
         }
+    }
+
+    signOut() {
+        console.log("signing out in app.js");
+        localStorage.removeItem('sessionToken');
+
+        this.setState({
+            loggedInUser: {}
+        })
     }
 
     handleRouteCallback(routePath, routeProps) {
@@ -36,12 +90,13 @@ class App extends Component {
         }) 
     }
 
+    
     render() {
         return(
             <div id="app">
-                <Navigation handleRouteCallback={this.handleRouteCallback}/>
+                <Navigation handleRouteCallback={this.handleRouteCallback} loggedInUser={this.state.loggedInUser} signOut={this.signOut}/>
                 <CatNavigation />
-                <Main routePath={this.state.routePath} routeProps={this.state.routeProps} clearRouteState={this.clearState}/>
+                <Main routePath={this.state.routePath} routeProps={this.state.routeProps} clearRouteState={this.clearState} loggedInUser={this.state.loggedInUser}/>
             </div>
         )
     }

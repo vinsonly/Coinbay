@@ -23,8 +23,6 @@ function renderSuggestion(suggestion, { query }) {
   );
 }
 
-
-
 class ListSpanInner extends Component {
   constructor(props) {
     super(props);

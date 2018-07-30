@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route, Switch, Redirect     } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 
 import Navigation from './navigation/Navigation';
 import Search from './search/Search';
@@ -9,6 +9,7 @@ import Transaction from './transaction/Transaction';
 import Whoops404 from './whoops404/Whoops404';
 import SinglePosting from './postingSingle';
 import PostingUpload from './postingUpload';
+import SignOut from './signout';
 
 import MetaCoin from "./ethComponents/metacoin.js"
 
@@ -107,6 +108,7 @@ class Main extends Component {
                     <Route path="/new_posting/" component={PostingUpload}/>
                     <Route path="/login" component={Login}/>
                     <Route path="/register" component={Register}/>
+                    <Route path="/sign_out" component={SignOut}/>
                     <Route component={Whoops404}/>
                 </Switch>
             </main>

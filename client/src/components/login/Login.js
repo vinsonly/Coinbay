@@ -44,6 +44,11 @@ class Login extends React.Component  {
         } else {
           console.log("logged in");
           localStorage.setItem('sessionToken', body.token);
+          
+          //redirect user to main postings page
+          console.log(this.props);
+          // this.props.history.push('/posts');
+          window.location.replace('/');
         }
       })
       .catch(err => {

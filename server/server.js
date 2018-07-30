@@ -41,18 +41,3 @@ app.get('*', (req, res) => {
 })
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
-
-// var pg = require('pg');
-// var connectionString = process.env.DATABASE_URL || 'postgres://admin:admin@localhost:5432/admin';
-
-// const client = new pg.Client(connectionString);
-// client.connect();
-
-
-// client.query('SELECT * FROM playground;', (err, res) => {
-//   if (err) {
-//     console.log(err.stack)
-//   } else {
-//     console.log(res.rows[0])
-//   }
-// })
