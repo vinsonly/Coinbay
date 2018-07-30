@@ -10,7 +10,7 @@
   height: 3em
 }
 
-#tabs > button {
+#tabs button {
 	background-color: #2bbbad;
     border: none;
     color: white;
