@@ -58,6 +58,8 @@ class Main extends Component {
 
     render() {
 
+        console.log(this.props.loggedInUser);
+
         //check if props are different
         if(this.isPropsDifferent()) {
             this.routePath = this.props.routePath,

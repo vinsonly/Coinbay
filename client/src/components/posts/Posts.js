@@ -14,7 +14,7 @@ class Posts extends Component {
 
 		this.state = { 
 			format: "grid",
-			counter: 10 
+			counter: 20 
 		};
 
 		fetch(`/api/postings_with_users`)
