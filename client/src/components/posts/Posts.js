@@ -82,8 +82,16 @@ class Posts extends Component {
 		else
 			return "items-list";
 	}
+	postingView() {
+		return (
+			<div className="format-options">
+				<p className="grid" onClick={() => this.changeFormat("grid")}>grid layout&nbsp;&nbsp;&nbsp;</p>
+				<p className="detailed-list" onClick={() => this.changeFormat("detailed-list")}>detailed list layout&nbsp;&nbsp;&nbsp;</p>
+				<p className="list" onClick={() => this.changeFormat("list")}>list layout&nbsp;&nbsp;&nbsp;</p>
+			</div>
+		)
+	}
  	render() {
-
 		console.log(this.props);
 		console.log(this.state);
 		window.state = this.state;
@@ -118,10 +126,8 @@ class Posts extends Component {
 			if(idArr != null && idArr.length > 0) {
 				return (
 					<div>
-						<div className="format-options">
-							<p className="grid" onClick={() => this.changeFormat("grid")}>grid layout&nbsp;&nbsp;&nbsp;</p>
-							<p className="detailed-list" onClick={() => this.changeFormat("detailed-list")}>detailed list layout&nbsp;&nbsp;&nbsp;</p>
-							<p className="list" onClick={() => this.changeFormat("list")}>list layout&nbsp;&nbsp;&nbsp;</p>
+						<div>
+							{this.postingView()}
 						</div>
 						<div className="container">
 								{this.state.postings.map(posting => {
@@ -140,9 +146,7 @@ class Posts extends Component {
 				return (
 					<div>
 						<div className="format-options">
-							<p className="grid" onClick={() => this.changeFormat("grid")}>grid layout&nbsp;&nbsp;&nbsp;</p>
-							<p className="detailed-list" onClick={() => this.changeFormat("detailed-list")}>detailed list layout&nbsp;&nbsp;&nbsp;</p>
-							<p className="list" onClick={() => this.changeFormat("list")}>list layout&nbsp;&nbsp;&nbsp;</p>
+							{this.postingView()}
 						</div>
 						<div className="container">
 								{this.state.postings.map(posting => {
@@ -161,9 +165,7 @@ class Posts extends Component {
 				return (
 					<div>
 						<div className="format-options">
-							<p className="grid" onClick={() => this.changeFormat("grid")}>grid layout&nbsp;&nbsp;&nbsp;</p>
-							<p className="detailed-list" onClick={() => this.changeFormat("detailed-list")}>detailed list layout&nbsp;&nbsp;&nbsp;</p>
-							<p className="list" onClick={() => this.changeFormat("list")}>list layout&nbsp;&nbsp;&nbsp;</p>
+							{this.postingView()}
 						</div>
 						<div className="container">
 								{this.state.postings.slice(0, this.state.counter).map(posting => {
