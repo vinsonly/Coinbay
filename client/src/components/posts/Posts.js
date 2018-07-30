@@ -102,7 +102,6 @@ class Posts extends Component {
 			}
 		}
 
-
 		else if (this.props.searchResults) {
 			idArr = [];
 
@@ -137,10 +136,14 @@ class Posts extends Component {
 						</div>
 					</div>
 				);
+			} else if (this.props.category != null) {
+				return (
+					<p>lol</p>
+				)
 			} else {
-				console.log("blah")
 				return (
 					<div>
+						{this.props.category}
 						<div className="format-options">
 							<p className="grid" onClick={() => this.changeFormat("grid")}>grid layout&nbsp;&nbsp;&nbsp;</p>
 							<p className="detailed-list" onClick={() => this.changeFormat("detailed-list")}>detailed list layout&nbsp;&nbsp;&nbsp;</p>

@@ -71,6 +71,9 @@ class SinglePosting extends React.Component {
           .then((body) => {
             this.arraySetupWrapper(this.state.user.rating);
           })
+          .catch(err => {
+            console.log(err);
+          })
       })
 
   }

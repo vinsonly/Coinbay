@@ -98,6 +98,7 @@ class Main extends Component {
             <main>
                 <Switch>
                     <Route exact path="/" component={Posts}/>
+                    <Route path="/posts/categories/:category" render={props => <Posts {...props} /> } />
                     <Route path="/posts/:id" render={props => <SinglePosting {...props} /> }/>
                     <Route path="/posts/search_results" component={Posts} />
                     <Route path="/posts/" component={Posts}/>
