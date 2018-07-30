@@ -14,7 +14,7 @@ class Posts extends Component {
 
 		this.state = { 
 			format: "grid",
-			counter: 10 
+			counter: 1000000 
 		};
 
 		fetch(`/api/postings_with_users`)
@@ -42,17 +42,17 @@ class Posts extends Component {
 		window.props = props;
 	}
 	
-	componentDidMount() {
-		window.addEventListener('scroll', function() {
-			if((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
-				this.setState(
-					(prevState,props)=>{
-					return {counter: this.state.counter += 20};
-					}
-				);
-			}
-		}.bind(this));
-	}
+	// componentDidMount() {
+	// 	window.addEventListener('scroll', function() {
+	// 		if((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+	// 			this.setState(
+	// 				(prevState,props)=>{
+	// 				return {counter: this.state.counter += 20};
+	// 				}
+	// 			);
+	// 		}
+	// 	}.bind(this));
+	// }
 
 	changeFormat(form) {
 		if (form == "grid" && this.state.format !== "grid") {
