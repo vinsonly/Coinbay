@@ -6,39 +6,51 @@ import 'mdbreact/dist/css/mdb.css'
 import './catNavigation.css'
 
 
+var categories = {  
+            0: "Automotives",
+            1: "Beauty",
+            2: "Pets",
+            3: "Electronics",
+            4: "Books",
+            5: "Clothing",
+            6: "Jewelry",
+            7: "Art",
+            8: "Health",
+            9: "Gardening",
+            10: "Office",
+            11: "Music",
+            12: "Home",
+            13: "Outdoors",
+            14: "Toys",
+            15: "Tools",                    
+            16: "Antiques",
+            17: "miscellaneous"
+};
+
+
 class CatNavigation extends Component {
 	componentDidMount() {
 		// click on left most category to observe effect
 		document.getElementById('expand').addEventListener("click", function() {
 			document.querySelector("#tabs").classList.toggle('expand');
 		});
+
+        for (var i = 0; i < Object.keys(categories).length; i++) {
+            document.getElementById(categories[i]).addEventListener("click", function() {
+                for (var j = 0; j < Object.keys(categories).length; j++) {
+                    document.getElementById(categories[j]).style.backgroundColor = "#2bbbad";
+                }
+
+                this.style.backgroundColor = "#6EC5E9";
+            });;
+        }
 	}
     render() {
-    	var categories = {  0: "Automotives",
-                    1: "Beauty",
-                    2: "Pets",
-                    3: "Electronics",
-                    4: "Books",
-                    5: "Clothing",
-                    6: "Jewelry",
-                    7: "Art",
-                    8: "Health",
-                    9: "Gardening",
-                    10: "Office",
-                    11: "Music",
-                    12: "Home",
-                    13: "Outdoors",
-                    14: "Toys",
-                    15: "Tools",                    
-                    16: "Antiques",
-                    17: "miscellaneous"
-                };
         var rows = [];
 
 		for (var i = 0; i < Object.keys(categories).length; i++) {
-		    rows.push(<Link to={"/posts/categories/"+categories[i]}><button>{categories[i]}</button></Link>);
+		    rows.push(<Link to={"/posts/categories/"+categories[i]} ><button id={categories[i]}>{categories[i]}</button></Link>);
 		}
-
         return (
         	<div>
 				<Navbar color="blue lighten-5" light id="no-padding">
