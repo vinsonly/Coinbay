@@ -50,8 +50,8 @@ function getRandomInt(max) {
   return Math.floor(Math.random() * Math.floor(max));
 }
 
-var genVal = 100;
-for (var i = 0; i<genVal; i++){
+var numPostings = 1000; //this needs to match number of users generated, see seeders demo-user.js file
+for (var i = 0; i<numPostings; i++){
 
   let randomInt = getRandomInt(18);
 
