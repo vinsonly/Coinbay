@@ -44,6 +44,10 @@ module.exports = {
         type: Sequelize.JSONB,
         allowNull: true
       },
+      times: {
+        type: Sequelize.ARRAY(Sequelize.STRING),
+        allowNull: true,
+      },
       images: {
         type: Sequelize.ARRAY(Sequelize.STRING),
         allowNull: true,
