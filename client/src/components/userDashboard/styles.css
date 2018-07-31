@@ -1,0 +1,7 @@
+div#listOfPostings h2 {
+    border-bottom: 2px black solid;
+}
+
+div.userDashboard {
+    padding-top: 20px;
+}

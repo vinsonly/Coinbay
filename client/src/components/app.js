@@ -59,6 +59,9 @@ class App extends Component {
                     console.log('ERROR:' + body.message);
                 } else {
                     console.log("token is valid");
+
+                    console.log(body);
+
                     this.setState({
                         loggedInUser: body
                     })

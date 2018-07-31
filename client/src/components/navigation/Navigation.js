@@ -117,7 +117,7 @@ class Navigation extends Component {
                                 <DropdownToggle nav caret>{this.props.loggedInUser.username}</DropdownToggle>
                                 <DropdownMenu>
                                     <DropdownItem><NavLink to="/profile">Profile</NavLink></DropdownItem>
-                                    <DropdownItem><button onClick={this.props.signOut}>Sign Out</button></DropdownItem>
+                                    <DropdownItem onClick={this.props.signOut}>Sign Out</DropdownItem>
                                 </DropdownMenu>
                                 </Dropdown>
                             </NavItem>  ) : (<div></div>)

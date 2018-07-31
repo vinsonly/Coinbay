@@ -3,9 +3,11 @@ import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import ReactTable from "react-table";
-import { BrowserRouter, Route, Link, Router, Redirect } from 'react-router-dom'
+import { BrowserRouter, Route, Link, Router, Redirect } from 'react-router-dom';
 
+import './styles.css'
 
+import UserProfile from '../userProfile';
 
 class UserDashboard extends Component {
   constructor(props) {
@@ -17,13 +19,7 @@ class UserDashboard extends Component {
     };
 
     this.fetchPosts = this.fetchPosts.bind(this);
-
     console.log(props.loggedInUser);
-
-    // if(this.props.loggedInUser) {
-    //   this.fetchPosts();
-    // }
-
     console.log(props);
   }
 
@@ -39,6 +35,20 @@ class UserDashboard extends Component {
         console.log(body);
         console.log(status);
       })
+  }
+
+  componentDidMount(){
+    if(this.props.loggedInUser.id) {
+      console.log("User is logged in, fetching posts");
+      this.fetchPosts();
+    }
+  }
+
+  componentDidUpdate() {
+    if(this.props.loggedInUser.id) {
+      console.log("User is logged in, fetching posts");
+      this.fetchPosts();
+    }
   }
 
   render() {
@@ -89,7 +99,7 @@ class UserDashboard extends Component {
 
       if( this.props.loggedInUser ) {
         return (
-          <div className={this.props.root}>
+          <div className="userDashboard">
             <Grid container spacing={24}>
       
               <Grid item xs={12} md={6}>
@@ -99,17 +109,17 @@ class UserDashboard extends Component {
                       <ReactTable
                         data={this.state.data}
                         columns={columns}
-                        defaultSorted={[{ id: "firstName", desc: false }]}
+                        defaultSorted={[{ id: "updatedAt", desc: false }]}
                       />                  
 
                 </div>
               </Grid>
               <Grid item xs={12} md={6}>
-              <div id="listOfPostings">
+                <div id="listOfPostings">
                   <h2>User Info</h2>
+                  <UserProfile user={this.props.loggedInUser}/>
                 </div>
               </Grid>
-      
             </Grid>
           </div>
   
