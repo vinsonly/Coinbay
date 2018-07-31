@@ -132,9 +132,8 @@ class SinglePosting extends React.Component {
                         ) 
                       })}
 
-
                     </div>
-                    <Link to={"/"+"test"+"/posts/" + this.props.match.params.id}>
+                    <Link to={"/"+this.props.loggedInUser.username+"/transaction/" + this.props.match.params.id}>
                       <Button variant="contained" color="primary" className={this.props.button}>
                         Buy Now
                       </Button>
