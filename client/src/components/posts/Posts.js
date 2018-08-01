@@ -40,11 +40,15 @@ class Posts extends Component {
 				})
 
 		window.props = props;
-	}
-	
+	}	
 	componentDidMount() {
 		window.addEventListener('scroll', function() {
-			if((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+
+			console.log(window.innerHeight);
+			console.log(window.scrollY);
+			console.log(document.body.offsetHeight);
+
+			if((window.innerHeight + window.scrollY)  + 300 >= document.body.offsetHeight) {
 				this.setState(
 					(prevState,props)=>{
 					return {counter: this.state.counter += 20};
@@ -53,7 +57,6 @@ class Posts extends Component {
 			}
 		}.bind(this));
 	}
-
 	changeFormat(form) {
 		if (form == "grid" && this.state.format !== "grid") {
 			this.setState(
@@ -82,8 +85,16 @@ class Posts extends Component {
 		else
 			return "items-list";
 	}
+	postingView() {
+		return (
+			<div className="format-options">
+				<p className="grid" onClick={() => this.changeFormat("grid")}>grid layout&nbsp;&nbsp;&nbsp;</p>
+				<p className="detailed-list" onClick={() => this.changeFormat("detailed-list")}>detailed list layout&nbsp;&nbsp;&nbsp;</p>
+				<p className="list" onClick={() => this.changeFormat("list")}>list layout&nbsp;&nbsp;&nbsp;</p>
+			</div>
+		)
+	}
  	render() {
-
 		console.log(this.props);
 		console.log(this.state);
 		window.state = this.state;
@@ -102,7 +113,6 @@ class Posts extends Component {
 			}
 		}
 
-
 		else if (this.props.searchResults) {
 			idArr = [];
 
@@ -119,10 +129,8 @@ class Posts extends Component {
 			if(idArr != null && idArr.length > 0) {
 				return (
 					<div>
-						<div className="format-options">
-							<p className="grid" onClick={() => this.changeFormat("grid")}>grid layout&nbsp;&nbsp;&nbsp;</p>
-							<p className="detailed-list" onClick={() => this.changeFormat("detailed-list")}>detailed list layout&nbsp;&nbsp;&nbsp;</p>
-							<p className="list" onClick={() => this.changeFormat("list")}>list layout&nbsp;&nbsp;&nbsp;</p>
+						<div>
+							{this.postingView()}
 						</div>
 						<div className="container">
 								{this.state.postings.map(posting => {
@@ -137,14 +145,30 @@ class Posts extends Component {
 						</div>
 					</div>
 				);
-			} else {
-				console.log("blah")
+			} else if (this.props.match.params.category != null) {
 				return (
 					<div>
 						<div className="format-options">
-							<p className="grid" onClick={() => this.changeFormat("grid")}>grid layout&nbsp;&nbsp;&nbsp;</p>
-							<p className="detailed-list" onClick={() => this.changeFormat("detailed-list")}>detailed list layout&nbsp;&nbsp;&nbsp;</p>
-							<p className="list" onClick={() => this.changeFormat("list")}>list layout&nbsp;&nbsp;&nbsp;</p>
+							{this.postingView()}
+						</div>
+						<div className="container">
+								{this.state.postings.map(posting => {
+									if (posting.category == this.props.match.params.category) {
+										return (
+											<div className={this.classFormat(this.state.format)}>
+												<SimpleMediaCard format={this.state.format} post={posting.id} title={posting.postingTitle} description={posting.description} price={posting.price} username={posting.User.username} rating={posting.User.rating} date={posting.createdAt} image={posting.images[0]}/>
+											</div>
+										)
+									}
+								})}
+						</div>
+					</div>
+				);
+			} else {
+				return (
+					<div>
+						<div className="format-options">
+							{this.postingView()}
 						</div>
 						<div className="container">
 								{this.state.postings.slice(0, this.state.counter).map(posting => {

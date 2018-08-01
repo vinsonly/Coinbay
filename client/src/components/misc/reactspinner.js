@@ -22,4 +22,4 @@ class ReactSpinner extends React.Component {
   }
 }
 
-export default ReactSpinner
+export default ReactSpinner;

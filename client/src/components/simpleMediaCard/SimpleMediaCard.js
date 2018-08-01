@@ -42,47 +42,49 @@ class SimpleMediaCard extends Component {
     if(this.props.format == "grid") {
       return (
           <div className="resize">
-            <Card>
-              <div className="relative-position">
-                <CardImage className="img-fluid" src={this.props.image} waves />
-                <p className="time-position">{this.parseDate(this.props.date)}</p>
-                <p className="price-position">${this.props.price}</p>
-              </div>
-              <CardTitle className="title-padding">{this.props.title}</CardTitle>
-              <CardBody>
-                  <CardText>{this.props.description}</CardText>
-                  <div className="center-button">
-                    <Link to={"/posts/" + this.props.post}><Button>More Details</Button></Link>
-                  </div>
-                  <p className="seller-info">{this.props.username}</p>
-                  <p className="seller-info">
-                    {this.state.blackStarArray.map((x, index) => {
-                      return (
-                       <i className="material-icons" key={index}>
-                        star
-                       </i>
-                      ) 
-                    })}
+            <Link to={"/posts/" + this.props.post}>
+              <Card>
+                <div className="relative-position">
+                  <CardImage className="img-fluid" src={this.props.image} waves />
+                  <p className="time-position">{this.parseDate(this.props.date)}</p>
+                  <p className="price-position">${this.props.price}</p>
+                </div>
+                <CardTitle className="title-padding">{this.props.title}</CardTitle>
+                <CardBody>
+                    <CardText>{this.props.description}</CardText>
+                    <div className="center-button">
+                    <Button>More Details</Button>
+                    </div>
+                    <p className="seller-info">{this.props.username}</p>
+                    <p className="seller-info">
+                      {this.state.blackStarArray.map((x, index) => {
+                        return (
+                         <i className="material-icons" key={index}>
+                          star
+                         </i>
+                        ) 
+                      })}
 
-                    {this.state.halfStarArray.map((x, index) => {
-                      return (
-                        <i className="material-icons" key={index}>
-                        star_half
-                        </i>
-                      ) 
-                    })}
+                      {this.state.halfStarArray.map((x, index) => {
+                        return (
+                          <i className="material-icons" key={index}>
+                          star_half
+                          </i>
+                        ) 
+                      })}
 
-                    {this.state.emptyStarArray.map((x, index) => {
-                      return (
-                        <i className="material-icons" key={index} >
-                        star_border
-                        </i>
-                      ) 
-                    })}
+                      {this.state.emptyStarArray.map((x, index) => {
+                        return (
+                          <i className="material-icons" key={index} >
+                          star_border
+                          </i>
+                        ) 
+                      })}
 
-                  </p>
-              </CardBody>
-            </Card>
+                    </p>
+                </CardBody>
+              </Card>
+            </Link>
           </div>
       );
     } else if (this.props.format == "detailed-list") {

@@ -24,6 +24,10 @@ module.exports = {
         type: Sequelize.NUMERIC(10,2),
         allowNull: false,
       },
+      category: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
       status: {
         type: Sequelize.ENUM('active','pending','sold'),
         allowNull: false,
@@ -39,6 +43,10 @@ module.exports = {
       location: {
         type: Sequelize.JSONB,
         allowNull: true
+      },
+      times: {
+        type: Sequelize.ARRAY(Sequelize.STRING),
+        allowNull: true,
       },
       images: {
         type: Sequelize.ARRAY(Sequelize.STRING),

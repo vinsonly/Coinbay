@@ -205,7 +205,7 @@ class UserProfile extends Component {
                         <p><span class="fieldName">Phone Number:</span> {(this.props.user.phone) ? (this.props.user.phone) : "n/a"}</p>
                     </li>
                     <li class="userListField">
-                        <p><span class="fieldName">Ethereum Address:</span> {(this.props.user.crypto) ?  (this.props.user.phone) : "n/a"}</p>
+                        <p><span class="fieldName">Ethereum Address:</span> {(this.props.user.crypto) ?  (this.props.user.crypto) : "n/a"}</p>
                     </li>
                     <li class="userListField">
                         <p><span class="fieldName">User Rating:</span> {(this.props.user.rating) ? (this.props.user.rating) + "/10" : "n/a"}</p>

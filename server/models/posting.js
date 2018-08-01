@@ -17,6 +17,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.NUMERIC(10,2),
       allowNull: false
     },
+    category: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
     status: { // active, sold, pending
       type: DataTypes.ENUM('active', 'sold', 'pending'),
       allowNull: false
@@ -31,6 +35,10 @@ module.exports = (sequelize, DataTypes) => {
     },
     location: {
       type: DataTypes.JSONB,
+      allowNull: true
+    },
+    times: {
+      type: DataTypes.ARRAY(DataTypes.STRING),
       allowNull: true
     },
     images: {
