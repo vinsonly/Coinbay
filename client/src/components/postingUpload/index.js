@@ -118,7 +118,7 @@ class PostingUpload extends React.Component {
 
         let status;
         fetch('/api/posting', {
-            method: 'POST', // or 'PUT'
+            method: 'POST',
             body: JSON.stringify(data), // data can be `string` or {object}!
             headers:{
               'Content-Type': 'application/json',

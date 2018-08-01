@@ -19,7 +19,6 @@
     "pg": "^7.4.3",
     "pg-hstore": "^2.3.2",
     "react-autosuggest": "^9.3.4",
-    "react-google-maps": "^9.4.5",
     "sequelize": "^4.38.0"
   },
   "devDependencies": {

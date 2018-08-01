@@ -65,7 +65,9 @@ module.exports = {
     update(req, res) {
         
         let id = parseInt(req.body.id);
-        console.log(req.body);
+        console.log("req.body", req.body);
+
+        console.log(id);
         
         return User
             .findById(id)
@@ -228,7 +230,7 @@ module.exports = {
 
             if(users.length > 0) {
                 return res.status(400).json({
-                    message: "Another user already exists with that username or password, please try again."
+                    message: "Another user already exists with that username or email, please try again."
                 });
             } else {
                 next();
@@ -238,8 +240,49 @@ module.exports = {
             return res.status(400).send(err);
         })
 
-    }
+    },
 
+    isValidUpdate(req, res, next) {
+        let id = parseInt(req.body.id);
+
+        obj = this;
+
+        User.findById(id)
+            .then(user => {
+                if(req.body.username != user.username  || req.body.email != user.email) {
+                    if(req.body.username != user.username) {
+                        // check if there is a conflict in the database
+                        User.findAll({
+                            where: {
+                                [or]: {
+                                    email: req.body.email,
+                                    username: req.body.username
+                                }
+                            }
+                        })
+                        .then((users) => {
+                
+                            console.log(users);
+                
+                            if(users.length > 0) {
+                                return res.status(400).json({
+                                    message: "Another user already exists with that username or email, please try again."
+                                });
+                            } else {
+                                next();
+                            }
+                        })
+                        .catch(err => {
+                            return res.status(400).send(err);
+                        })
+
+                    }
+          
+                } else {
+                    next();
+                } 
+            })
+    }
 }
 
 /*

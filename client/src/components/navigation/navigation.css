@@ -15,3 +15,80 @@ div.dropdown {
     align-items: center;
     justify-content: center;
 }
+
+.nav-color {
+	background-color: #0080ff !important
+}
+
+
+.navbar, .pagination .page-item.active .page-link {
+	-webkit-box-shadow: none !important;
+	-moz-box-shadow: none !important;
+	box-shadow: none !important;
+}
+
+
+div.search * {
+	width: 100% !important;
+}
+
+.searching form {
+	background-color: white !important;
+	border: solid white;
+	border-radius: 0.7em
+}
+
+.searching input {
+	width: 100%;
+	height: 0.6em;
+	padding-bottom: 1em
+}
+
+.searching {
+	text-align: right !important;
+	float: right !important;
+    width: 90% !important
+}
+
+form#searchForm div{
+	width: 100%;
+}
+
+
+form#searchForm div input.react-autosuggest__input {
+	padding: 15px 0;
+}
+input.react-autosuggest__input {
+	width: 100%;
+}
+
+.navbar.scrolling-navbar {
+	width:80%;
+
+}
+
+.white-text strong {
+	color: white !important;
+	font-size: 160%
+}
+
+.white-text a {
+	color: white !important;
+	font-size: 130%
+}
+
+.white-text span {
+	color: white !important;
+	font-size: 120%
+}
+
+.center-search {
+  display: flex !important;
+  justify-content: center !important;
+  flex-wrap: wrap !important;
+  padding-bottom: 10px;
+}
+
+.expand {
+	width: 100% !important
+}

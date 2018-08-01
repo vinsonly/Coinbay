@@ -101,3 +101,11 @@ button.btn.btn-default.Ripple-parent {
 .inline-display {
 	display: inline-block
 }
+
+.shrink-img {
+  display: block;
+  max-width:6em;
+  max-height:6em;
+  width: auto;
+  height: auto;
+}

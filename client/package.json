@@ -13,11 +13,12 @@
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "react-dropzone": "^4.2.13",
+    "react-flatpickr": "^3.6.4",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.3.1",
     "react-scripts": "1.1.4",
     "react-spinners": "^0.3.3",
-    "recompose": "^0.28.0",
+    "react-table": "^6.8.6",
     "redux": "^4.0.0",
     "typeface-roboto": "0.0.54",
     "web3": "0.20.6"

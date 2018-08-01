@@ -15,6 +15,7 @@ import MetaCoin from "./ethComponents/metacoin.js"
 
 import Login from "./login/Login"
 import Register from "./register/Register"
+import UserDashboard from './userDashboard';
 
 class Main extends Component {
 
@@ -57,6 +58,8 @@ class Main extends Component {
 
     render() {
 
+        console.log(this.props.loggedInUser);
+
         //check if props are different
         if(this.isPropsDifferent()) {
             this.routePath = this.props.routePath,
@@ -94,21 +97,21 @@ class Main extends Component {
                     )
             }
         }
-
         return(
             <main>
                 <Switch>
                     <Route exact path="/" component={Posts}/>
                     <Route path="/posts/categories/:category" render={props => <Posts {...props} /> } />
-                    <Route path="/posts/:id" render={props => <SinglePosting {...props} /> }/>
+                    <Route path="/posts/:id" render={props => <SinglePosting {...props} loggedInUser={this.props.loggedInUser} /> }/>
                     <Route path="/posts/search_results" component={Posts} />
                     <Route path="/posts/" component={Posts}/>
-                    <Route path="/:user/transaction/:item" render={props => <Transaction {...props} /> }/>
+                    <Route path="/:user/transaction/:item" render={props => <Transaction {...props } /> } />
                     <Route path="/metacoin/" component={MetaCoin}/>
                     <Route path="/new_posting/" component={PostingUpload}/>
                     <Route path="/login" component={Login}/>
                     <Route path="/register" component={Register}/>
                     <Route path="/sign_out" component={SignOut}/>
+                    <Route path="/profile" render={props => <UserDashboard loggedInUser={this.props.loggedInUser} />} />
                     <Route component={Whoops404}/>
                 </Switch>
             </main>
