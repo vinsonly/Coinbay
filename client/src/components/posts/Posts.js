@@ -14,7 +14,8 @@ class Posts extends Component {
 
 		this.state = { 
 			format: "grid",
-			counter: 20 
+			counter: 20,
+			results: 0
 		};
 
 		fetch(`/api/postings_with_users`)
@@ -44,9 +45,9 @@ class Posts extends Component {
 	componentDidMount() {
 		window.addEventListener('scroll', function() {
 
-			console.log(window.innerHeight);
-			console.log(window.scrollY);
-			console.log(document.body.offsetHeight);
+			// console.log(window.innerHeight);
+			// console.log(window.scrollY);
+			// console.log(document.body.offsetHeight);
 
 			if((window.innerHeight + window.scrollY)  + 300 >= document.body.offsetHeight) {
 				this.setState(
@@ -87,10 +88,10 @@ class Posts extends Component {
 	}
 	postingView() {
 		return (
-			<div className="format-options">
-				<p className="grid" onClick={() => this.changeFormat("grid")}>grid layout&nbsp;&nbsp;&nbsp;</p>
-				<p className="detailed-list" onClick={() => this.changeFormat("detailed-list")}>detailed list layout&nbsp;&nbsp;&nbsp;</p>
-				<p className="list" onClick={() => this.changeFormat("list")}>list layout&nbsp;&nbsp;&nbsp;</p>
+			<div className="format-options tabs">
+				<p className="grid" onClick={() => this.changeFormat("grid")}>Grid</p>
+				<p className="detailed-list" onClick={() => this.changeFormat("detailed-list")}>Detailed List</p>
+				<p className="list" onClick={() => this.changeFormat("list")}>Simple List</p>
 			</div>
 		)
 	}
@@ -146,21 +147,24 @@ class Posts extends Component {
 					</div>
 				);
 			} else if (this.props.match.params.category != null) {
+				var counter = 0;
 				return (
 					<div>
 						<div className="format-options">
 							{this.postingView()}
 						</div>
 						<div className="container">
-								{this.state.postings.map(posting => {
-									if (posting.category == this.props.match.params.category) {
-										return (
-											<div className={this.classFormat(this.state.format)}>
-												<SimpleMediaCard format={this.state.format} post={posting.id} title={posting.postingTitle} description={posting.description} price={posting.price} username={posting.User.username} rating={posting.User.rating} date={posting.createdAt} image={posting.images[0]}/>
-											</div>
-										)
-									}
-								})}
+							{this.state.postings.map(posting => {
+								if (posting.category == this.props.match.params.category) {
+									counter++;
+									return (
+										<div className={this.classFormat(this.state.format)}>
+											<SimpleMediaCard format={this.state.format} post={posting.id} title={posting.postingTitle} description={posting.description} price={posting.price} username={posting.User.username} rating={posting.User.rating} date={posting.createdAt} image={posting.images[0]}/>
+										</div>
+									)
+								}
+							})}
+							<p className="return-results">Number of results found: {counter}</p>
 						</div>
 					</div>
 				);

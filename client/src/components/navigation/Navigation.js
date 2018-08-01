@@ -81,55 +81,62 @@ class Navigation extends Component {
         console.log(this.props.loggedInUser);
 
       return (
-            <Navbar color="grey" dark expand="lg" scrolling>
-                <NavbarBrand href="/">
-                    <strong>CryptoBay</strong>
-                </NavbarBrand>
-                { !this.state.isWideEnough && <NavbarToggler onClick = { this.onClick } />}
-                <Collapse isOpen={ this.state.collapse } navbar>
-                    <NavbarNav left>
-                      <NavItem>
-                          <NavLink to="/posts">Postings</NavLink>
-                      </NavItem>
-                      <NavItem>
-                          <NavLink to="/new_posting">Create Posting</NavLink>
-                      </NavItem>
-                        {
-                            (!this.props.loggedInUser.id) ? (        
-                                <NavItem>
-                                    <NavLink to="/register">Register</NavLink>
-                                </NavItem>
-                            ) : (<div></div>)
-                        }    
+            <div className="nav-color">
+                <div className="white-text">
+                    <Navbar className="expand" dark expand="lg" scrolling>
+                        <NavbarBrand href="/">
+                            <strong>CryptoBay</strong>
+                        </NavbarBrand>
+                        { !this.state.isWideEnough && <NavbarToggler onClick = { this.onClick } />}
+                        <Collapse isOpen={ this.state.collapse } navbar>
+                            <NavbarNav left>
+                              <NavItem>
+                                  <NavLink to="/posts">Postings</NavLink>
+                              </NavItem>
+                              <NavItem>
+                                  <NavLink to="/new_posting">Create Posting</NavLink>
+                              </NavItem>
+                            </NavbarNav>
+                            <NavbarNav right>
+                                {
+                                    (this.props.loggedInUser.id) ? (<NavItem>
+                                        <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
+                                        <DropdownToggle nav caret>{this.props.loggedInUser.username}</DropdownToggle>
+                                        <DropdownMenu>
+                                            <DropdownItem><NavLink to="/profile">Profile</NavLink></DropdownItem>
+                                            <DropdownItem onClick={this.props.signOut}>Sign Out</DropdownItem>
+                                        </DropdownMenu>
+                                        </Dropdown>
+                                    </NavItem>  ) : (<div></div>)
+                                }      
+                                {
+                                    (!this.props.loggedInUser.id) ? (        
+                                        <NavItem>
+                                            <NavLink to="/register">Register</NavLink>
+                                        </NavItem>
+                                    ) : (<div></div>)
+                                }    
 
-                        {
-                            (!this.props.loggedInUser.id) ? (
-                                <NavItem>
-                                    <NavLink to="/login">Login</NavLink>
-                                </NavItem>
-                            ) : (<div></div>)
-                        }   
-                    </NavbarNav>
-                    <NavbarNav right>
-                        {
-                            (this.props.loggedInUser.id) ? (<NavItem>
-                                <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
-                                <DropdownToggle nav caret>{this.props.loggedInUser.username}</DropdownToggle>
-                                <DropdownMenu>
-                                    <DropdownItem><NavLink to="/profile">Profile</NavLink></DropdownItem>
-                                    <DropdownItem onClick={this.props.signOut}>Sign Out</DropdownItem>
-                                </DropdownMenu>
-                                </Dropdown>
-                            </NavItem>  ) : (<div></div>)
-                        }         
-                       <NavItem>
-                          <form className="form-inline md-form mt-0" id="searchForm">
+                                {
+                                    (!this.props.loggedInUser.id) ? (
+                                        <NavItem>
+                                            <NavLink to="/login">Login</NavLink>
+                                        </NavItem>
+                                    ) : (<div></div>)
+                                }               
+                            </NavbarNav>
+                        </Collapse>
+                    </Navbar>
+                </div>
+
+                <div className="center-search">
+                    <div className="searching">
+                        <form className="form-inline md-form mt-0" id="searchForm">
                             <Search handleRouteCallback={this.props.handleRouteCallback}/>
-                          </form>
-                       </NavItem>  
-                    </NavbarNav>
-                </Collapse>
-            </Navbar>
+                        </form>
+                    </div>
+                </div>
+            </div>
       );
     }
 }

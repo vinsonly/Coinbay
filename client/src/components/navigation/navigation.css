@@ -16,7 +16,7 @@ div.dropdown {
     justify-content: center;
 }
 
-/* .nav-color {
+.nav-color {
 	background-color: #0080ff !important
 }
 
@@ -85,5 +85,10 @@ input.react-autosuggest__input {
 .center-search {
   display: flex !important;
   justify-content: center !important;
-  flex-wrap: wrap !important
-} */
+  flex-wrap: wrap !important;
+  padding-bottom: 10px;
+}
+
+.expand {
+	width: 100% !important
+}

@@ -1,5 +1,7 @@
 import React from 'react';
 import { Container, Row, Col, Input, Button } from 'mdbreact';
+import { Route } from 'react-router-dom';
+import Login from "../login/Login";
 
 import './register.css'
 
@@ -71,6 +73,10 @@ class Register extends React.Component  {
       } else {
         alert(`User successfully created!`);
         // redirect user here
+
+        return(
+          window.location.replace('/login')
+        );
       }
     })
     .catch(err => {

@@ -1,7 +1,8 @@
 .container {
   display: flex;
   justify-content: center;
-  flex-wrap: wrap
+  flex-wrap: wrap;
+  padding-top: 6em
 }
 
 .items {
@@ -35,4 +36,46 @@ div.center-button {
 
 .format-options > p {
   display: inline-block
+}
+
+.view img {
+  margin: auto;
+  height: 250px;
+}
+
+.view {
+  background-color: #0c0c0c;
+}
+
+.tabs p {
+  position: absolute;
+  font-size: 1.2em;
+  padding: 0.2em;
+  border: solid #e3f2fd;
+  border-bottom-left-radius: 0.3em;
+  border-bottom-right-radius: 0.3em;
+  background: #e3f2fd;
+  color: #007bff;
+  cursor: pointer
+}
+
+.tabs p:nth-child(1) {
+  margin-left: 1em;
+  float: left;
+}
+
+.tabs p:nth-child(2) {
+  margin-left: 4.5em;
+  float: left;
+}
+
+.tabs p:nth-child(3) {
+  margin-left: 11.6em;
+  float: left;
+}
+
+.return-results {
+  position: absolute;
+  color: #007bff;
+  font-size: 1.2em;
 }

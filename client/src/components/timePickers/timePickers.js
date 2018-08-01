@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import 'flatpickr/dist/themes/material_green.css';
+import './timePickers.css';
 import Flatpickr from 'react-flatpickr';
  
 class TimePickers extends React.Component {
@@ -13,9 +14,11 @@ class TimePickers extends React.Component {
   render() {
     const { date } = this.state;
     return (
-      <Flatpickr data-enable-time
-        value={date}
-        onChange={date => { this.setState({date}) }} />
+      <div className="dates-times">
+        <Flatpickr data-enable-time
+          value={date}
+          onChange={date => { this.setState({date}) }} />
+      </div>
     )
   }
 }

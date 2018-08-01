@@ -4,7 +4,6 @@ import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
 import './postingSingle.css';
-import TimePickers from '../timePickers/timePickers';
 import setUpRatingArrays from '../../helpers/postings.js';
 
 
@@ -94,11 +93,12 @@ class SinglePosting extends React.Component {
     if(this.state.posting || this.state.user) {
       return (
         <div className={this.props.root}>
-          <TimePickers/>
           <Grid container spacing={24}>
     
             <Grid item xs={12} md={6}>
-              <img id="postingPicture"src={this.state.posting.images[0]}></img>
+              <div className="image-display">
+                <img id="postingPicture"src={this.state.posting.images[0]}></img>
+              </div>
             </Grid>
             <Grid item xs={12} md={6}>
                 <div className="postingInfo">
