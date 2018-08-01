@@ -117,11 +117,16 @@ class SinglePosting extends React.Component {
             <Grid item xs={12} md={6}>
                 <div className="postingInfo">
                     <h1>{this.state.posting.postingTitle}</h1>
+                    <br/>
                     <h2>${this.state.posting.price}</h2>
                     <p>{this.state.posting.description}</p>
-                    <h3>Seller: {this.state.user.username}</h3>
+                    <br/>
+                    <h2>Seller: {this.state.user.username}</h2>
+                    <h4>E-mail: {this.state.user.email}</h4>
+                    <h4>Phone: {this.state.user.phone}</h4>
+                    <h4>Ethereum Address: {this.state.user.crypto}</h4>
                     <div className="sellerRating">
-                      <h3>Rating</h3>
+                      <h4>Rating</h4>
                
                       {this.state.blackStarArray.map((x, index) => {
                         return (
@@ -148,6 +153,7 @@ class SinglePosting extends React.Component {
                       })}
 
                     </div>
+                    <br/>
                     <Button onClick={ () => this.offered() } variant="contained" color="primary" className="bid-button">
                       {this.state.buttonText}
                     </Button>
