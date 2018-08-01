@@ -91,7 +91,7 @@ class Posts extends Component {
 			<div className="format-options tabs">
 				<p className="grid" onClick={() => this.changeFormat("grid")}>Grid</p>
 				<p className="detailed-list" onClick={() => this.changeFormat("detailed-list")}>Detailed List</p>
-				<p className="list" onClick={() => this.changeFormat("list")}>simple List</p>
+				<p className="list" onClick={() => this.changeFormat("list")}>Simple List</p>
 			</div>
 		)
 	}
