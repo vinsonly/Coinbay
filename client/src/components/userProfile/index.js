@@ -103,7 +103,7 @@ class UserProfile extends Component {
                     alert(`Error: ${body.message}`);
                 } else {
                     localStorage.removeItem('sessionToken');
-                    alert('User successfully updated. Please login again.');
+                    alert('User successfully updated. Please login again with your updated credentials.');
                     console.log(body);
                     // redirect the user to their post
                     window.location.replace('/login');
