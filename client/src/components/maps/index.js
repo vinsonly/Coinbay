@@ -1,171 +1,106 @@
-/* eslint-disable no-undef */
 
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
-import {SearchBox} from "react-google-maps/lib/components/places/SearchBox"
+import GoogleMapReact from 'google-map-react';
+
+import './styling.css'
 
 
-const _ = require("lodash");
-const { compose, withProps, lifecycle } = require("recompose");
-const {
-  withScriptjs,
-  withGoogleMap,
-  GoogleMap,
-  Marker,
-} = require("react-google-maps");
+class Map extends Component {
+  constructor(props) {
+    super(props);
 
-// const AnyReactComponent = ({ text }) => {
-//     return(<div><i class="material-icons">location_on</i></div>);
-// }
+    this.initialCenter = {
+        lat: 49.282482,
+        lng: -123.118275
+    }
+    
+    this.zoom = 11
 
-// class Map extends Component {
-//   constructor(props){
-//     super(props)
-//   }
-//
-//
-//   render() {
-//    const GoogleMapExample = withGoogleMap(props => (
-//       <GoogleMap
-//         defaultCenter = { { lat: 40.756795, lng: -73.954298 } }
-//         defaultZoom = { 13 }
-//       >
-//
-//       <SearchBox
-//       ref={props.onSearchBoxMounted}
-//       bounds={props.bounds}
-//       // controlPosition={google.maps.ControlPosition.TOP_LEFT}
-//       onPlacesChanged={props.onPlacesChanged}
-//     >
-//       <input
-//         type="text"
-//         placeholder="Customized your placeholder"
-//         style={{
-//           boxSizing: `border-box`,
-//           border: `1px solid transparent`,
-//           width: `240px`,
-//           height: `32px`,
-//           marginTop: `27px`,
-//           padding: `0 12px`,
-//           borderRadius: `3px`,
-//           boxShadow: `0 2px 6px rgba(0, 0, 0, 0.3)`,
-//           fontSize: `14px`,
-//           outline: `none`,
-//           textOverflow: `ellipses`,
-//         }}
-//       />
-//     </SearchBox>
-//
-//       </GoogleMap>
-//
-//
-//
-//
-//    ));
-//    return(
-//       <div>
-//         <GoogleMapExample
-//           containerElement={ <div style={{ height: `500px`, width: '500px' }} /> }
-//           mapElement={ <div style={{ height: `100%` }} /> }
-//           // onSearchBoxMounted={this.handleSearchBoxMounted}
-//         />
-//
-//       </div>
-//    );
-//    }
-// };
+    this.state = {
+      lat: 49.282482,
+      lng: -123.118275
+    };
 
-const MapWithASearchBox = compose(
-  withProps({
-    googleMapURL: "https://maps.googleapis.com/maps/api/js?key=AIzaSyApF1SHbXduNze6A4Jfs-nKjLYzuyBiNTs&v=3.exp&libraries=geometry,drawing,places",
-    loadingElement: <div style={{ height: `100%` }} />,
-    containerElement: <div style={{ height: `400px` }} />,
-    mapElement: <div style={{ height: `100%` }} />,
-  }),
-  lifecycle({
-    componentWillMount() {
-      const refs = {}
+    this.onClick = this.onClick.bind(this);
+    this.onBoundsChange = this.onBoundsChange.bind(this);
+  }
 
-      this.setState({
-        bounds: null,
-        center: {
-          lat: 41.9, lng: -87.624
-        },
-        markers: [],
-        onMapMounted: ref => {
-          refs.map = ref;
-        },
-        onBoundsChanged: () => {
-          this.setState({
-            bounds: refs.map.getBounds(),
-            center: refs.map.getCenter(),
-          })
-        },
-        onSearchBoxMounted: ref => {
-          refs.searchBox = ref;
-        },
-        onPlacesChanged: () => {
-          const places = refs.searchBox.getPlaces();
-          const bounds = new google.maps.LatLngBounds();
+  onClick(x, y, _lat, _long, event) {
+    console.log(x, y, _lat, _long, event);
 
-          places.forEach(place => {
-            if (place.geometry.viewport) {
-              bounds.union(place.geometry.viewport)
-            } else {
-              bounds.extend(place.geometry.location)
-            }
-          });
-          const nextMarkers = places.map(place => ({
-            position: place.geometry.location,
-          }));
-          const nextCenter = _.get(nextMarkers, '0.position', this.state.center);
+    console.log(x.lat);
+    console.log(x.lng)
 
-          this.setState({
-            center: nextCenter,
-            markers: nextMarkers,
-          });
-          // refs.map.fitBounds(bounds);
-        },
-      })
-    },
-  }),
-  withScriptjs,
-  withGoogleMap
-)(props =>
-  <GoogleMap
-    ref={props.onMapMounted}
-    defaultZoom={15}
-    center={props.center}
-    onBoundsChanged={props.onBoundsChanged}
-  >
-    <SearchBox
-      ref={props.onSearchBoxMounted}
-      bounds={props.bounds}
-      controlPosition={google.maps.ControlPosition.TOP_LEFT}
-      onPlacesChanged={props.onPlacesChanged}
-    >
-      <input
-        type="text"
-        placeholder="Customized your placeholder"
-        style={{
-          boxSizing: `border-box`,
-          border: `1px solid transparent`,
-          width: `240px`,
-          height: `32px`,
-          marginTop: `27px`,
-          padding: `0 12px`,
-          borderRadius: `3px`,
-          boxShadow: `0 2px 6px rgba(0, 0, 0, 0.3)`,
-          fontSize: `14px`,
-          outline: `none`,
-          textOverflow: `ellipses`,
-        }}
-      />
-    </SearchBox>
-    {props.markers.map((marker, index) =>
-      <Marker key={index} position={marker.position} />
-    )}
-  </GoogleMap>
-);
+    // this.setState({
+    //   lat: x.lat,
+    //   lng: x.lng 
+    // });
+  }
 
-export default Map = MapWithASearchBox;
+  onBoundsChange(center, zoom, bounds, marginBounds) {
+    console.log(center);
+    let lat = center.lat;
+    let lng = center.lng;
+    console.log(lat);
+    console.log(lng);
+    this.props.setLocation(lat, lng);
+    this.setState({
+      lat: lat,
+      lng: lng
+    })
+  }
+
+  render() {
+
+    if(!this.state) {
+      return (<div>Loading...</div>)
+    }
+
+    console.log(this.state); 
+
+    return (
+      // Important! Always set the container height explicitly
+      <div id="gmapsWrapper" style={{ height: '600px', width: '100%' }}>
+        <GoogleMapReact
+          bootstrapURLKeys={{ key: "AIzaSyDvtndexGCQLEeLUsklFakSejGOElaVlH8" }}
+          defaultCenter={this.initialCenter}
+          defaultZoom={this.zoom}
+          onClick={this.onClick}
+          onBoundsChange={this.onBoundsChange}
+          center={{
+            lat: this.state.lat,
+            lng: this.state.lng
+          }}
+        >
+
+          <Marker
+            lat={this.state.lat}
+            lng={this.state.lng}
+          />
+        </GoogleMapReact>
+        {/* <div id="tempMarker">
+        </div> */}
+        
+      </div>
+    );
+  }
+}
+
+class Marker extends Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    return(
+      <div id="marker">
+        <i class="material-icons" style={{color: 'red'}}>
+          place
+        </i>
+      </div>
+    )
+  }
+}
+
+
+export default Map;

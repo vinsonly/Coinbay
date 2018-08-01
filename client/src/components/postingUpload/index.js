@@ -35,6 +35,7 @@ class PostingUpload extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleImageSubmit = this.handleImageSubmit.bind(this);
+        this.setLocation = this.setLocation.bind(this);
     }
 
     async handleSubmit(event) {
@@ -187,6 +188,15 @@ class PostingUpload extends React.Component {
 
     }
 
+    setLocation(lat, lng) {
+        this.setState({
+            location: {
+                lat: lat,
+                lng: lng
+            }
+        })
+    }
+
     handleChange(event) {
 
         let abstract1 = this.state.abstract.abstract1;
@@ -273,6 +283,8 @@ class PostingUpload extends React.Component {
 
   render() {
 
+    console.log(this.state);
+
     return(
         <div id="postingUploadContainer">
             <h3>Posting Upload</h3>
@@ -318,7 +330,7 @@ class PostingUpload extends React.Component {
                     <label htmlFor="meetingLocation" className="grey-text">Longitude</label>
                     <input onChange={this.handleChange} type="number" id="lng" className="form-control meetingLocation"/>
 
-                    <Map />
+                    <Map setLocation={this.setLocation}/>
 
                     <Accept handleSubmit={this.handleImageSubmit}/>
                     Uploaded Images:
