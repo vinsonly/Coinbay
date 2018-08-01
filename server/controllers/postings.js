@@ -25,6 +25,7 @@ module.exports = {
             postingTitle: req.body.postingTitle,
             modelName: req.body.modelName,
             brand: req.body.brand,
+            category: req.body.category,
             price: req.body.price,
             status: "active",
             description: req.body.description,

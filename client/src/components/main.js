@@ -16,6 +16,7 @@ import MetaCoin from "./ethComponents/metacoin.js"
 
 import Login from "./login/Login"
 import Register from "./register/Register"
+import UserDashboard from './userDashboard';
 
 class Main extends Component {
 
@@ -57,6 +58,8 @@ class Main extends Component {
     }
 
     render() {
+
+        console.log(this.props.loggedInUser);
 
         //check if props are different
         if(this.isPropsDifferent()) {
@@ -110,6 +113,7 @@ class Main extends Component {
                     <Route path="/register" component={Register}/>
                     <Route path="/notifications" component={Notifications}/>
                     <Route path="/sign_out" component={SignOut}/>
+                    <Route path="/profile" render={props => <UserDashboard loggedInUser={this.props.loggedInUser} />} />
                     <Route component={Whoops404}/>
                 </Switch>
             </main>

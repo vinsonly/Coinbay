@@ -10,7 +10,7 @@ module.exports = (app) => {
 
     app.post('/api/user', usersController.isExistingUser, usersController.create);
     app.get('/api/users', usersController.read);
-    app.post('/api/user/update', usersController.update);
+    app.post('/api/user/update', usersController.isValidUpdate, usersController.update);
     app.post('/api/user/delete', usersController.delete);
     app.get('/api/user/:id', usersController.findById);
     app.get('/api/user/:id/boughtPosts', usersController.findBoughtPostsByUserId);

@@ -8,6 +8,7 @@
     "start": "node server/server.js"
   },
   "dependencies": {
+    "@google/maps": "^0.5.5",
     "bcrypt": "^3.0.0",
     "ejs": "^2.6.1",
     "express": "^4.16.2",
