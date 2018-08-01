@@ -2,7 +2,7 @@
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  padding-top: 4em
+  padding-top: 6em
 }
 
 .items {
@@ -72,4 +72,10 @@ div.center-button {
 .tabs p:nth-child(3) {
   margin-left: 11.6em;
   float: left;
+}
+
+.return-results {
+  position: absolute;
+  color: #007bff;
+  font-size: 1.2em;
 }

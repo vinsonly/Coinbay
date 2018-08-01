@@ -14,7 +14,8 @@ class Posts extends Component {
 
 		this.state = { 
 			format: "grid",
-			counter: 20
+			counter: 20,
+			results: 0
 		};
 
 		fetch(`/api/postings_with_users`)
@@ -146,21 +147,24 @@ class Posts extends Component {
 					</div>
 				);
 			} else if (this.props.match.params.category != null) {
+				var counter = 0;
 				return (
 					<div>
 						<div className="format-options">
 							{this.postingView()}
 						</div>
 						<div className="container">
-								{this.state.postings.map(posting => {
-									if (posting.category == this.props.match.params.category) {
-										return (
-											<div className={this.classFormat(this.state.format)}>
-												<SimpleMediaCard format={this.state.format} post={posting.id} title={posting.postingTitle} description={posting.description} price={posting.price} username={posting.User.username} rating={posting.User.rating} date={posting.createdAt} image={posting.images[0]}/>
-											</div>
-										)
-									}
-								})}
+							{this.state.postings.map(posting => {
+								if (posting.category == this.props.match.params.category) {
+									counter++;
+									return (
+										<div className={this.classFormat(this.state.format)}>
+											<SimpleMediaCard format={this.state.format} post={posting.id} title={posting.postingTitle} description={posting.description} price={posting.price} username={posting.User.username} rating={posting.User.rating} date={posting.createdAt} image={posting.images[0]}/>
+										</div>
+									)
+								}
+							})}
+							<p className="return-results">Number of results found: {counter}</p>
 						</div>
 					</div>
 				);
