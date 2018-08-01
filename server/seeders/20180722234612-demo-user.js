@@ -3,8 +3,9 @@
 const faker = require('faker');
 
 var array = [];
+var numUsers = 1000;
 
-for (var i = 0; i<100; i++){
+for (var i = 0; i<numUsers; i++){
   array.push({
     email: faker.internet.email(),
     username: faker.internet.userName(),

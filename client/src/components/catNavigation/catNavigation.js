@@ -13,18 +13,18 @@ var categories = {
             3: "Electronics",
             4: "Books",
             5: "Clothing",
-            6: "Jewelry",
+            6: "Jewelry & Accessories",
             7: "Art",
             8: "Health",
             9: "Gardening",
             10: "Office",
             11: "Music",
-            12: "Home",
-            13: "Outdoors",
+            12: "Home & Furniture",
+            13: "Sports & Outdoors",
             14: "Toys",
             15: "Tools",                    
             16: "Antiques",
-            17: "miscellaneous"
+            17: "Miscellaneous"
 };
 
 
