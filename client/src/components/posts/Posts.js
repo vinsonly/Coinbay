@@ -87,10 +87,10 @@ class Posts extends Component {
 	}
 	postingView() {
 		return (
-			<div className="format-options">
-				<p className="grid" onClick={() => this.changeFormat("grid")}>grid layout&nbsp;&nbsp;&nbsp;</p>
-				<p className="detailed-list" onClick={() => this.changeFormat("detailed-list")}>detailed list layout&nbsp;&nbsp;&nbsp;</p>
-				<p className="list" onClick={() => this.changeFormat("list")}>list layout&nbsp;&nbsp;&nbsp;</p>
+			<div className="format-options tabs">
+				<p className="grid" onClick={() => this.changeFormat("grid")}>Grid</p>
+				<p className="detailed-list" onClick={() => this.changeFormat("detailed-list")}>Detailed List</p>
+				<p className="list" onClick={() => this.changeFormat("list")}>simple List</p>
 			</div>
 		)
 	}
