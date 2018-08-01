@@ -10,6 +10,7 @@ import Whoops404 from './whoops404/Whoops404';
 import SinglePosting from './postingSingle';
 import PostingUpload from './postingUpload';
 import SignOut from './signout';
+import Notifications from './notifications/notifications';
 
 import MetaCoin from "./ethComponents/metacoin.js"
 
@@ -110,6 +111,7 @@ class Main extends Component {
                     <Route path="/new_posting/" component={PostingUpload}/>
                     <Route path="/login" component={Login}/>
                     <Route path="/register" component={Register}/>
+                    <Route path="/notifications" component={Notifications}/>
                     <Route path="/sign_out" component={SignOut}/>
                     <Route path="/profile" render={props => <UserDashboard loggedInUser={this.props.loggedInUser} />} />
                     <Route component={Whoops404}/>

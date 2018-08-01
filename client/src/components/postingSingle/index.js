@@ -29,7 +29,7 @@ class SinglePosting extends React.Component {
     let postingStatus;
     let userStatus;
 
-    this.state = {};
+    this.state = {buttonText: "Bid Now"};
 
     this.arraySetupWrapper = this.arraySetupWrapper.bind(this);
 
@@ -83,6 +83,20 @@ class SinglePosting extends React.Component {
     this.setState(result);
   }
 
+  offered() {
+    var bidButton = document.getElementsByClassName('bid-button');
+    // need condition to check (upon revisit) to see if already bidded
+    bidButton[0].style.color = "black";
+    bidButton[0].style.backgroundColor = "grey";
+    bidButton[0].style.cursor = "default";   
+
+    this.setState(
+        (prevState,props)=>{
+        return {buttonText: "Bidded"};
+        }
+    );
+
+  }
   render() {
 
     window.state = this.state;
@@ -134,11 +148,9 @@ class SinglePosting extends React.Component {
                       })}
 
                     </div>
-                    <Link to={"/"+this.props.loggedInUser.username+"/transaction/" + this.props.match.params.id}>
-                      <Button variant="contained" color="primary" className={this.props.button}>
-                        Buy Now
-                      </Button>
-                    </Link>
+                    <Button onClick={ () => this.offered() } variant="contained" color="primary" className="bid-button">
+                      {this.state.buttonText}
+                    </Button>
                 </div>
             </Grid>
     

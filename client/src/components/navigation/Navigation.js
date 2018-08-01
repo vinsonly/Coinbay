@@ -26,7 +26,6 @@ class Navigation extends Component {
         this.checkUserLoggedIn();
 
     }
-
     onClick(){
         this.setState({
             collapse: !this.state.collapse,
@@ -100,6 +99,10 @@ class Navigation extends Component {
                             <NavbarNav right>
                                 {
                                     (this.props.loggedInUser.id) ? (<NavItem>
+                                        <NavItem>
+                                            <NavLink to="/notifications">Notifications</NavLink>
+                                        </NavItem>
+                                        {/* {this.notifier()} */}
                                         <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
                                         <DropdownToggle nav caret>{this.props.loggedInUser.username}</DropdownToggle>
                                         <DropdownMenu>
@@ -123,7 +126,7 @@ class Navigation extends Component {
                                             <NavLink to="/login">Login</NavLink>
                                         </NavItem>
                                     ) : (<div></div>)
-                                }               
+                                }        
                             </NavbarNav>
                         </Collapse>
                     </Navbar>
