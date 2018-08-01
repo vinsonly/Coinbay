@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './styling.css';
 import ReactSpinner from '../misc/reactspinner.js';
-import TimePickers from '../timePickers/timePickers';
+
 import Dropzone from 'react-dropzone'
 
 class PostingUpload extends React.Component {
@@ -309,14 +309,6 @@ class PostingUpload extends React.Component {
                     
                     <label htmlFor="description" className="grey-text">Description</label>
                     <textarea onChange={this.handleChange} type="text" id="description" className="form-control" rows="3"></textarea>
-                    <br/>
-
-                    <label htmlFor="date-time" className="grey-text">Date and Time</label>
-                    <br/>
-                    <div id="time-1">
-                        <TimePickers/>
-                    </div>
-
                     <br/>
 
                     <label htmlFor="meetingLocation" className="grey-text">Latitude</label>

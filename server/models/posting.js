@@ -37,10 +37,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.JSONB,
       allowNull: true
     },
-    times: {
-      type: DataTypes.STRING,
-      allowNull: true
-    },
     images: {
       type: DataTypes.ARRAY(DataTypes.STRING),
       allowNull: true
