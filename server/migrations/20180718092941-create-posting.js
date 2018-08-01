@@ -45,7 +45,7 @@ module.exports = {
         allowNull: true
       },
       times: {
-        type: Sequelize.ARRAY(Sequelize.STRING),
+        type: Sequelize.STRING,
         allowNull: true,
       },
       images: {
