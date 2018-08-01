@@ -36,3 +36,12 @@ div.center-button {
 .format-options > p {
   display: inline-block
 }
+
+.view img {
+  margin: auto;
+  height: 250px;
+}
+
+.view {
+  background-color: #0c0c0c;
+}
