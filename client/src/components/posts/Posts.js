@@ -45,9 +45,9 @@ class Posts extends Component {
 	componentDidMount() {
 		window.addEventListener('scroll', function() {
 
-			console.log(window.innerHeight);
-			console.log(window.scrollY);
-			console.log(document.body.offsetHeight);
+			// console.log(window.innerHeight);
+			// console.log(window.scrollY);
+			// console.log(document.body.offsetHeight);
 
 			if((window.innerHeight + window.scrollY)  + 300 >= document.body.offsetHeight) {
 				this.setState(
