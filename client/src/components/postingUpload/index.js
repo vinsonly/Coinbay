@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import './styling.css';
 import ReactSpinner from '../misc/reactspinner.js';
 
+import Map from '../maps';
+
 import Dropzone from 'react-dropzone'
 
 class PostingUpload extends React.Component {
@@ -28,7 +30,7 @@ class PostingUpload extends React.Component {
             },
             images: [],
             status: ""
-        }      
+        }
 
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -41,7 +43,7 @@ class PostingUpload extends React.Component {
 
         if(this.state.status == "Uploading image(s)...") {
             alert("Please wait for image upload to finish");
-            return;    
+            return;
         }
 
         if(this.state.status == "imageUploadFailed") {
@@ -66,7 +68,7 @@ class PostingUpload extends React.Component {
             alert("You can not leave one location field empty.");
             return;
         }
-        
+
         let price = parseInt(this.state.priceDollars) + parseInt(this.state.priceCents)/100;
 
 
@@ -89,7 +91,7 @@ class PostingUpload extends React.Component {
             if(ab.length > 1) {
                 await abstract.push(this.state.abstract[ab]);
                 abstractIsEmpty = false;
-            }        
+            }
         }
 
         data.abstract = abstract;
@@ -139,7 +141,7 @@ class PostingUpload extends React.Component {
 
         // Math.round(price*100)/100
         // use this formula to get the number to the nearest 2 decimal places
-        
+
     }
 
     handleImageSubmit(base64) {
@@ -180,9 +182,9 @@ class PostingUpload extends React.Component {
                     images: newImages
                 })
             }
-        
+
         })
-      
+
     }
 
     handleChange(event) {
@@ -204,7 +206,7 @@ class PostingUpload extends React.Component {
                 break;
             case 'brand':
                 this.setState({
-                    brand: event.target.value    
+                    brand: event.target.value
                 })
                 break;
             case 'priceDollars':
@@ -254,7 +256,7 @@ class PostingUpload extends React.Component {
                 this.setState({
                     location: {
                         lat: event.target.value,
-                        lng: this.state.location.lng 
+                        lng: this.state.location.lng
                     }
                 })
                 break;
@@ -262,7 +264,7 @@ class PostingUpload extends React.Component {
                 this.setState({
                     location: {
                         lat: this.state.location.lat,
-                        lng: event.target.value 
+                        lng: event.target.value
                     }
                 })
                 break;
@@ -270,8 +272,8 @@ class PostingUpload extends React.Component {
     }
 
   render() {
-    
-    return(    
+
+    return(
         <div id="postingUploadContainer">
             <h3>Posting Upload</h3>
             <div className="formContainer">
@@ -280,33 +282,33 @@ class PostingUpload extends React.Component {
                     <span className="mandatoryStar">*</span>
                     <input onChange={this.handleChange} type="text" id="postingTitle" className="form-control"/>
                     <br/>
-                    
+
                     <label htmlFor="modelName" className="grey-text">Model Name</label>
                     <span className="mandatoryStar">*</span>
                     <input onChange={this.handleChange} type="text" id="modelName" className="form-control"/>
                     <br/>
-                    
+
                     <label htmlFor="brand" className="grey-text">Brand</label>
                     <span className="mandatoryStar">*</span>
                     <input onChange={this.handleChange} type="text" id="brand" className="form-control"/>
                     <br/>
-                    
+
                     <label htmlFor="price" className="grey-text">Price</label>
                     <span className="mandatoryStar">*</span>
                     <div id="priceContainer">
-                        <span id="dollar">$</span> 
+                        <span id="dollar">$</span>
                         <input onChange={this.handleChange} value={this.state.priceDollars} type="number" id="priceDollars" className="form-control"/>
-                        <span id="dot">.</span> 
+                        <span id="dot">.</span>
                         <input onChange={this.handleChange} value={this.state.priceCents} type="number" id="priceCents" className="form-control"/>
                     </div>
                     <br/>
-                    
+
                     <label htmlFor="abstract" className="grey-text">Abstract</label>
                     <input onChange={this.handleChange} type="text" id="abstract1" className="form-control abstract"/>
                     <input onChange={this.handleChange} type="text" id="abstract2" className="form-control abstract"/>
                     <input onChange={this.handleChange} type="text" id="abstract3" className="form-control abstract"/>
                     <br/>
-                    
+
                     <label htmlFor="description" className="grey-text">Description</label>
                     <textarea onChange={this.handleChange} type="text" id="description" className="form-control" rows="3"></textarea>
                     <br/>
@@ -315,7 +317,10 @@ class PostingUpload extends React.Component {
                     <input onChange={this.handleChange} type="number" id="lat" className="form-control meetingLocation"/>
                     <label htmlFor="meetingLocation" className="grey-text">Longitude</label>
                     <input onChange={this.handleChange} type="number" id="lng" className="form-control meetingLocation"/>
-                    <Accept handleSubmit={this.handleImageSubmit}/> 
+
+                    <Map />
+
+                    <Accept handleSubmit={this.handleImageSubmit}/>
                     Uploaded Images:
                     <div className="uploadedImages">{
                         this.state.images.map(image => {
@@ -368,9 +373,9 @@ class Accept extends React.Component {
                     // console.log(reader.result);
                     let base64 = removeFirstChars(reader.result, file.type);
                     // console.log(base64)
-                
+
                     acceptedBase64.push(base64);
-                    
+
                     props.handleSubmit(base64);
 
                     // upload to imgur and wait for callback before continuing with posting
@@ -431,14 +436,14 @@ class Status extends React.Component {
                         <ReactSpinner />
                     </div>
                 )
-            } 
+            }
             else if(this.props.status == "imageUploadFailed") {
                 return (
                     <div className="postingStatus">
                         <span className="spanStatus">{this.props.status}</span>
                         <i className="material-icons" styles="color: red;">
                             error
-                        </i>                    
+                        </i>
                     </div>
                 )
             } else {
@@ -447,7 +452,7 @@ class Status extends React.Component {
                         <span className="spanStatus">{this.props.status}</span>
                         <i className="material-icons" styles="color: green;">
                             check
-                        </i>                    
+                        </i>
                     </div>
                 )
             }

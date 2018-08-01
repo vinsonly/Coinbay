@@ -8,16 +8,19 @@
     "start": "node server/server.js"
   },
   "dependencies": {
+    "@google/maps": "^0.5.5",
     "bcrypt": "^3.0.0",
     "ejs": "^2.6.1",
     "express": "^4.16.2",
     "faker": "^4.1.0",
+    "google-map-react": "^1.0.5",
     "install": "^0.12.1",
     "jsonwebtoken": "^8.3.0",
     "npm": "^6.2.0",
     "pg": "^7.4.3",
     "pg-hstore": "^2.3.2",
     "react-autosuggest": "^9.3.4",
+    "react-google-maps": "^9.4.5",
     "sequelize": "^4.38.0"
   },
   "devDependencies": {
