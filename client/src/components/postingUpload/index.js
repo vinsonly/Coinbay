@@ -16,6 +16,7 @@ class PostingUpload extends React.Component {
             postingTitle: "",
             modelName: "",
             brand: "",
+            category: "",
             priceDollars: 0,
             priceCents: 0,
             description: "",
@@ -40,7 +41,7 @@ class PostingUpload extends React.Component {
 
     async handleSubmit(event) {
         event.preventDefault();
-        console.log(this.state);
+        // console.log(this.state);
 
         if(this.state.status == "Uploading image(s)...") {
             alert("Please wait for image upload to finish");
@@ -57,6 +58,7 @@ class PostingUpload extends React.Component {
         if(this.state.postingTitle.length < 1 ||
         this.state.modelName.length < 1 ||
         this.state.brand.length < 1 ||
+        this.state.category.length < 1 ||
         !this.state.priceDollars ||
         !this.state.priceCents) {
             alert("Please fill out all mandatory fields");
@@ -77,7 +79,9 @@ class PostingUpload extends React.Component {
             postingTitle: this.state.postingTitle,
             modelName: this.state.modelName,
             brand: this.state.brand,
+            category: this.state.category,
             price: price,
+            location: this.state.location
         }
 
         if(this.state.description.length > 0) {
@@ -106,9 +110,8 @@ class PostingUpload extends React.Component {
         }
 
 
-        if(this.state.images[0]) {
-            let images;
-            data.images = images;
+        if(this.state.images.length > 0) {
+            data.images = this.state.images;
         }
 
         console.log(data);
@@ -278,12 +281,15 @@ class PostingUpload extends React.Component {
                     }
                 })
                 break;
+            case 'categorySelector':
+                this.setState({
+                    category: event.target.value
+                })
+                break;
         }
     }
 
   render() {
-
-    console.log(this.state);
 
     return(
         <div id="postingUploadContainer">
@@ -303,6 +309,30 @@ class PostingUpload extends React.Component {
                     <label htmlFor="brand" className="grey-text">Brand</label>
                     <span className="mandatoryStar">*</span>
                     <input onChange={this.handleChange} type="text" id="brand" className="form-control"/>
+                    <br/>
+
+                    <label htmlFor="Category" className="grey-text">Category*</label><br/>
+                    <div id="categoryDiv">
+                        <select name="category" id="categorySelector" value={this.state.category} onChange={this.handleChange}>
+                            <option value="Beauty">Beauty</option>
+                            <option value="Pets">Pets</option>
+                            <option value="Electronics">Electronics</option>
+                            <option value="Books">Books</option>
+                            <option value="Clothing">Clothing</option>
+                            <option value="Jewelry">Jewelry</option>
+                            <option value="Art">Art</option>
+                            <option value="Health">Health</option>
+                            <option value="Gardening">Gardening</option>
+                            <option value="Office">Office</option>
+                            <option value="Music">Music</option>
+                            <option value="Home">Home</option>
+                            <option value="Outdoors">Outdoors</option>
+                            <option value="Toys">Toys</option>
+                            <option value="Tools">Tools</option>
+                            <option value="Antiques">Antiques</option>
+                            <option value="miscellaneous">miscellaneous</option>
+                        </select>
+                    </div>
                     <br/>
 
                     <label htmlFor="price" className="grey-text">Price</label>
@@ -325,11 +355,12 @@ class PostingUpload extends React.Component {
                     <textarea onChange={this.handleChange} type="text" id="description" className="form-control" rows="3"></textarea>
                     <br/>
 
-                    <label htmlFor="meetingLocation" className="grey-text">Latitude</label>
+                    {/* <label htmlFor="meetingLocation" className="grey-text">Latitude</label>
                     <input onChange={this.handleChange} type="number" id="lat" className="form-control meetingLocation"/>
                     <label htmlFor="meetingLocation" className="grey-text">Longitude</label>
-                    <input onChange={this.handleChange} type="number" id="lng" className="form-control meetingLocation"/>
+                    <input onChange={this.handleChange} type="number" id="lng" className="form-control meetingLocation"/> */}
 
+                    <label htmlFor="meetingLocation" className="grey-text">Meeting Location</label>
                     <Map setLocation={this.setLocation}/>
 
                     <Accept handleSubmit={this.handleImageSubmit}/>
