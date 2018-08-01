@@ -94,7 +94,7 @@ class SimpleMediaCard extends Component {
             <Card>
               <CardBody>
                   <div className="img-detailed">
-                    <CardImage className="img-fluid" src={this.props.image} waves />
+                    <CardImage className="img-fluid shrink-img" src={this.props.image} waves />
                     <p className="time-position">{this.parseDate(this.props.date)}</p>
                   </div>
                   <div className="detailed-title">
