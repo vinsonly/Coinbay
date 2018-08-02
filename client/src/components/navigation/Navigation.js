@@ -96,12 +96,16 @@ class Navigation extends Component {
                                   <NavLink to="/new_posting">Create Posting</NavLink>
                               </NavItem>
                             </NavbarNav>
-                            <NavbarNav right>
+                            <NavbarNav right>     
                                 {
-                                    (this.props.loggedInUser.id) ? (<NavItem>
+                                    (this.props.loggedInUser.id) ? (
                                         <NavItem>
                                             <NavLink to="/notifications">Notifications</NavLink>
                                         </NavItem>
+                                    ) : (<div></div>)
+                                }
+                                {
+                                    (this.props.loggedInUser.id) ? (<NavItem>
                                         {/* {this.notifier()} */}
                                         <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
                                         <DropdownToggle nav caret>{this.props.loggedInUser.username}</DropdownToggle>
@@ -111,7 +115,7 @@ class Navigation extends Component {
                                         </DropdownMenu>
                                         </Dropdown>
                                     </NavItem>  ) : (<div></div>)
-                                }      
+                                } 
                                 {
                                     (!this.props.loggedInUser.id) ? (        
                                         <NavItem>
