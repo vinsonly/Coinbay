@@ -80,7 +80,8 @@ module.exports = {
                                 status: req.body.status || posting.status,
                                 description: req.body.description || posting.description, 
                                 abstract: req.body.abstract || posting.abstract, 
-                                location: req.body.location || posting.location 
+                                location: req.body.location || posting.location,
+                                accepted: req.body.accepted || posting.accepted
                             })
                             .then(() => {
                                 console.log("Successfully updated posting");
@@ -162,7 +163,11 @@ module.exports = {
             .findAll({
                 where: {
                     userId: userId
-                }
+                },
+                include: [{
+                    model: User,
+                    required: true,
+                }]
             })
                 .then((postings) => {
                     console.log(`Here are all of the postings that are associated to user ${userId}:`);
@@ -253,7 +258,7 @@ module.exports = {
 
                     return posting
                         .update({
-                            status: "pending",
+                            status: "pendingConfirmation",
                             buyerId: buyerId,
                             contractAddress: contractAddress
                         })
@@ -336,6 +341,64 @@ module.exports = {
                 console.log(error);
                 res.status(400).send(error);
             })
+    },
+
+    findBuyerPosts(req, res) {
+        let userId = parseInt(req.params.userId);
+        let ogPostings;
+        return Posting
+            .findAll({
+                where: {
+                    buyerId: userId
+                }
+            })
+                .then((postings) => {
+                    console.log(`Here are all of the postings that are associated to user ${userId}:`);
+                    console.log(postings);
+                    return res.send(postings);
+                })
+                .catch((err) => {
+                    console.log("We ran into an error:");
+                    console.log(err);
+                    return res.status(400).send(err);
+                })
+    },
+
+    acceptOffer(req, res) {
+        
+        let id = parseInt(req.body.id);
+        console.log(req.body);
+        
+        return Posting
+            .findById(id)
+                .then(posting => {
+                    if(!posting) {
+                        return res.status(404).send({
+                            message: `posting with id: ${id} not found.`
+                        })
+                    } else {
+                        return posting
+                            .update({
+                                accepted: true,
+                                status: "pending"
+                            })
+                            .then(() => {
+                                console.log("Successfully updated posting");
+                                res.send(posting);
+                            })
+                            .catch((error) => {
+                                console.log("Opps we ran into an error");
+                                console.log(error);
+                                res.status(400).send(error);
+                            })
+                    }
+                })
+                .catch((error) => {
+                    console.log("Opps we ran into an error");
+                    console.log(error);
+                    res.status(400).send(error);
+                })
+            
     },
 
 }

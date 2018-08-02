@@ -8,12 +8,24 @@ contract BasicEscrow {
     bool buyerOk;
     bool sellerOk;
 
-    function BasicEscrow(address buyer_address, address seller_address) public {
+    constructor(address buyer_address, address seller_address) public {
         // this is the constructor function that runs ONCE upon initialization
         buyer = buyer_address;
         seller = seller_address;
         escrow = msg.sender;
         start = now; //now is an alias for block.timestamp, not really "now"
+    }
+
+    function getBuyerOk() public view returns (bool){
+        return buyerOk;
+    }
+
+    function getSellerOk() public view returns (bool){
+        return sellerOk;
+    }
+
+    function getBalance() public view returns (uint){
+        return balance;
     }
 
     function accept() public {
@@ -32,13 +44,14 @@ contract BasicEscrow {
 
     function payBalance() private {
         // we are sending ourselves (contract creator) a fee
-        escrow.transfer(this.balance / 100);
+        // escrow.transfer(this.balance / 100);
         // send seller the balance
-        if (seller.send(this.balance)) {
-            balance = 0;
-        } else {
-            throw;
-        }
+        // if (seller.send(this.balance)) {
+        //     balance = 0;
+        // } else {
+        //     throw;
+        // }
+        selfdestruct(seller);
     }
 
     function deposit() public payable {

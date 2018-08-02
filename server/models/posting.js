@@ -22,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
     status: { // active, sold, pending
-      type: DataTypes.ENUM('active', 'sold', 'pending'),
+      type: DataTypes.ENUM('active', 'sold', 'pendingConfirmation', 'pending'),
       allowNull: false
     },
     description: {
@@ -51,6 +51,10 @@ module.exports = (sequelize, DataTypes) => {
     },
     contractAddress: {
       type: DataTypes.STRING,
+      allowNull: true
+    },
+    accepted: {
+      type: DataTypes.BOOLEAN,
       allowNull: true
     },
   }, {});

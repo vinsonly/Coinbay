@@ -230,7 +230,7 @@ class SinglePosting extends React.Component {
 
           let data = {
             id: this.state.posting.id,
-            status: "pending",
+            status: "pendingConfirmation",
             contractAddress: contractAddress
           }
 

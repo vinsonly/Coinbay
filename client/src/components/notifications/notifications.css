@@ -3,7 +3,7 @@
 }
 
 div#notifications {
-	width: 50%;
+	width: 100%;
 	margin: auto;
 	padding-top: 50px;
 }
@@ -16,4 +16,19 @@ div#notifications > div {
 	background-color: lightblue;
 	border: 2px solid lightgrey;
 	border-radius: 15px;
+}
+
+div.notificationsPost {
+	width: 50%;
+	margin: 15px auto;
+}
+
+@media (max-width: 900px) {
+	div#buyerPendingPosts {
+		width: 100%;
+	}
+	
+	div#sellerPosts {
+		width: 100%;
+	}
 }

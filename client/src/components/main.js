@@ -111,7 +111,7 @@ class Main extends Component {
                     <Route path="/new_posting/" component={PostingUpload}/>
                     <Route path="/login" component={Login}/>
                     <Route path="/register" component={Register}/>
-                    <Route path="/notifications" component={Notifications}/>
+                    <Route path="/notifications" render={props => <Notifications loggedInUser={this.props.loggedInUser}/>} />
                     <Route path="/sign_out" component={SignOut}/>
                     <Route path="/profile" render={props => <UserDashboard loggedInUser={this.props.loggedInUser} />} />
                     <Route component={Whoops404}/>

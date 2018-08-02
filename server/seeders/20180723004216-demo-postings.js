@@ -74,7 +74,7 @@ for(var k = 0; k < 10; k++) {
     updatedAt: new Date(),
     // to randomize use: userId: Math.floor(Math.random() * 100)
     userId: 1,
-    buyerId: 2// random user from 0 to 10
+    buyerId: 3// random user from 0 to 10
   });
 }
 
@@ -100,7 +100,7 @@ for(var j = 0; j < 10; j++) {
     updatedAt: new Date(),
     // to randomize use: userId: Math.floor(Math.random() * 100)
     userId: 2,
-    buyerId: 1// random user from 0 to 10
+    buyerId: 3// random user from 0 to 10
   });
 }
 
@@ -130,7 +130,7 @@ for (var i = 0; i<numPostings; i++){
     updatedAt: new Date(),
     // to randomize use: userId: Math.floor(Math.random() * 100)
     userId: i + 1,
-    buyerId: 2 // random user from 0 to 10
+    buyerId: 4 // random user from 0 to 10
   });
 };
 
