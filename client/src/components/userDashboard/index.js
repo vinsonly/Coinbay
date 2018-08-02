@@ -5,6 +5,8 @@ import Button from '@material-ui/core/Button';
 import ReactTable from "react-table";
 import { BrowserRouter, Route, Link, Router, Redirect, withRouter } from 'react-router-dom';
 
+import swal from 'sweetalert';
+
 import './styles.css'
 
 import UserProfile from '../userProfile';
@@ -56,6 +58,84 @@ class UserDashboard extends Component {
     console.log("deleting posting", postingId);
     console.log("this", this);
     console.log("obj", obj);
+
+    swal(`Are you sure you want to delete posting ${postingId}?`,{
+      buttons: {
+        confirm: {
+          text: "OK",
+          value: true,
+          visible: true,
+          className: "",
+          closeModal: false
+        },
+        cancel: {
+          text: "Cancel",
+          value: false,
+          visible: true,
+          className: "",
+          closeModal: true,
+        }
+      }
+    }).then(res => {
+      console.log(res);
+      if(res) {
+        // delete posting
+        swal(`Deleting posting ${postingId} please wait...`);
+        // setTimeout(() => {
+        //   swal('Posting deleted...')
+        // }, 2000)
+        let sessionToken = localStorage.getItem('sessionToken');
+        let data = {
+          id: postingId
+        }
+        let status;
+
+        fetch('/api/posting/delete', {
+          method: 'POST',
+          body: JSON.stringify(data), // data can be `string` or {object}!
+          headers:{
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem('sessionToken')
+          }
+        })
+      .then((res) => {
+          status = res.status;
+          return res.json();
+      })
+      .then(body => {
+          if(status != 200) {
+            swal('We ran into an error, please try again later...');
+          } else {
+            console.log(body);
+              swal(`Posting ${postingId} successfully deleted`,{
+                buttons: {
+                  confirm: {
+                    text: "OK",
+                    value: true,
+                    visible: true,
+                    className: "",
+                    closeModal: false
+                  },
+                  cancel: {
+                    text: "Cancel",
+                    value: false,
+                    visible: false,
+                    className: "",
+                    closeModal: true,
+                  }
+                }
+              }).then(res => {
+                window.location.reload();
+              })              
+            }
+      })
+      .catch(err => {
+          console.error('ERROR', err);
+      })
+
+
+      }
+    })
   }
 
   // set the state to redirect to the posting edit page
