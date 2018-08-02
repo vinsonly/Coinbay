@@ -19,3 +19,7 @@ div#userProfile ul {
 div#editUserProfile ul {
     padding: 0;
 }
+
+.profileOffers {
+	margin-left: 1.5em !important
+}
