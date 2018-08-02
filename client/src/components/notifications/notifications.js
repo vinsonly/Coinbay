@@ -6,7 +6,7 @@ class Notifications extends React.Component {
   render() {
 
     return (
-	    <div>
+	    <div id="notifications">
 	    	<Notification bidder={"Bob"}/>
 	    	<br/>
 			<Notification bidder={"Fred"}/>
