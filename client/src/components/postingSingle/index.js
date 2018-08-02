@@ -6,6 +6,13 @@ import { Link } from 'react-router-dom';
 import './postingSingle.css';
 import SimpleMap from '../mapsPostLocation/mapsPostLocation';
 import setUpRatingArrays from '../../helpers/postings.js';
+import swal from 'sweetalert';
+import BasicEscrow from '../../eth/build/contracts/BasicEscrow.json';
+
+import getWeb3 from '../../eth/getWeb3';
+
+const contract = require('truffle-contract');
+const escrow = contract(BasicEscrow)
 
 
 const styles = theme => ({
@@ -33,6 +40,24 @@ class SinglePosting extends React.Component {
     this.state = {buttonText: "Buy Now"};
 
     this.arraySetupWrapper = this.arraySetupWrapper.bind(this);
+    this.instantiateContract = this.instantiateContract.bind(this);
+
+    //get ethereum price from cmc
+    fetch('https://api.coinmarketcap.com/v2/ticker/1027/')
+    .then(res => {
+      return res.json();
+    })
+    .then(body => {
+      console.log(body.data.quotes.USD.price);
+      this.setState({
+        ethusd: body.data.quotes.USD.price
+      })
+      window.state = this.state;
+    }) 
+    .catch(err => {
+      console.log(err);
+    });
+
 
     fetch(`/api/posting/${postingId}`)
       .then(res => {
@@ -85,19 +110,111 @@ class SinglePosting extends React.Component {
   }
 
   offered() {
-    var bidButton = document.getElementsByClassName('bid-button');
-    // need condition to check (upon revisit) to see if already bidded
-    bidButton[0].style.color = "black";
-    bidButton[0].style.backgroundColor = "grey";
-    bidButton[0].style.cursor = "default";   
+    console.log("offered");
+    let buyer = this.props.loggedInUser;
+    let seller = this.state.user;
 
-    this.setState(
-        (prevState,props)=>{
-        return {buttonText: "Deposit Submitted"};
-        }
-    );
+    console.log("buyer", buyer);
+    console.log("seller", seller);
 
+    if(buyer.id == seller.id) {
+      swal('You may not buy your own postings');
+      return;
+    }
+
+    if(!this.props.loggedInUser) {
+      swal('Please log in to place offers on items');
+    }
+
+    if(this.props.loggedInUser.crypto.length < 10) {
+      swal('Please update your profile with a valid Ethereum Address to start placing offers.');
+    }
+
+    getWeb3
+    .then(results => {
+      this.setState({
+        web3: results.web3
+      })
+
+      let ethPrice;
+
+      if(this.state.ethusd) {
+        ethPrice = parseInt(this.state.posting.price)/this.state.ethusd;
+      } else {
+        ethPrice = parseInt(this.state.posting.price)/420;
+      }
+
+      console.log(ethPrice);
+
+      // Instantiate contract once web3 provided.
+      this.instantiateContract(ethPrice)
+    })
+    .catch(() => {
+      console.log('Error finding web3.');
+    })
+
+    // create a contract 
+
+    // var bidButton = document.getElementsByClassName('bid-button');
+    // // need condition to check (upon revisit) to see if already bidded
+    // bidButton[0].style.color = "black";
+    // bidButton[0].style.backgroundColor = "grey";
+    // bidButton[0].style.cursor = "default";   
+
+    
+    // this.setState(
+    //     (prevState,props)=>{
+    //       return {buttonText: "Deposit Submitted"};
+    //     }
+    // );
   }
+
+  instantiateContract(amount) {
+    console.log("instantiating contract with amount:", amount);
+
+    if(!this.state.web3.currentProvider) {
+      swal('We ran into an connecting to the Ethereum Blockchain, please try again later.'); 
+      return; 
+    }
+
+    escrow.setProvider(this.state.web3.currentProvider)
+
+    var escrowInstance;
+
+    let sellerAddress = this.state.user.crypto;
+    let buyerAddress = this.props.loggedInUser.crypto;
+
+    this.state.web3.eth.getAccounts((error, accounts) => {
+      if(error) {
+        console.log("error", error)
+      } else {
+        console.log("accounts", accounts);
+
+        console.log("sellerAddress", sellerAddress);
+        console.log("buyerAddress", buyerAddress);
+
+        let lowerCaseBuyer = buyerAddress.toLowerCase()
+        let lowerCaseSeller = sellerAddress.toLowerCase();
+
+        if(accounts[0].toLowerCase() != buyerAddress.toLowerCase()) {
+          swal("Please set up Metamask with the same address as the one registered to your account");
+          return;
+        }
+
+        swal('Please follow the instructions on Metamask to create the contract and deposit into the newly created smart contract');
+        escrow.new(lowerCaseBuyer, lowerCaseSeller,{
+          from: accounts[0]
+        }).then(instance => {
+          swal('Smart contract successfully created');
+          console.log('instance', instance);
+          window.instance = instance;
+        })
+
+      }
+    })
+    
+  }
+
   render() {
 
     window.state = this.state;
@@ -127,7 +244,7 @@ class SinglePosting extends React.Component {
                     <h4>Phone: {this.state.user.phone}</h4>
                     <h4>Ethereum Address: {this.state.user.crypto}</h4>
                     <div className="sellerRating">
-                      <h4>Rating</h4>
+                      <h4 style={{marginBottom: 0}}>Rating:</h4>
                
                       {this.state.blackStarArray.map((x, index) => {
                         return (
