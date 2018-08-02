@@ -69,6 +69,7 @@ for(var k = 0; k < 10; k++) {
     status: 'active',
     description: faker.lorem.sentence(),
     images: [image],
+    date: faker.date.future(),
     createdAt: faker.date.past(),
     updatedAt: new Date(),
     // to randomize use: userId: Math.floor(Math.random() * 100)
@@ -94,6 +95,7 @@ for(var j = 0; j < 10; j++) {
     status: 'active',
     description: faker.lorem.sentence(),
     images: [image],
+    date: faker.date.future(),
     createdAt: faker.date.past(),
     updatedAt: new Date(),
     // to randomize use: userId: Math.floor(Math.random() * 100)
@@ -123,6 +125,7 @@ for (var i = 0; i<numPostings; i++){
     status: 'active',
     description: faker.lorem.sentence(),
     images: [image],
+    date: faker.date.future(),
     createdAt: faker.date.past(),
     updatedAt: new Date(),
     // to randomize use: userId: Math.floor(Math.random() * 100)
