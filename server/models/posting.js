@@ -33,6 +33,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.ARRAY(DataTypes.STRING),
       allowNull: true
     },
+    date: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
     location: {
       type: DataTypes.JSONB,
       allowNull: true

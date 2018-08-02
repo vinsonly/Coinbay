@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './styling.css';
 import ReactSpinner from '../misc/reactspinner.js';
+import TimePickers from '../timePickers/timePickers';
 
 import Map from '../maps';
 
@@ -25,6 +26,7 @@ class PostingUpload extends React.Component {
                 abstract2: "",
                 abstract3: ""
             },
+            date: "",
             location: {
                 lat: "",
                 lng: ""
@@ -148,6 +150,18 @@ class PostingUpload extends React.Component {
 
     }
 
+    componentDidMount() {
+        document.getElementsByClassName("flatpickr-input")[0].addEventListener('input', function (e) {
+            this.setState(
+                (prevState,props)=>{
+                return {date: e.target.value};
+                }
+            );
+
+            alert(this.state.date);
+        }.bind(this));
+    }
+
     handleImageSubmit(base64) {
         let obj = this;
 
@@ -201,7 +215,6 @@ class PostingUpload extends React.Component {
     }
 
     handleChange(event) {
-
         let abstract1 = this.state.abstract.abstract1;
         let abstract2 = this.state.abstract.abstract2;
         let abstract3 = this.state.abstract.abstract3;
@@ -359,6 +372,9 @@ class PostingUpload extends React.Component {
                     <input onChange={this.handleChange} type="number" id="lat" className="form-control meetingLocation"/>
                     <label htmlFor="meetingLocation" className="grey-text">Longitude</label>
                     <input onChange={this.handleChange} type="number" id="lng" className="form-control meetingLocation"/> */}
+                    <label htmlFor="date" className="grey-text">Date and Time</label>
+                    <TimePickers />
+                    <br/>
 
                     <label htmlFor="meetingLocation" className="grey-text">Meeting Location</label>
                     <Map setLocation={this.setLocation}/>
