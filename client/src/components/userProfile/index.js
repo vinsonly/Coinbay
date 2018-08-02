@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Button from '@material-ui/core/Button';
 import './styles.css'
-
+import { Link } from 'react-router-dom';
 import ReactSpinner from 'react-spinners';
 
 class UserProfile extends Component {
@@ -220,6 +220,12 @@ class UserProfile extends Component {
                     <Button onClick={this.openEdit} variant="contained" color="primary" className={"profileEditButton"}>
                         Edit User Info
                     </Button>
+
+                    <Link to="/notifications">
+                        <Button variant="contained" color="primary" className={"profileOffers"}>
+                            View Offers
+                        </Button>
+                    </Link>
 
                 </ul>
             </div>
