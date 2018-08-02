@@ -259,7 +259,7 @@ div.center-button {
   p#expand {
     margin: auto;
     position: absolute;
-    margin-top: 50px;
+    margin-top: 0;
     left: 0;
     margin-left: 20px;
     margin-right: 20px;
@@ -269,7 +269,8 @@ div.center-button {
   div.format-options.tabs {
     display: flex;
     justify-content:  space-around;
-    width: 100vw;
+    width: 100%;
+    margin-top: 50px;
   }
 
   div.format-options.tabs p {
@@ -280,7 +281,6 @@ div.center-button {
   div.container {
     padding-left: 0;
     padding-right: 0;
-    padding-top: 60px;
   }
 
   div.container div.items {
@@ -288,4 +288,9 @@ div.center-button {
     padding-right: 0;
   }
 
+  div#postingSingleDiv {
+    /* margin-top: 50px;   */
+  }
+  
 }
+
