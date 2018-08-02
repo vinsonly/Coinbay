@@ -65,6 +65,11 @@ class PostingUpload extends React.Component {
             return;
         }
 
+        if(!(this.state.images && this.state.images.length > 0)) {
+            alert("You must upload at least one image");
+            return;
+        }
+
         if( (this.state.location.lat && !this.state.location.lng) ||
             (!this.state.location.lat && this.state.location.lng)
         ) {

@@ -30,7 +30,7 @@ class SinglePosting extends React.Component {
     let postingStatus;
     let userStatus;
 
-    this.state = {buttonText: "Bid Now"};
+    this.state = {buttonText: "Buy Now"};
 
     this.arraySetupWrapper = this.arraySetupWrapper.bind(this);
 
@@ -93,7 +93,7 @@ class SinglePosting extends React.Component {
 
     this.setState(
         (prevState,props)=>{
-        return {buttonText: "Bidded"};
+        return {buttonText: "Deposit Submitted"};
         }
     );
 

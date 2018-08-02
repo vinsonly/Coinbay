@@ -16,9 +16,11 @@ function getSuggestionValue(suggestion) {
 function renderSuggestion(suggestion, { query }) {
   const suggestionText = `${suggestion.postingTitle}`;
 
+  console.log(suggestion.images);
+
   return (
     <span>
-        <ListSpan text={suggestion.postingTitle} postingId={suggestion.id} postingImage={suggestion.images[0]}/>
+        <ListSpan text={suggestion.postingTitle} postingId={suggestion.id} postingImage={suggestion.images}/>
     </span>
   );
 }

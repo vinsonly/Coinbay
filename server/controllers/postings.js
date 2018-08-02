@@ -28,6 +28,7 @@ module.exports = {
             category: req.body.category,
             price: req.body.price,
             status: "active",
+            images: req.body.images,
             description: req.body.description,
             abstract: req.body.abstract,
             location: req.body.location,
