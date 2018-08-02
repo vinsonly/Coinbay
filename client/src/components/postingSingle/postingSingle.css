@@ -27,4 +27,5 @@ div.sellerRating h3 {
 .image-display {
     width:100%;
     max-width:35em;
+    margin: 0 auto
 }
