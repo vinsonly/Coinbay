@@ -270,7 +270,7 @@ div.center-button {
     display: flex;
     justify-content:  space-around;
     width: 100%;
-    margin-top: 50px;
+    /* margin-top: 50px; */
   }
 
   div.format-options.tabs p {

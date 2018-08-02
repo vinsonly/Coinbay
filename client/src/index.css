@@ -4,3 +4,8 @@ body {
   font-family: sans-serif;
 }
 
+@media (max-width: 433px) {
+  main > div{
+    padding-top: 50px;
+  }
+}
