@@ -4,6 +4,7 @@ import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
 import './postingSingle.css';
+import SimpleMap from '../mapsPostLocation/mapsPostLocation';
 import setUpRatingArrays from '../../helpers/postings.js';
 
 
@@ -159,8 +160,10 @@ class SinglePosting extends React.Component {
                     </Button>
                 </div>
             </Grid>
-    
           </Grid>
+          <div className="post-map">
+            <SimpleMap lat={49.282482} lng={-123.118275} />
+          </div>
         </div>
       );
     }
