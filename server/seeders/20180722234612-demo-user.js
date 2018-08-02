@@ -14,7 +14,7 @@ for (var i = 0; i<numUsers; i++){
       username: "user1",
       password: "$2b$10$3l2k.FIeEZMBY1Qq0ww9YuGE.BoeysdlR6EZJDznZRYZNR88Eq9I2",
       phone: faker.phone.phoneNumber(),
-      crypto: "",
+      crypto: "0x6841EBBd0CBC33dcD114C548C99396710cc25e5B",
       rating: Math.floor(Math.random() * 10),
       createdAt: faker.date.past(),
       updatedAt: new Date()
@@ -25,7 +25,7 @@ for (var i = 0; i<numUsers; i++){
       username: "user2",
       password: "$2b$10$YFN3uq9wjR1it.ICD0oxw.uD3hTKYeJql7kEh.7hOmijb9HqFsXNK",
       phone: faker.phone.phoneNumber(),
-      crypto: "",
+      crypto: "0x9ba1F32F809b6C58945Ada29d10cB82cA078C5E5",
       rating: Math.floor(Math.random() * 10),
       createdAt: faker.date.past(),
       updatedAt: new Date()

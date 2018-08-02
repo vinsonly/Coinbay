@@ -44,6 +44,10 @@ module.exports = (sequelize, DataTypes) => {
     images: {
       type: DataTypes.ARRAY(DataTypes.STRING),
       allowNull: true
+    },
+    txid: {
+      type: DataTypes.STRING,
+      allowNull: true
     }
   }, {});
   Posting.associate = function(models) {
