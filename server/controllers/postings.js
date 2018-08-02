@@ -226,11 +226,15 @@ module.exports = {
 
         let buyerId = req.body.validatedUser.id;
 
-        if(!buyerId || !id) {
+        let addy = req.body.contractAddress;
+        
+        if(!buyerId || !id || !addy) {
             return res.status(400).send({
                 message: "Missing parameters, please check your request and try again."
             })
         }
+
+        let contractAddress = addy.toLowerCase();
 
         return Posting
         .findById(id)
@@ -251,6 +255,7 @@ module.exports = {
                         .update({
                             status: "pending",
                             buyerId: buyerId,
+                            contractAddress: contractAddress
                         })
                         .then(() => {
                             console.log("Successfully updated posting");

@@ -196,6 +196,8 @@ class SinglePosting extends React.Component {
         let lowerCaseBuyer = buyerAddress.toLowerCase()
         let lowerCaseSeller = sellerAddress.toLowerCase();
 
+        let contractAddress;
+
         if(accounts[0].toLowerCase() != buyerAddress.toLowerCase()) {
           swal("Please set up Metamask with the same address as the one registered to your account");
           return;
@@ -204,10 +206,83 @@ class SinglePosting extends React.Component {
         swal('Please follow the instructions on Metamask to create the contract and deposit into the newly created smart contract');
         escrow.new(lowerCaseBuyer, lowerCaseSeller,{
           from: accounts[0]
-        }).then(instance => {
+        })
+        .then(instance => {
           swal('Smart contract successfully created');
           console.log('instance', instance);
           window.instance = instance;
+
+          // deposit into our newly created smart contract
+
+          let wei = this.state.web3.toWei(amount, "ether");
+
+          console.log("wei", wei);
+
+          contractAddress = instance.address.toLowerCase();
+
+          return instance.deposit({
+            from: accounts[0],
+            value: wei
+          });
+        })
+        .then(result => {
+          console.log("result", result);
+
+          let data = {
+            id: this.state.posting.id,
+            status: "pending",
+            contractAddress: contractAddress
+          }
+
+          let status;
+
+          // post transaction to database
+          fetch(`/api/posting/buy/${this.state.posting.id}`, {
+            method: 'POST',
+            body: JSON.stringify(data), // data can be `string` or {object}!
+            headers:{
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer ' + localStorage.getItem('sessionToken')
+            }
+          })
+          .then((res) => {
+            status = res.status;
+            return res.json();
+          })
+          .then(body => {
+            if(status != 200) {
+              swal(`Error: ${body.message}`);
+            } else {
+                swal("Successfully submitted offer, please wait for the seller to accept your offer, then meet the seller at the indicated meeting location and that indicated time and date.");
+                console.log(body);
+
+                var bidButton = document.getElementsByClassName('bid-button');
+                // need condition to check (upon revisit) to see if already bidded
+                bidButton[0].style.color = "black";
+                bidButton[0].style.backgroundColor = "grey";
+                bidButton[0].style.cursor = "default";   
+
+                this.setState(
+                  (prevState,props)=>{
+                    return {buttonText: "Deposit Submitted"};
+                  }
+                );
+
+                // redirect user back to the main postings page
+                setTimeout(function() {
+                  window.location.replace('/posts');
+                }, 3000)
+
+            }
+          })
+          .catch(err => {
+            console.error('ERROR', err);
+          })
+          
+
+        })
+        .catch(err => {
+          console.log(err);
         })
 
       }
@@ -286,5 +361,7 @@ class SinglePosting extends React.Component {
     }
   }
 }
+
+
 
 export default withStyles(styles)(SinglePosting);

@@ -48,7 +48,11 @@ module.exports = (sequelize, DataTypes) => {
     txid: {
       type: DataTypes.STRING,
       allowNull: true
-    }
+    },
+    contractAddress: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
   }, {});
   Posting.associate = function(models) {
     // associations can be defined here
