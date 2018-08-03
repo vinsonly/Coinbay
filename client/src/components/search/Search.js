@@ -146,12 +146,22 @@ class SearchInner extends Component {
 
     let value = target.childNodes[0].childNodes[0].value;
 
-    console.log(this.state);
+    // console.log(this.state);
 
     // sessionStorage.setItem('itemDisplay', JSON.stringify(this.state.suggestions));
 
-    console.log(this.props);
+    // console.log(this.props);
+
+    if(value != '' && Object.keys(this.state.suggestions).length == 0){
+      this.props.handleRouteCallback("/posts", {});
+    }
+    // else if(value == ''){
+      // this.props.handleRouteCallback("/posts", null);
+    // }
+    else{
       this.props.handleRouteCallback("/posts", this.state.suggestions);
+    }
+
 
   }
 

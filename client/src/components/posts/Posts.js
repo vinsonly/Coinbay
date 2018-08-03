@@ -12,7 +12,7 @@ class Posts extends Component {
 
 		let postingStatus;
 
-		this.state = { 
+		this.state = {
 			format: "grid",
 			counter: 20,
 			results: 0
@@ -41,7 +41,7 @@ class Posts extends Component {
 				})
 
 		window.props = props;
-	}	
+	}
 	componentDidMount() {
 		window.addEventListener('scroll', function() {
 
