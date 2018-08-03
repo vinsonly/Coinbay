@@ -146,7 +146,7 @@ class Posts extends Component {
 						</div>
 					</div>
 				);
-			} else if (this.props.match.params.category != null) {
+			} else if (this.props.match.params.category != null || (this.props.location.state != undefined && idArr == null)) {
 				var counter = 0;
 				return (
 					<div>
@@ -168,7 +168,8 @@ class Posts extends Component {
 						</div>
 					</div>
 				);
-			} else {
+			}
+			else {
 				return (
 					<div>
 						<div className="format-options">
