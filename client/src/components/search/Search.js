@@ -152,10 +152,16 @@ class SearchInner extends Component {
 
     // console.log(this.props);
 
-    if(value != '' && Object.keys(this.state.suggestions).length == 0)
+    if(value != '' && Object.keys(this.state.suggestions).length == 0){
       this.props.handleRouteCallback("/posts", {});
-    else
+    }
+    // else if(value == ''){
+      // this.props.handleRouteCallback("/posts", null);
+    // }
+    else{
       this.props.handleRouteCallback("/posts", this.state.suggestions);
+    }
+
 
   }
 
