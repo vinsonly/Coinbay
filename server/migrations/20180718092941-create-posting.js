@@ -29,7 +29,7 @@ module.exports = {
         allowNull: false
       },
       status: {
-        type: Sequelize.ENUM('active','pending','sold'),
+        type: Sequelize.ENUM('active','pendingConfirmation','pending','sold'),
         allowNull: false,
       },
       description: {
@@ -40,17 +40,29 @@ module.exports = {
         type: Sequelize.ARRAY(Sequelize.STRING),
         allowNull: true,
       },
+      date: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
       location: {
         type: Sequelize.JSONB,
         allowNull: true
       },
-      times: {
-        type: Sequelize.ARRAY(Sequelize.STRING),
-        allowNull: true,
-      },
       images: {
         type: Sequelize.ARRAY(Sequelize.STRING),
         allowNull: true,
+      },
+      txid: {
+        type: Sequelize.STRING,
+        allowNull: true
+      },
+      contractAddress: {
+        type: Sequelize.STRING,
+        allowNull: true
+      },
+      accepted: {
+        type: Sequelize.BOOLEAN,
+        allowNull: true
       },
       createdAt: {
         allowNull: false,

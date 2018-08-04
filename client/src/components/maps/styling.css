@@ -1,0 +1,12 @@
+div#tempMarker {
+    width: 20px;
+    height: 20px;
+    background-color: blue;
+    opacity: 0.3;
+    position: absolute;
+    z-index: 999999;
+    margin-top: -24.5%;
+    margin-left: 20.5%;
+} 
+
+

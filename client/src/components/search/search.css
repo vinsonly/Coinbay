@@ -4,6 +4,8 @@ body {
 
 .react-autosuggest__container {
   position: relative;
+  width: 95% !important;
+  margin: auto;
 }
 
 .react-autosuggest__input {
@@ -111,4 +113,9 @@ div.searchElement {
     width: 310px;
   }
   
+}
+
+.react-autosuggest__suggestions-list {
+  height: 25em;
+  overflow: auto
 }

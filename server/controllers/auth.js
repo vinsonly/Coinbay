@@ -6,9 +6,7 @@ const jwt = require('jsonwebtoken');
 const Sequelize = require('sequelize');
 const {or, and, gt, lt} = Sequelize.Op;
 
-
 console.log(User);
-
 
 // app.post('/api/login', (req, res) => {
 //     // Mock user

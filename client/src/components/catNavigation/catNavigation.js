@@ -29,6 +29,13 @@ var categories = {
 
 
 class CatNavigation extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = { 
+            navText: "Expand"
+        };
+    }
 	componentDidMount() {
 		// click on left most category to observe effect
 		document.getElementById('expand').addEventListener("click", function() {
@@ -45,11 +52,27 @@ class CatNavigation extends Component {
             });;
         }
 	}
+    textChange(text) {
+        if(text == "Expand") {
+            this.setState(
+                (prevState,props)=>{
+                return {navText: "Collaspe"};
+                }
+            );
+        }
+        else {
+            this.setState(
+                (prevState,props)=>{
+                return {navText: "Expand"};
+                }
+            );
+        }
+    }
     render() {
         var rows = [];
 
 		for (var i = 0; i < Object.keys(categories).length; i++) {
-		    rows.push(<Link to={"/posts/categories/"+categories[i]} ><button id={categories[i]}>{categories[i]}</button></Link>);
+		    rows.push(<Link to={"/posts/categories/"+categories[i]} key={categories[i]}><button id={categories[i]}>{categories[i]}</button></Link>);
 		}
         return (
         	<div>
@@ -58,7 +81,7 @@ class CatNavigation extends Component {
 				    {rows}
 				    </NavbarBrand>
 				</Navbar>
-				<p id="expand">Press me</p>
+				<p id="expand" onClick={ () => this.textChange(this.state.navText) }>{this.state.navText}</p>
 			</div>
 		)
 	}

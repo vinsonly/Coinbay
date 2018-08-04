@@ -22,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
     status: { // active, sold, pending
-      type: DataTypes.ENUM('active', 'sold', 'pending'),
+      type: DataTypes.ENUM('active', 'sold', 'pendingConfirmation', 'pending'),
       allowNull: false
     },
     description: {
@@ -33,18 +33,30 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.ARRAY(DataTypes.STRING),
       allowNull: true
     },
-    location: {
-      type: DataTypes.JSONB,
+    date: {
+      type: DataTypes.STRING,
       allowNull: true
     },
-    times: {
-      type: DataTypes.ARRAY(DataTypes.STRING),
+    location: {
+      type: DataTypes.JSONB,
       allowNull: true
     },
     images: {
       type: DataTypes.ARRAY(DataTypes.STRING),
       allowNull: true
-    }
+    },
+    txid: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    contractAddress: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    accepted: {
+      type: DataTypes.BOOLEAN,
+      allowNull: true
+    },
   }, {});
   Posting.associate = function(models) {
     // associations can be defined here

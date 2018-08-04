@@ -1,0 +1,25 @@
+li.userListField {
+    list-style: none;
+}
+
+div#userProfile {
+    padding: 0;
+    padding-right: 20px;
+}
+
+span.fieldName {
+    font-size: 20px;
+    font-weight: 500;
+}
+
+div#userProfile ul {
+    padding: 0;
+}
+
+div#editUserProfile ul {
+    padding: 0;
+}
+
+.profileOffers {
+	margin-left: 1.5em !important
+}

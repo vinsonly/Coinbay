@@ -12,9 +12,10 @@ class Posts extends Component {
 
 		let postingStatus;
 
-		this.state = { 
+		this.state = {
 			format: "grid",
-			counter: 20
+			counter: 20,
+			results: 0
 		};
 
 		fetch(`/api/postings_with_users`)
@@ -40,13 +41,13 @@ class Posts extends Component {
 				})
 
 		window.props = props;
-	}	
+	}
 	componentDidMount() {
 		window.addEventListener('scroll', function() {
 
-			console.log(window.innerHeight);
-			console.log(window.scrollY);
-			console.log(document.body.offsetHeight);
+			// console.log(window.innerHeight);
+			// console.log(window.scrollY);
+			// console.log(document.body.offsetHeight);
 
 			if((window.innerHeight + window.scrollY)  + 300 >= document.body.offsetHeight) {
 				this.setState(
@@ -87,12 +88,18 @@ class Posts extends Component {
 	}
 	postingView() {
 		return (
-			<div className="format-options">
-				<p className="grid" onClick={() => this.changeFormat("grid")}>grid layout&nbsp;&nbsp;&nbsp;</p>
-				<p className="detailed-list" onClick={() => this.changeFormat("detailed-list")}>detailed list layout&nbsp;&nbsp;&nbsp;</p>
-				<p className="list" onClick={() => this.changeFormat("list")}>list layout&nbsp;&nbsp;&nbsp;</p>
+			<div className="format-options tabs">
+				<p className="grid" onClick={() => this.changeFormat("grid")}>Grid</p>
+				<p className="detailed-list" onClick={() => this.changeFormat("detailed-list")}>Detailed List</p>
+				<p className="list" onClick={() => this.changeFormat("list")}>Simple List</p>
 			</div>
 		)
+	}
+	noResultsMsg(number) {
+		if(number > 0)
+			return "Number of results found: " + number;
+		else
+			return "No results found";
 	}
  	render() {
 		console.log(this.props);
@@ -145,35 +152,39 @@ class Posts extends Component {
 						</div>
 					</div>
 				);
-			} else if (this.props.match.params.category != null) {
+			} else if (this.props.match.params.category != null || (this.props.location.state != undefined && idArr == null)) {
+				var counter = 0;
 				return (
 					<div>
 						<div className="format-options">
 							{this.postingView()}
 						</div>
 						<div className="container">
-								{this.state.postings.map(posting => {
-									if (posting.category == this.props.match.params.category) {
-										return (
-											<div className={this.classFormat(this.state.format)}>
-												<SimpleMediaCard format={this.state.format} post={posting.id} title={posting.postingTitle} description={posting.description} price={posting.price} username={posting.User.username} rating={posting.User.rating} date={posting.createdAt} image={posting.images[0]}/>
-											</div>
-										)
-									}
-								})}
+							{this.state.postings.map(posting => {
+								if (posting.category == this.props.match.params.category) {
+									counter++;
+									return (
+										<div className={this.classFormat(this.state.format)}>
+											<SimpleMediaCard format={this.state.format} post={posting.id} title={posting.postingTitle} description={posting.description} price={posting.price} username={posting.User.username} rating={posting.User.rating} date={posting.createdAt} image={posting.images[0]}/>
+										</div>
+									)
+								}
+							})}
+							<p className="return-results">{this.noResultsMsg(counter)}</p>
 						</div>
 					</div>
 				);
-			} else {
+			}
+			else {
 				return (
 					<div>
 						<div className="format-options">
 							{this.postingView()}
 						</div>
 						<div className="container">
-								{this.state.postings.slice(0, this.state.counter).map(posting => {
+								{this.state.postings.slice(0, this.state.counter).map((posting, index) => {
 									return (
-										<div className={this.classFormat(this.state.format)}>
+										<div className={this.classFormat(this.state.format)} key={index}>
 											<SimpleMediaCard format={this.state.format} post={posting.id} title={posting.postingTitle} description={posting.description} price={posting.price} username={posting.User.username} rating={posting.User.rating} date={posting.createdAt} image={posting.images}/>
 										</div>
 									)

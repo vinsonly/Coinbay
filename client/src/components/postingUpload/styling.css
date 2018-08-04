@@ -65,3 +65,8 @@ span.spanStatus {
 span.mandatoryStar {
     color: red;
 }
+
+select#categorySelector {
+    width: 100%;
+    padding: 10px;
+}

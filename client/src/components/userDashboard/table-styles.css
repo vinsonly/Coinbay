@@ -1,0 +1,25 @@
+.rt-tr.-odd {
+	background-color: #e6f3f7
+}
+
+.rt-td:nth-of-type(5) button, .rt-td:nth-of-type(7) button, .rt-td:nth-of-type(8) button {
+	border: none;
+	border-radius: 0.3em;
+	padding: 0.2em 0.5em 0.2em 0.5em;
+	cursor:pointer
+}
+
+.rt-td:nth-of-type(5) button {
+	background-color: #2bbbad;
+	color: white
+}
+
+.rt-td:nth-of-type(7) button {
+	background-color: #ff1919;
+	color: white
+}
+
+.rt-td:nth-of-type(8) button {
+	background-color: #007bff;
+	color: white
+}

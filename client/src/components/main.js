@@ -10,11 +10,13 @@ import Whoops404 from './whoops404/Whoops404';
 import SinglePosting from './postingSingle';
 import PostingUpload from './postingUpload';
 import SignOut from './signout';
+import Notifications from './notifications/notifications';
 
 import MetaCoin from "./ethComponents/metacoin.js"
 
 import Login from "./login/Login"
 import Register from "./register/Register"
+import UserDashboard from './userDashboard';
 
 class Main extends Component {
 
@@ -56,6 +58,8 @@ class Main extends Component {
     }
 
     render() {
+
+        console.log(this.props.loggedInUser);
 
         //check if props are different
         if(this.isPropsDifferent()) {
@@ -107,7 +111,9 @@ class Main extends Component {
                     <Route path="/new_posting/" component={PostingUpload}/>
                     <Route path="/login" component={Login}/>
                     <Route path="/register" component={Register}/>
+                    <Route path="/notifications" render={props => <Notifications loggedInUser={this.props.loggedInUser}/>} />
                     <Route path="/sign_out" component={SignOut}/>
+                    <Route path="/profile" render={props => <UserDashboard loggedInUser={this.props.loggedInUser} />} />
                     <Route component={Whoops404}/>
                 </Switch>
             </main>

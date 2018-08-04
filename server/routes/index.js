@@ -10,7 +10,7 @@ module.exports = (app) => {
 
     app.post('/api/user', usersController.isExistingUser, usersController.create);
     app.get('/api/users', usersController.read);
-    app.post('/api/user/update', usersController.update);
+    app.post('/api/user/update', usersController.isValidUpdate, usersController.update);
     app.post('/api/user/delete', usersController.delete);
     app.get('/api/user/:id', usersController.findById);
     app.get('/api/user/:id/boughtPosts', usersController.findBoughtPostsByUserId);
@@ -18,13 +18,17 @@ module.exports = (app) => {
     app.get('/api/user/postings/:userId', postingsController.findByUser);
 
     app.get('/api/postings', postingsController.read);
+    app.post('/api/posting/acceptoffer', postingsController.acceptOffer);
     app.post('/api/posting', authController.verifyToken, postingsController.create);
     app.post('/api/posting/update', postingsController.update);
     app.post('/api/posting/delete', postingsController.delete);
     app.get('/api/posting/:id', postingsController.findById);
     app.get('/api/postings_with_users/', postingsController.getActivePostsWithSellers);
+    app.get('/api/buyer_postings/:userId', postingsController.findBuyerPosts);
+    
     // app.get('/api/postings/?=asdsadsadsad', postingsController.search); //read the query string from the URL and query the database
 
+    app.post('/api/posting/buy/:id', authController.verifyToken, postingsController.setUpTransaction);
 
     app.get('/api/adminusers', adminusersController.read);
     app.post('/api/adminuser', adminusersController.create);

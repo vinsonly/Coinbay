@@ -1,7 +1,9 @@
 .container {
   display: flex;
   justify-content: center;
-  flex-wrap: wrap
+  flex-wrap: wrap;
+  padding-top: 6em;
+  position: relative
 }
 
 .items {
@@ -36,3 +38,261 @@ div.center-button {
 .format-options > p {
   display: inline-block
 }
+
+.view img {
+  margin: auto;
+  height: 250px;
+}
+
+.view {
+  background-color: #0c0c0c;
+}
+
+.tabs p {
+  position: absolute;
+  font-size: 1.2em;
+  padding: 0.2em;
+  border: solid #e3f2fd;
+  border-bottom-left-radius: 0.3em;
+  border-bottom-right-radius: 0.3em;
+  background: #e3f2fd;
+  color: #007bff;
+  cursor: pointer
+}
+
+.tabs p:nth-child(1) {
+  margin-left: 1em;
+  float: left;
+}
+
+.tabs p:nth-child(2) {
+  margin-left: 4.5em;
+  float: left;
+}
+
+.tabs p:nth-child(3) {
+  margin-left: 11.6em;
+  float: left;
+}
+
+.return-results {
+  position: absolute;
+  color: #007bff;
+  font-size: 1.2em;
+  top: 3.2em;
+}
+
+@media (min-width: 1200px) {
+  div.items-list {
+    width: 100%;
+  }
+
+  div.items-list .resize-detailed-list {
+    width: 100%;
+  }
+
+  div.items-list .resize-detailed-list card {
+    width: 100%;
+  }
+
+  div.items-list .resize-detailed-list card .card-body{
+    width: 100%;
+  }
+
+  .card .card-body .detailed-title {
+    width: 83%;
+  }
+
+  .card .card-body .detailed-text {
+    width: 83%;
+  }
+}
+
+@media (max-width: 1200px) {
+  div.items-list {
+    width: 100%;
+  }
+
+  div.items-list .resize-detailed-list {
+    width: 100%;
+  }
+
+  div.items-list .resize-detailed-list card {
+    width: 100%;
+  }
+
+  div.items-list .resize-detailed-list card .card-body{
+    width: 100%;
+  }
+
+  .card .card-body .detailed-title {
+    width: 80%;
+  }
+
+  .card .card-body .detailed-text {
+    width: 80%;
+  }
+}
+
+@media (max-width: 991px) {
+  div.items-list {
+    width: 100%;
+  }
+
+  div.items-list .resize-detailed-list {
+    width: 100%;
+  }
+
+  div.items-list .resize-detailed-list card {
+    width: 100%;
+  }
+
+  div.items-list .resize-detailed-list card .card-body{
+    width: 100%;
+  }
+
+  .card .card-body .detailed-title {
+    width: 72%;
+  }
+
+  .card .card-body .detailed-text {
+    width: 72%;
+  }
+}
+
+@media (max-width: 991px) {
+  div.items-list {
+    width: 100%;
+  }
+
+  div.items-list .resize-detailed-list {
+    width: 100%;
+  }
+
+  div.items-list .resize-detailed-list card {
+    width: 100%;
+  }
+
+  div.items-list .resize-detailed-list card .card-body{
+    width: 100%;
+  }
+
+  .card .card-body .detailed-title {
+    width: 60%;
+  }
+
+  .card .card-body .detailed-text {
+    width: 60%;
+  }
+
+  .detailed-text .card-text-list p {
+    height: 50px;
+    overflow-y: hidden;
+  }
+}
+
+@media (max-width: 767px) {
+  div.items-list {
+    width: 100%;
+  }
+
+  div.items-list .resize-detailed-list {
+    width: 100%;
+  }
+
+  div.items-list .resize-detailed-list card {
+    width: 100%;
+  }
+
+  div.items-list .resize-detailed-list card .card-body{
+    width: 100%;
+  }
+
+  .card .card-body .detailed-title {
+    width: 50%;
+  }
+
+  .card .card-body .detailed-text {
+    width: 50%;
+  }
+
+  .detailed-text .card-text-list p {
+    display: none;
+  }
+}
+
+@media (max-width: 500px) {
+  div.items-list {
+    width: 100%;
+  }
+
+  div.items-list .resize-detailed-list {
+    width: 100%;
+  }
+
+  div.items-list .resize-detailed-list card {
+    width: 100%;
+  }
+
+  div.items-list .resize-detailed-list card .card-body{
+    width: 100%;
+  }
+
+  .card .card-body .detailed-title {
+    width: 50%;
+  }
+
+  .card .card-body .detailed-text {
+    width: 50%;
+  }
+
+  .detailed-text .card-text-list p {
+    display: none;
+    height: 50px;
+    overflow-y: hidden;
+  }
+
+  div.card .card-body .img-detailed {
+    width: 7em !important;
+  }
+}
+
+@media (max-width: 433px) {
+  p#expand {
+    margin: auto;
+    position: absolute;
+    margin-top: 0;
+    left: 0;
+    margin-left: 20px;
+    margin-right: 20px;
+    text-align: center;
+  }
+
+  div.format-options.tabs {
+    display: flex;
+    justify-content:  space-around;
+    width: 100%;
+    /* margin-top: 50px; */
+  }
+
+  div.format-options.tabs p {
+    position: relative;
+    margin: auto;
+  }
+
+  div.container {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  div.container div.items {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  div#postingSingleDiv {
+    /* margin-top: 50px;   */
+  }
+  
+}
+

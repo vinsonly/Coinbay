@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import './styling.css';
 import ReactSpinner from '../misc/reactspinner.js';
 
+import Map from '../maps';
+
 import Dropzone from 'react-dropzone'
 
 class PostingUpload extends React.Component {
@@ -14,6 +16,7 @@ class PostingUpload extends React.Component {
             postingTitle: "",
             modelName: "",
             brand: "",
+            category: "Beauty",
             priceDollars: 0,
             priceCents: 0,
             description: "",
@@ -22,26 +25,28 @@ class PostingUpload extends React.Component {
                 abstract2: "",
                 abstract3: ""
             },
+            date: "",
             location: {
                 lat: "",
                 lng: ""
             },
             images: [],
             status: ""
-        }      
+        }
 
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleImageSubmit = this.handleImageSubmit.bind(this);
+        this.setLocation = this.setLocation.bind(this);
     }
 
     async handleSubmit(event) {
         event.preventDefault();
-        console.log(this.state);
+        // console.log(this.state);
 
         if(this.state.status == "Uploading image(s)...") {
             alert("Please wait for image upload to finish");
-            return;    
+            return;
         }
 
         if(this.state.status == "imageUploadFailed") {
@@ -50,13 +55,20 @@ class PostingUpload extends React.Component {
             }
         }
 
+        console.log("this.state", this.state);
+
         // enforce mandatory values
         if(this.state.postingTitle.length < 1 ||
         this.state.modelName.length < 1 ||
         this.state.brand.length < 1 ||
-        !this.state.priceDollars ||
-        !this.state.priceCents) {
+        this.state.category.length < 1 ||
+        !this.state.priceDollars ) {
             alert("Please fill out all mandatory fields");
+            return;
+        }
+
+        if(!(this.state.images && this.state.images.length > 0)) {
+            alert("You must upload at least one image");
             return;
         }
 
@@ -66,7 +78,7 @@ class PostingUpload extends React.Component {
             alert("You can not leave one location field empty.");
             return;
         }
-        
+
         let price = parseInt(this.state.priceDollars) + parseInt(this.state.priceCents)/100;
 
 
@@ -74,7 +86,9 @@ class PostingUpload extends React.Component {
             postingTitle: this.state.postingTitle,
             modelName: this.state.modelName,
             brand: this.state.brand,
+            category: this.state.category,
             price: price,
+            location: this.state.location
         }
 
         if(this.state.description.length > 0) {
@@ -89,7 +103,7 @@ class PostingUpload extends React.Component {
             if(ab.length > 1) {
                 await abstract.push(this.state.abstract[ab]);
                 abstractIsEmpty = false;
-            }        
+            }
         }
 
         data.abstract = abstract;
@@ -103,16 +117,15 @@ class PostingUpload extends React.Component {
         }
 
 
-        if(this.state.images[0]) {
-            let images;
-            data.images = images;
+        if(this.state.images.length > 0) {
+            data.images = this.state.images;
         }
 
         console.log(data);
 
         let status;
         fetch('/api/posting', {
-            method: 'POST', // or 'PUT'
+            method: 'POST',
             body: JSON.stringify(data), // data can be `string` or {object}!
             headers:{
               'Content-Type': 'application/json',
@@ -139,7 +152,7 @@ class PostingUpload extends React.Component {
 
         // Math.round(price*100)/100
         // use this formula to get the number to the nearest 2 decimal places
-        
+
     }
 
     handleImageSubmit(base64) {
@@ -170,7 +183,7 @@ class PostingUpload extends React.Component {
         .then(body => {
             if(status != 200) {
                 obj.setState({
-                    status: "imageUploadFailed"
+                    status: "ImageUploadFailed: Image size is too large"
                 })
             } else {
                 let newImages = this.state.images;
@@ -180,13 +193,21 @@ class PostingUpload extends React.Component {
                     images: newImages
                 })
             }
-        
+
         })
-      
+
+    }
+
+    setLocation(lat, lng) {
+        this.setState({
+            location: {
+                lat: lat,
+                lng: lng
+            }
+        })
     }
 
     handleChange(event) {
-
         let abstract1 = this.state.abstract.abstract1;
         let abstract2 = this.state.abstract.abstract2;
         let abstract3 = this.state.abstract.abstract3;
@@ -204,7 +225,7 @@ class PostingUpload extends React.Component {
                 break;
             case 'brand':
                 this.setState({
-                    brand: event.target.value    
+                    brand: event.target.value
                 })
                 break;
             case 'priceDollars':
@@ -254,7 +275,7 @@ class PostingUpload extends React.Component {
                 this.setState({
                     location: {
                         lat: event.target.value,
-                        lng: this.state.location.lng 
+                        lng: this.state.location.lng
                     }
                 })
                 break;
@@ -262,16 +283,21 @@ class PostingUpload extends React.Component {
                 this.setState({
                     location: {
                         lat: this.state.location.lat,
-                        lng: event.target.value 
+                        lng: event.target.value
                     }
+                })
+                break;
+            case 'categorySelector':
+                this.setState({
+                    category: event.target.value
                 })
                 break;
         }
     }
 
   render() {
-    
-    return(    
+
+    return(
         <div id="postingUploadContainer">
             <h3>Posting Upload</h3>
             <div className="formContainer">
@@ -280,42 +306,70 @@ class PostingUpload extends React.Component {
                     <span className="mandatoryStar">*</span>
                     <input onChange={this.handleChange} type="text" id="postingTitle" className="form-control"/>
                     <br/>
-                    
+
                     <label htmlFor="modelName" className="grey-text">Model Name</label>
                     <span className="mandatoryStar">*</span>
                     <input onChange={this.handleChange} type="text" id="modelName" className="form-control"/>
                     <br/>
-                    
+
                     <label htmlFor="brand" className="grey-text">Brand</label>
                     <span className="mandatoryStar">*</span>
                     <input onChange={this.handleChange} type="text" id="brand" className="form-control"/>
                     <br/>
-                    
+
+                    <label htmlFor="Category" className="grey-text">Category*</label><br/>
+                    <div id="categoryDiv">
+                        <select name="category" id="categorySelector" value={this.state.category} onChange={this.handleChange}>
+                            <option value="Beauty">Beauty</option>
+                            <option value="Pets">Pets</option>
+                            <option value="Electronics">Electronics</option>
+                            <option value="Books">Books</option>
+                            <option value="Clothing">Clothing</option>
+                            <option value="Jewelry">Jewelry</option>
+                            <option value="Art">Art</option>
+                            <option value="Health">Health</option>
+                            <option value="Gardening">Gardening</option>
+                            <option value="Office">Office</option>
+                            <option value="Music">Music</option>
+                            <option value="Home">Home</option>
+                            <option value="Outdoors">Outdoors</option>
+                            <option value="Toys">Toys</option>
+                            <option value="Tools">Tools</option>
+                            <option value="Antiques">Antiques</option>
+                            <option value="miscellaneous">miscellaneous</option>
+                        </select>
+                    </div>
+                    <br/>
+
                     <label htmlFor="price" className="grey-text">Price</label>
                     <span className="mandatoryStar">*</span>
                     <div id="priceContainer">
-                        <span id="dollar">$</span> 
+                        <span id="dollar">$</span>
                         <input onChange={this.handleChange} value={this.state.priceDollars} type="number" id="priceDollars" className="form-control"/>
-                        <span id="dot">.</span> 
+                        <span id="dot">.</span>
                         <input onChange={this.handleChange} value={this.state.priceCents} type="number" id="priceCents" className="form-control"/>
                     </div>
                     <br/>
-                    
+
                     <label htmlFor="abstract" className="grey-text">Abstract</label>
                     <input onChange={this.handleChange} type="text" id="abstract1" className="form-control abstract"/>
                     <input onChange={this.handleChange} type="text" id="abstract2" className="form-control abstract"/>
                     <input onChange={this.handleChange} type="text" id="abstract3" className="form-control abstract"/>
                     <br/>
-                    
+
                     <label htmlFor="description" className="grey-text">Description</label>
                     <textarea onChange={this.handleChange} type="text" id="description" className="form-control" rows="3"></textarea>
                     <br/>
 
-                    <label htmlFor="meetingLocation" className="grey-text">Latitude</label>
+                    {/* <label htmlFor="meetingLocation" className="grey-text">Latitude</label>
                     <input onChange={this.handleChange} type="number" id="lat" className="form-control meetingLocation"/>
                     <label htmlFor="meetingLocation" className="grey-text">Longitude</label>
-                    <input onChange={this.handleChange} type="number" id="lng" className="form-control meetingLocation"/>
-                    <Accept handleSubmit={this.handleImageSubmit}/> 
+                    <input onChange={this.handleChange} type="number" id="lng" className="form-control meetingLocation"/> */}
+
+                    <label htmlFor="meetingLocation" className="grey-text">Meeting Location</label>
+                    <Map setLocation={this.setLocation}/>
+
+                    <Accept handleSubmit={this.handleImageSubmit}/>
                     Uploaded Images:
                     <div className="uploadedImages">{
                         this.state.images.map(image => {
@@ -368,9 +422,9 @@ class Accept extends React.Component {
                     // console.log(reader.result);
                     let base64 = removeFirstChars(reader.result, file.type);
                     // console.log(base64)
-                
+
                     acceptedBase64.push(base64);
-                    
+
                     props.handleSubmit(base64);
 
                     // upload to imgur and wait for callback before continuing with posting
@@ -431,14 +485,14 @@ class Status extends React.Component {
                         <ReactSpinner />
                     </div>
                 )
-            } 
+            }
             else if(this.props.status == "imageUploadFailed") {
                 return (
                     <div className="postingStatus">
                         <span className="spanStatus">{this.props.status}</span>
                         <i className="material-icons" styles="color: red;">
                             error
-                        </i>                    
+                        </i>
                     </div>
                 )
             } else {
@@ -447,7 +501,7 @@ class Status extends React.Component {
                         <span className="spanStatus">{this.props.status}</span>
                         <i className="material-icons" styles="color: green;">
                             check
-                        </i>                    
+                        </i>
                     </div>
                 )
             }

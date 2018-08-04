@@ -13,7 +13,11 @@ var numUsers = 200;
 for (var i = 0; i<numUsers; i++){
 
   if(i == 0) {
+<<<<<<< HEAD
     // Creating test user1 (password is the same)
+=======
+    // password is user1
+>>>>>>> staging
     array.push({
       email: "usertest1@gmail.com",
       username: "user1",
@@ -24,7 +28,11 @@ for (var i = 0; i<numUsers; i++){
       createdAt: faker.date.past(),
       updatedAt: new Date()
     })
+<<<<<<< HEAD
     // Creating test user2 (password is the same)
+=======
+    // password is user2  
+>>>>>>> staging
     array.push({
       email: "usertest2@gmail.com",
       username: "user2",
