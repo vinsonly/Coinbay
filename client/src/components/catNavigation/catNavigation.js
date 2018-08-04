@@ -72,7 +72,7 @@ class CatNavigation extends Component {
         var rows = [];
 
 		for (var i = 0; i < Object.keys(categories).length; i++) {
-		    rows.push(<Link to={"/posts/categories/"+categories[i]} ><button id={categories[i]}>{categories[i]}</button></Link>);
+		    rows.push(<Link to={"/posts/categories/"+categories[i]} key={categories[i]}><button id={categories[i]}>{categories[i]}</button></Link>);
 		}
         return (
         	<div>

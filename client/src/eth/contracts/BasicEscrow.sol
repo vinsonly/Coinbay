@@ -43,14 +43,7 @@ contract BasicEscrow {
     }
 
     function payBalance() private {
-        // we are sending ourselves (contract creator) a fee
-        // escrow.transfer(this.balance / 100);
-        // send seller the balance
-        // if (seller.send(this.balance)) {
-        //     balance = 0;
-        // } else {
-        //     throw;
-        // }
+
         selfdestruct(seller);
     }
 
