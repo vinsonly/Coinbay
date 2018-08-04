@@ -16,7 +16,7 @@ class PostingUpload extends React.Component {
             postingTitle: "",
             modelName: "",
             brand: "",
-            category: "",
+            category: "Beauty",
             priceDollars: 0,
             priceCents: 0,
             description: "",
@@ -54,6 +54,8 @@ class PostingUpload extends React.Component {
                 return;
             }
         }
+
+        console.log("this.state", this.state);
 
         // enforce mandatory values
         if(this.state.postingTitle.length < 1 ||
