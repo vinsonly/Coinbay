@@ -77,7 +77,7 @@ class Navigation extends Component {
 
         if (is_root == true) {
             return(
-                <div className="center-search">
+                <div className="center-search" style={{backgroundImage: 'url(' + require('./img/splash-map-lower-mainland.png') + ')'}} >
                     <div className="searching">
                         <form className="form-inline md-form mt-0" id="searchForm">
                             <Search handleRouteCallback={this.props.handleRouteCallback}/>

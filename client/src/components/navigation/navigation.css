@@ -102,19 +102,20 @@ input.react-autosuggest__input {
 }
 
 .center-search {
-  display: flex !important;
-  justify-content: center !important;
-  flex-wrap: wrap !important;
-  padding-bottom: 10px;
-  height: 22em;
-  background-image: url("https://briffly.com/wp-content/uploads/Google-Maps.jpg")
+	display: flex !important;
+	justify-content: center !important;
+	flex-wrap: wrap !important;
+	padding-bottom: 10px;
+	height: 22em;
+	background-repeat:no-repeat;
+	background-size:cover
 }
 
 .center-search-min {
-  display: flex !important;
-  justify-content: center !important;
-  flex-wrap: wrap !important;
-  padding-bottom: 10px
+	display: flex !important;
+	justify-content: center !important;
+	flex-wrap: wrap !important;
+	padding-bottom: 10px
 }
 
 .expand {
