@@ -61,8 +61,7 @@ class PostingUpload extends React.Component {
         this.state.modelName.length < 1 ||
         this.state.brand.length < 1 ||
         this.state.category.length < 1 ||
-        !this.state.priceDollars ||
-        !this.state.priceCents) {
+        !this.state.priceDollars ) {
             alert("Please fill out all mandatory fields");
             return;
         }
