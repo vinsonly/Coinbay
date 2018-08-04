@@ -1,5 +1,6 @@
 
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import GoogleMapReact from 'google-map-react';
 
 import './styling.css'
@@ -13,7 +14,7 @@ class Map extends Component {
         lat: 49.282482,
         lng: -123.118275
     }
-    
+
     this.zoom = 11
 
     this.state = {
@@ -21,34 +22,33 @@ class Map extends Component {
       lng: -123.118275
     };
 
-    this.onClick = this.onClick.bind(this);
+    // this.onClick = this.onClick.bind(this);
     this.onBoundsChange = this.onBoundsChange.bind(this);
+
   }
 
-  onClick(x, y, _lat, _long, event) {
-    console.log(x, y, _lat, _long, event);
+  // onClick(x, y, _lat, _long, event) {
+  //   console.log(x.lat);
+  //   console.log(x.lng);
+  //
+  //   this.setState({
+  //     lat: x.lat,
+  //     lng: x.lng,
+  //   });
+  // }
 
-    console.log(x.lat);
-    console.log(x.lng)
-
-    // this.setState({
-    //   lat: x.lat,
-    //   lng: x.lng 
-    // });
-  }
-
-  onBoundsChange(center, zoom, bounds, marginBounds) {
+  onBoundsChange(center, zoom) {
     console.log(center);
     let lat = center.lat;
     let lng = center.lng;
-    console.log(lat);
-    console.log(lng);
     this.props.setLocation(lat, lng);
     this.setState({
       lat: lat,
       lng: lng
     })
+
   }
+
 
   render() {
 
@@ -56,31 +56,32 @@ class Map extends Component {
       return (<div>Loading...</div>)
     }
 
-    console.log(this.state); 
+    console.log(this.state);
 
     return (
       // Important! Always set the container height explicitly
       <div id="gmapsWrapper" style={{ height: '600px', width: '100%' }}>
-        <GoogleMapReact
-          bootstrapURLKeys={{ key: "AIzaSyDvtndexGCQLEeLUsklFakSejGOElaVlH8" }}
-          defaultCenter={this.initialCenter}
-          defaultZoom={this.zoom}
-          onClick={this.onClick}
-          onBoundsChange={this.onBoundsChange}
-          center={{
-            lat: this.state.lat,
-            lng: this.state.lng
-          }}
-        >
 
-          <Marker
-            lat={this.state.lat}
-            lng={this.state.lng}
-          />
+      <GoogleMapReact
+        bootstrapURLKeys={{ key: "AIzaSyDvtndexGCQLEeLUsklFakSejGOElaVlH8" }}
+        defaultCenter={this.initialCenter}
+        defaultZoom={this.zoom}
+        onBoundsChange={this.onBoundsChange}
+        center={{
+          lat: this.state.lat,
+          lng: this.state.lng
+        }}
+      >
+
+      <Marker
+        lat={this.state.lat}
+        lng={this.state.lng}
+      />
+
         </GoogleMapReact>
+
         {/* <div id="tempMarker">
         </div> */}
-        
       </div>
     );
   }
@@ -97,10 +98,12 @@ class Marker extends Component {
         <i class="material-icons" style={{color: 'red'}}>
           place
         </i>
+
       </div>
     )
   }
 }
+
 
 
 export default Map;
