@@ -183,7 +183,7 @@ class PostingUpload extends React.Component {
         .then(body => {
             if(status != 200) {
                 obj.setState({
-                    status: "imageUploadFailed"
+                    status: "ImageUploadFailed: Image size is too large"
                 })
             } else {
                 let newImages = this.state.images;
