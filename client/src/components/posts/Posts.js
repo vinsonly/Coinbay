@@ -95,6 +95,12 @@ class Posts extends Component {
 			</div>
 		)
 	}
+	noResultsMsg(number) {
+		if(number > 0)
+			return "Number of results found: " + number;
+		else
+			return "No results found";
+	}
  	render() {
 		console.log(this.props);
 		console.log(this.state);
@@ -164,7 +170,7 @@ class Posts extends Component {
 									)
 								}
 							})}
-							<p className="return-results">Number of results found: {counter}</p>
+							<p className="return-results">{this.noResultsMsg(counter)}</p>
 						</div>
 					</div>
 				);
