@@ -6,6 +6,27 @@ div.postingInfo {
     margin: 15px;
 }
 
+div.postingInfo h1 {
+    color: #007bff
+}
+
+div.postingInfo p {
+    color: #747373;
+    font-size: 1.5em
+}
+
+.prices {
+    color: #00B200
+}
+
+.seller {
+    color: #696969
+}
+
+.seller-title {
+    color: #2bbbad
+}
+
 div.postingInfo p {
     line-height: 25px;
 }
@@ -36,4 +57,8 @@ div.sellerRating h3 {
 .image-display > img {
     margin-top: auto;
     margin-bottom: auto;
+}
+
+#postingSingleDiv {
+    margin-top: 2em
 }

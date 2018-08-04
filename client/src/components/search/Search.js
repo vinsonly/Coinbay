@@ -16,11 +16,14 @@ function getSuggestionValue(suggestion) {
 function renderSuggestion(suggestion, { query }) {
   const suggestionText = `${suggestion.postingTitle}`;
 
+<<<<<<< HEAD
   // console.log(suggestion.images);
 
+=======
+>>>>>>> 78fda10c738ff1a131f69bb52d969c35384475a6
   return (
     <span>
-        <ListSpan text={suggestion.postingTitle} postingId={suggestion.id} postingImage={suggestion.images}/>
+        <ListSpan text={suggestion.postingTitle} postingId={suggestion.id} postingImage={suggestion.images[0]}/>
     </span>
   );
 }
@@ -29,25 +32,23 @@ class ListSpanInner extends Component {
   constructor(props) {
     super(props);
     this.handleClick = this.handleClick.bind(this);
+<<<<<<< HEAD
     // this.testArray = [];
 
     // console.log(props);
+=======
+>>>>>>> 78fda10c738ff1a131f69bb52d969c35384475a6
   }
 
   handleClick() {
     console.log("redirecting...");
-    console.log(this.props.postingId);
-
-    this.props.history.push("/posts/" + this.props.postingId);
+    window.location.replace("/posts/" + this.props.postingId);
 
   }
 
   //if array contains == 1, then open straight to page
 
   render() {
-    // testArray.push(this.props.postingId);
-
-    // console.log(testArray);
     return(
       <div className="searchElement" onClick={this.handleClick}>
         <img className='imgStyling' src={this.props.postingImage}></img>
@@ -146,12 +147,13 @@ class SearchInner extends Component {
 
     let value = target.childNodes[0].childNodes[0].value;
 
-    console.log(this.state);
-
-    // sessionStorage.setItem('itemDisplay', JSON.stringify(this.state.suggestions));
-
-    console.log(this.props);
+    if(value != '' && Object.keys(this.state.suggestions).length == 0){
+      this.props.handleRouteCallback("/posts", null);
+    }
+    else{
       this.props.handleRouteCallback("/posts", this.state.suggestions);
+    }
+
 
   }
 
@@ -166,8 +168,6 @@ class SearchInner extends Component {
       if(this.state.toRedirect) {
 
         console.log('redirecting');
-
-        console.log(this.state);
         return(
           // <Redirect to="/posts" />
           <Route path="/posts/" render={(props) => ( <Posts searchResults={this.state.suggestions}/> )} />
