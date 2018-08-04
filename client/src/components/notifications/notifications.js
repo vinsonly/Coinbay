@@ -155,8 +155,17 @@ class Notifications extends React.Component {
 					})}
 				</div>
 
-					<div id="sellerActivePosts" className="notificationsPost">
+				<div id="sellerActivePosts" className="notificationsPost">
 					<h2> Received Offers </h2>
+					{this.state.sellerActivePosts.map(post => {
+						return(
+							<Notification post={post} currentUser="seller" status="pendingConfirmation" loggedInUser={this.props.loggedInUser}/>
+						)
+					})}
+				</div>
+
+				<div id="completedTransactions" className="notificationsPost">
+					<h2> Completed Transactions </h2>
 					{this.state.sellerActivePosts.map(post => {
 						return(
 							<Notification post={post} currentUser="seller" status="pendingConfirmation" loggedInUser={this.props.loggedInUser}/>

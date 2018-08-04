@@ -221,9 +221,9 @@ class UserProfile extends Component {
                         Edit User Info
                     </Button>
 
-                    <Link to="/notifications">
+                    <Link to="/manage_transactions">
                         <Button variant="contained" color="primary" className={"profileOffers"}>
-                            View Offers
+                            View Your Offers
                         </Button>
                     </Link>
 

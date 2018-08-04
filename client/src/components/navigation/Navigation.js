@@ -100,7 +100,7 @@ class Navigation extends Component {
                                 {
                                     (this.props.loggedInUser.id) ? (
                                         <NavItem>
-                                            <NavLink to="/notifications">Manage Transactions</NavLink>
+                                            <NavLink to="/manage_transactions">Manage Transactions</NavLink>
                                         </NavItem>
                                     ) : (<div></div>)
                                 }
