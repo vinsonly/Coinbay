@@ -114,3 +114,8 @@ div.searchElement {
   }
   
 }
+
+.react-autosuggest__suggestions-list {
+  height: 25em;
+  overflow: auto
+}
