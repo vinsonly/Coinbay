@@ -138,9 +138,9 @@ class Navigation extends Component {
 
                 <div className="center-search">
                     <div className="searching">
-                        <form className="form-inline md-form mt-0" id="searchForm">
+                        <div className="form-inline md-form mt-0" id="searchForm">
                             <Search handleRouteCallback={this.props.handleRouteCallback}/>
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -16,7 +16,7 @@ function getSuggestionValue(suggestion) {
 function renderSuggestion(suggestion, { query }) {
   const suggestionText = `${suggestion.postingTitle}`;
 
-  console.log(suggestion.images);
+  // console.log(suggestion.images);
 
   return (
     <span>
@@ -31,7 +31,7 @@ class ListSpanInner extends Component {
     this.handleClick = this.handleClick.bind(this);
     // this.testArray = [];
 
-    console.log(props);
+    // console.log(props);
   }
 
   handleClick() {
