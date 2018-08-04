@@ -34,7 +34,7 @@ div.search * {
 
 .searching form {
 	background-color: white !important;
-	border: solid white;
+	border: solid 0.1em #007bff;
 	border-radius: 0.7em
 }
 
@@ -47,7 +47,8 @@ div.search * {
 .searching input {
 	width: 100%;
 	height: 0.6em;
-	padding-bottom: 1em
+	padding-bottom: 1em;
+	margin-bottom: 0.7em
 }
 
 .searching-min input {
