@@ -25,7 +25,7 @@ module.exports = (app) => {
     app.get('/api/posting/:id', postingsController.findById);
     app.get('/api/postings_with_users/', postingsController.getActivePostsWithSellers);
     app.get('/api/buyer_postings/:userId', postingsController.findBuyerPosts);
-    
+    app.get('/api/seller_postings/:userId/with_buyer', postingsController.findByUserWithBuyerDetails);
     // app.get('/api/postings/?=asdsadsadsad', postingsController.search); //read the query string from the URL and query the database
 
     app.post('/api/posting/buy/:id', authController.verifyToken, postingsController.setUpTransaction);

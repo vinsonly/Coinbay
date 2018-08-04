@@ -29,76 +29,76 @@ class Notifications extends React.Component {
 		let userId = this.props.loggedInUser.id;
 		console.log("userId", userId);
 		fetch(`/api/buyer_postings/${userId}`)
-    .then(res => {
-      status = res.status;
-      return res.json();
-    })
-		.then(async body => {
-			let pendingPosts = [];
-      if(status == 200) {
-				await body.map(async posting => {
-					if(posting.status == "pending") {
-						await pendingPosts.push(posting);
-					}
-				})
+			.then(res => {
+			status = res.status;
+			return res.json();
+			})
+				.then(async body => {
+					let pendingPosts = [];
+			if(status == 200) {
+						await body.map(async posting => {
+							if(posting.status == "pending") {
+								await pendingPosts.push(posting);
+							}
+						})
 
-				return {
-					buyerPendingPosts: pendingPosts
-				}
-      }
-		})
-		.then(res => {
-			this.setState({
-				buyerPendingPosts: res.buyerPendingPosts,
-				fetchedBuyerPosts: true
-			});
-		})
-		.catch(err => {
-			console.log("ERROR!!");
-			console.log(err);
-		})
+						return {
+							buyerPendingPosts: pendingPosts
+						}
+			}
+				})
+				.then(res => {
+					this.setState({
+						buyerPendingPosts: res.buyerPendingPosts,
+						fetchedBuyerPosts: true
+					});
+				})
+				.catch(err => {
+					console.log("ERROR!!");
+					console.log(err);
+				})
 	}
 
 	fetchSellerPosts() {
 		let status;
 		let userId = this.props.loggedInUser.id;
 		console.log("userId", userId);
-		fetch(`/api/user/postings/${this.props.loggedInUser.id}`)
-    .then(res => {
-      status = res.status;
-      return res.json();
-    })
-    .then(async body => {
-			let activePosts = [];
-			let pendingPosts = [];
-      if(status == 200) {
-				await body.map(async posting => {
-					if(posting.status == "pendingConfirmation") {
-						await	activePosts.push(posting);
-					} else if(posting.status == "pending") {
-						await pendingPosts.push(posting);
-					}
+		fetch(`/api/seller_postings/${this.props.loggedInUser.id}/with_buyer`)
+			.then(res => {
+			status = res.status;
+			return res.json();
+			})
+			.then(async body => {
+					let activePosts = [];
+					let pendingPosts = [];
+			if(status == 200) {
+						await body.map(async posting => {
+							if(posting.status == "pendingConfirmation") {
+								await	activePosts.push(posting);
+							} else if(posting.status == "pending") {
+								await pendingPosts.push(posting);
+							}
+						})
+
+						console.log(pendingPosts);
+
+						return {
+							sellerActivePosts: activePosts,
+							sellerPendingPosts: pendingPosts
+						}
+			}
 				})
-
-				console.log(pendingPosts);
-
-				return {
-					sellerActivePosts: activePosts,
-					sellerPendingPosts: pendingPosts
-				}
-      }
-		})
-		.then(res => {
-			this.setState({
-				sellerActivePosts: res.sellerActivePosts,
-				sellerPendingPosts: res.sellerPendingPosts,
-				fetchedSellerPosts: true
-			});
-		})
-		.catch(err => {
-			console.log("ERROR!!");
-			console.log(err);
-		})
+				.then(res => {
+					this.setState({
+						sellerActivePosts: res.sellerActivePosts,
+						sellerPendingPosts: res.sellerPendingPosts,
+						fetchedSellerPosts: true
+					});
+				})
+				.catch(err => {
+					console.log("ERROR!!");
+					console.log(err);
+				})
 	}
 
 	componentDidUpdate() {

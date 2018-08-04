@@ -528,7 +528,6 @@ class Status extends React.Component {
 }
 
 
-
 function removeFirstChars(base64, type) {
     let toRemove = 13 + type.length;
     return base64.substring(toRemove, base64.length);

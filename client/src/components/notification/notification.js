@@ -211,12 +211,19 @@ class Notification extends React.Component {
     return (
     	<div id={otherUser + this.props.status + this.props.currentUser}>
         {(this.props.currentUser == "seller") ? (
-          <p>Buyer Id: {this.props.post.buyerId}</p>
+          <div>
+            <p>Buyer Id: {this.props.post.buyerId}</p>
+            <p>Buyer Username: {this.props.post.Buyer.username}</p>
+          </div>
         ) : (
-          <p>Seller Id: {this.props.post.userId}</p>
+          <div>
+            <p>Seller Id: {this.props.post.userId}</p>
+            <p>Seller Username: {this.props.post.User.username}</p>
+          </div>
         )}
         <p>Posting Id: {this.props.post.id}</p>
         <p>Posting Title: {this.props.post.postingTitle}</p>
+        {/* <p>Meeting Time: {this.props.post.time}</p> */}
         <a href={`/posts/${postingId}`}><p>Link to Post</p></a>
 	      <div className="presence">
 	        <button className='btn btn-success'
@@ -226,6 +233,7 @@ class Notification extends React.Component {
 	          onClick={this.rejectTransaction.bind(this, 'error', otherUser)}>{rejectMsg}
 	        </button> 
 	       </div>
+         <div className="notificationsDivider" />
 	        <NotificationContainer/>
       	</div>
     );

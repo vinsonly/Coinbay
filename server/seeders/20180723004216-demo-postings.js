@@ -100,7 +100,7 @@ for(var j = 0; j < 10; j++) {
     updatedAt: new Date(),
     // to randomize use: userId: Math.floor(Math.random() * 100)
     userId: 2,
-    buyerId: 3// random user from 0 to 10
+    buyerId: 3// random user from 0 to 10,
   });
 }
 

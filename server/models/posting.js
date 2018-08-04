@@ -61,8 +61,15 @@ module.exports = (sequelize, DataTypes) => {
   Posting.associate = function(models) {
     // associations can be defined here
     Posting.belongsTo(models.User, {
+      as: 'Buyer',
+      foreignKey: 'buyerId'
+    })
+
+    Posting.belongsTo(models.User, {
+      as: 'User',
       foreignKey: 'userId'
     });
+
   };
   return Posting;
 };

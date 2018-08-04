@@ -2,6 +2,9 @@ const Posting = require('../models/').Posting;
 const User = require('../models/').User;
 const verifyToken = require('./auth').verifyToken;
 
+var db = require('../models');
+var sequelize = db.sequelize;
+
 // var getWeb3 = require('../../utils/getWeb3');
 
 // var BasicEscrow = require('../eth/build/contracts/BasicEscrow.json');
@@ -167,6 +170,7 @@ module.exports = {
                 include: [{
                     model: User,
                     required: true,
+                    as: "User"
                 }]
             })
                 .then((postings) => {
@@ -190,6 +194,7 @@ module.exports = {
                 include: [{
                     model: User,
                     required: true,
+                    as: "User"
                 }]
             })
                 .then((postings) => {
@@ -243,7 +248,7 @@ module.exports = {
 
         return Posting
         .findById(id)
-            .then(posting => {
+            .then(async posting => {
                 if(!posting) {
                     return res.status(404).send({
                         message: `posting with id: ${id} not found.`
@@ -256,21 +261,56 @@ module.exports = {
                         })
                     }
 
-                    return posting
-                        .update({
-                            status: "pendingConfirmation",
-                            buyerId: buyerId,
-                            contractAddress: contractAddress
+                    let buyer;
+
+                    await User.findById(buyerId)
+                        .then(user => {
+                            buyer = user;
+                            console.log("Founder user", user);
                         })
-                        .then(() => {
-                            console.log("Successfully updated posting");
-                            res.send(posting);
-                        })
-                        .catch((error) => {
-                            console.log("Opps we ran into an error");
-                            console.log(error);
-                            res.status(400).send(error);
-                        })
+
+                    return User.findById(buyerId)
+                        .then(user => {
+                            if(!user) {
+                                return res.status(404).send({
+                                    message: `user with id: ${buyerId} not found.`
+                                })
+                            } else {
+                                buyer = user;
+                                return posting
+                                    .update({
+                                        status: "pendingConfirmation",
+                                        buyerId: buyerId,
+                                        contractAddress: contractAddress,
+                                        Buyer: buyer
+                                    })
+                                    .then(() => {
+                                        console.log("Successfully updated posting");
+                                        res.send(posting);
+                                    })
+                                    .catch((error) => {
+                                        console.log("Opps we ran into an error");
+                                        console.log(error);
+                                        res.status(400).send(error);
+                                    })
+                            }
+                        });
+
+                    // return posting
+                    //     .update({
+                    //         status: "pendingConfirmation",
+                    //         buyerId: buyerId,
+                    //         contractAddress: contractAddress
+                    //     })
+                    //     .then(() => {
+                    //         console.log("Successfully updated posting");
+                    //         res.send(posting);
+                    //     })
+                    //     .catch((error) => {
+                    //         console.log("Opps we ran into an error");
+                    //         console.log(error);
+                    //         res.status(400).send(error);
+                    //     })
                 }
             })
             .catch((error) => {
@@ -350,7 +390,12 @@ module.exports = {
             .findAll({
                 where: {
                     buyerId: userId
-                }
+                },
+                include: [{
+                    model: User,
+                    required: true,
+                    as: 'User'
+                }] 
             })
                 .then((postings) => {
                     console.log(`Here are all of the postings that are associated to user ${userId}:`);
@@ -399,6 +444,31 @@ module.exports = {
                     res.status(400).send(error);
                 })
             
+    },
+
+    findByUserWithBuyerDetails(req, res) {
+        let userId = parseInt(req.params.userId);
+        return Posting
+            .findAll({
+                where: {
+                    userId: userId
+                },
+                include: [{
+                    model: User,
+                    required: true,
+                    as: 'Buyer'
+                }]
+            })
+                .then((postings) => {
+                    console.log(`Here are all of the postings that are associated to user ${userId}:`);
+                    console.log(postings);
+                    return res.send(postings);
+                })
+                .catch((err) => {
+                    console.log("We ran into an error:");
+                    console.log(err);
+                    return res.status(400).send(err);
+                })
     },
 
 }

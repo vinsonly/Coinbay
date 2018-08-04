@@ -87,6 +87,7 @@ module.exports = {
           key: 'id',
           as: 'userId',
         },
+        allowNull: false
       },
     });
   },
