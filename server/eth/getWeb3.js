@@ -21,17 +21,25 @@ let getWeb3 = new Promise(function(resolve, reject) {
     } else {
       // Fallback to localhost if no web3 injection. We've configured this to
       // use the development console's port by default.
-      var provider = new Web3.providers.HttpProvider('http://127.0.0.1:7545')
+      // var provider = new Web3.providers.HttpProvider('http://127.0.0.1:7545')
+      
+      let error = "Metamask extension not detected.";
 
-      web3 = new Web3(provider)
+      console.log(error);
 
-      results = {
-        web3: web3
-      }
+      reject(error);
 
-      console.log('No web3 instance injected, using Local web3.');
+      // var provider = new Web3.providers.HttpProvider('http://127.0.0.1:7545')
 
-      resolve(results)
+      // web3 = new Web3(provider)
+
+      // results = {
+      //   web3: web3
+      // }
+
+      // console.log('No web3 instance injected, using Local web3.');
+
+      // resolve(results)
     }
   })
 })

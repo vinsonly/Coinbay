@@ -109,8 +109,12 @@ class SinglePosting extends React.Component {
     this.setState(result);
   }
 
+  /**
+     * 
+     * @return {number} The dot's width, in pixels.
+    */
   offered() {
-    console.log("offered");
+    console.log("processing transaction")
     let buyer = this.props.loggedInUser;
     let seller = this.state.user;
 
@@ -122,16 +126,21 @@ class SinglePosting extends React.Component {
       return;
     }
 
-    if(!this.props.loggedInUser) {
+    if(!this.props.loggedInUser.id) {
       swal('Please log in to place offers on items');
+      return;
     }
 
     if(this.props.loggedInUser.crypto.length < 10) {
       swal('Please update your profile with a valid Ethereum Address to start placing offers.');
+      return;
     }
 
     getWeb3
     .then(results => {
+
+      console.log("results.web3", results.web3);
+
       this.setState({
         web3: results.web3
       })
@@ -151,6 +160,7 @@ class SinglePosting extends React.Component {
     })
     .catch(() => {
       console.log('Error finding web3.');
+      swal('Unable to connect to the Ethereum Blockchain. Please install the Metamask for your preferred browser at https://metamask.io/');
     })
 
     // create a contract 
@@ -173,13 +183,11 @@ class SinglePosting extends React.Component {
     console.log("instantiating contract with amount:", amount);
 
     if(!this.state.web3.currentProvider) {
-      swal('We ran into an connecting to the Ethereum Blockchain, please try again later.'); 
+      swal('ERROR: Unable to connect to the Ethereum Blockchain. Please make sure you logged into your Ethereum account and conneced to the Ropsten TestNet on the MetaMask extension'); 
       return; 
     }
 
     escrow.setProvider(this.state.web3.currentProvider)
-
-    var escrowInstance;
 
     let sellerAddress = this.state.user.crypto;
     let buyerAddress = this.props.loggedInUser.crypto;
@@ -198,8 +206,13 @@ class SinglePosting extends React.Component {
 
         let contractAddress;
 
+        if(accounts.length < 1) {
+          swal("Please connect your Ethereum Wallet with Metamask and connect to the Ropsten Test Network then try again.");
+          return;
+        }
+
         if(accounts[0].toLowerCase() != buyerAddress.toLowerCase()) {
-          swal("Please set up Metamask with the same address as the one registered to your account");
+          swal("Please set up Metamask with the same address as the one registered to your account and connect to the Ropsten Test Network then try again.");
           return;
         }
 
@@ -318,7 +331,7 @@ class SinglePosting extends React.Component {
                   <div className="seller">
                     <h4>E-mail: {this.state.user.email}</h4>
                     <h4>Phone: {this.state.user.phone}</h4>
-                    <h4>Ethereum Address: {this.state.user.crypto}</h4>
+                    <h4 style={{wordWrap:"break-word"}}>Ethereum Address: {this.state.user.crypto}</h4>
                     <div className="sellerRating">
                       <h4 style={{marginBottom: 0}}>Rating:</h4>
                
@@ -349,6 +362,7 @@ class SinglePosting extends React.Component {
                     </div>
                   </div>
                   <br/>
+                  <h5 className="metaMaskWarning"><em>You must have the Metamask browser extension installed to place orders and confirm orders.</em></h5>
                   <Button onClick={ () => this.offered() } variant="contained" color="primary" className="bid-button">
                     {this.state.buttonText}
                   </Button>

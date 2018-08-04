@@ -62,3 +62,8 @@ div.sellerRating h3 {
 #postingSingleDiv {
     margin-top: 2em
 }
+
+h5.metaMaskWarning {
+    font-weight: bold;
+    color: rgba(255, 0, 0, 0.795)
+}
