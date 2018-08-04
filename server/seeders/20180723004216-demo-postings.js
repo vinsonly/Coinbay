@@ -59,69 +59,9 @@ function getRandomInt(max) {
   return Math.floor(Math.random() * Math.floor(max));
 }
 
-<<<<<<< HEAD
 // Generate postings that will be owned by User 1
 for(var k = 0; k < 10; k++) {
   let randomInt = getRandomInt(18);
-=======
-// generate posts for user1 and user2
-for(var k = 0; k < 10; k++) {
-  let randomInt = getRandomInt(18);
-
-  let category = categories[randomInt];
-  
-  let image = images[randomInt]
-  
-  array.push({
-    postingTitle: faker.commerce.productName(),
-    modelName: faker.commerce.productMaterial(),
-    brand: faker.company.companyName(),
-    price: faker.commerce.price(),
-    category: category,
-    status: 'active',
-    description: faker.lorem.sentence(),
-    images: [image],
-    date: faker.date.future(),
-    createdAt: faker.date.past(),
-    updatedAt: new Date(),
-    // to randomize use: userId: Math.floor(Math.random() * 100)
-    userId: 1,
-    buyerId: 3// random user from 0 to 10
-  });
-}
-
-// generate posts for user1 and user2
-for(var j = 0; j < 10; j++) {
-  let randomInt = getRandomInt(18);
-
-  let category = categories[randomInt];
-  
-  let image = images[randomInt]
-
-  array.push({
-    postingTitle: faker.commerce.productName(),
-    modelName: faker.commerce.productMaterial(),
-    brand: faker.company.companyName(),
-    price: faker.commerce.price(),
-    category: category,
-    status: 'active',
-    description: faker.lorem.sentence(),
-    images: [image],
-    date: faker.date.future(),
-    createdAt: faker.date.past(),
-    updatedAt: new Date(),
-    // to randomize use: userId: Math.floor(Math.random() * 100)
-    userId: 2,
-    buyerId: 3// random user from 0 to 10
-  });
-}
-
-
-
-
-var numPostings = 1000; //this needs to match number of users generated, see seeders demo-user.js file
-for (var i = 0; i<numPostings; i++){
->>>>>>> staging
 
   let category = categories[randomInt];
   
@@ -163,7 +103,6 @@ for(var j = 0; j < 10; j++) {
     description: faker.lorem.sentence(),
     images: [image],
     date: faker.date.future(),
-<<<<<<< HEAD
     createdAt: faker.date.past(),
     updatedAt: new Date(),
     // to randomize use: userId: Math.floor(Math.random() * 100)
@@ -192,8 +131,6 @@ for (var i = 0; i<numPostings; i++){
     description: faker.lorem.sentence(),
     images: [image],
     date: faker.date.future(),
-=======
->>>>>>> staging
     createdAt: faker.date.past(),
     updatedAt: new Date(),
     // to randomize use: userId: Math.floor(Math.random() * 100)
