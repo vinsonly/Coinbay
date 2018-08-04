@@ -1,4 +1,4 @@
-div#searchForm {
+form#searchForm {
     margin: 0;
 }
 
@@ -70,12 +70,12 @@ div.search * {
     width: 90% !important
 }
 
-div#searchForm div{
+form#searchForm div{
 	width: 100%;
 }
 
 
-div#searchForm div input.react-autosuggest__input {
+form#searchForm div input.react-autosuggest__input {
 	padding: 15px 0;
 }
 input.react-autosuggest__input {
