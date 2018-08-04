@@ -11,12 +11,10 @@ import SinglePosting from './postingSingle';
 import PostingUpload from './postingUpload';
 import SignOut from './signout';
 import Notifications from './notifications/notifications';
-
-import MetaCoin from "./ethComponents/metacoin.js"
-
 import Login from "./login/Login"
 import Register from "./register/Register"
 import UserDashboard from './userDashboard';
+import TransactionHistory from './transactionHistory';
 
 class Main extends Component {
 
@@ -107,13 +105,13 @@ class Main extends Component {
                     <Route path="/posts/search_results" component={Posts} />
                     <Route path="/posts/" component={Posts}/>
                     <Route path="/:user/transaction/:item" render={props => <Transaction {...props } /> } />
-                    <Route path="/metacoin/" component={MetaCoin}/>
                     <Route path="/new_posting/" component={PostingUpload}/>
                     <Route path="/login" component={Login}/>
                     <Route path="/register" component={Register}/>
                     <Route path="/manage_transactions" render={props => <Notifications loggedInUser={this.props.loggedInUser}/>} />
                     <Route path="/sign_out" component={SignOut}/>
                     <Route path="/profile" render={props => <UserDashboard loggedInUser={this.props.loggedInUser} />} />
+                    <Route path="/transaction_history" render={props => <TransactionHistory loggedInUser={this.props.loggedInUser}/>} />
                     <Route component={Whoops404}/>
                 </Switch>
             </main>

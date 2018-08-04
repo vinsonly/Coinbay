@@ -52,16 +52,12 @@ module.exports = {
         type: Sequelize.ARRAY(Sequelize.STRING),
         allowNull: true,
       },
-      txid: {
-        type: Sequelize.STRING,
-        allowNull: true
-      },
-      contractAddress: {
-        type: Sequelize.STRING,
-        allowNull: true
-      },
       accepted: {
         type: Sequelize.BOOLEAN,
+        allowNull: true
+      },
+      transaction: {
+        type: Sequelize.JSONB,
         allowNull: true
       },
       createdAt: {

@@ -24,11 +24,7 @@ div.notificationsPost {
 }
 
 @media (max-width: 900px) {
-	div#buyerPendingPosts {
-		width: 100%;
-	}
-	
-	div#sellerPosts {
-		width: 100%;
+	div.notificationsPost {
+		width: 90%;
 	}
 }

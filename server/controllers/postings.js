@@ -217,12 +217,6 @@ module.exports = {
 
 
     setUpTransaction(req, res) {
-        // BasicEscrow.new().then(function(instance) {
-        //     // Print the new address
-        //     console.log(instance.address);
-        //   }).catch(function(err) {
-        //     // There was an error! Handle it.
-        //   });
 
         console.log("req.params.id", req.params.id);
 
@@ -233,6 +227,8 @@ module.exports = {
         if(req.body.id) {
             id = parseInt(req.body.id);
         }
+
+        let txids = req.body.txids || [];
 
         let buyerId = req.body.validatedUser.id;
 
@@ -261,7 +257,12 @@ module.exports = {
                         })
                     }
 
-                    let buyer;
+                    let transaction = {
+                        contractAddress: contractAddress,
+                        txids: txids,
+                        startedAt: Date.now(),
+                        completedAt: null
+                    }
 
                     await User.findById(buyerId)
                         .then(user => {
@@ -276,13 +277,11 @@ module.exports = {
                                     message: `user with id: ${buyerId} not found.`
                                 })
                             } else {
-                                buyer = user;
                                 return posting
                                     .update({
                                         status: "pendingConfirmation",
                                         buyerId: buyerId,
-                                        contractAddress: contractAddress,
-                                        Buyer: buyer
+                                        transaction: transaction                                        
                                     })
                                     .then(() => {
                                         console.log("Successfully updated posting");
@@ -295,22 +294,6 @@ module.exports = {
                                     })
                             }
                         });
-
-                    // return posting
-                    //     .update({
-                    //         status: "pendingConfirmation",
-                    //         buyerId: buyerId,
-                    //         contractAddress: contractAddress
-                    //     })
-                    //     .then(() => {
-                    //         console.log("Successfully updated posting");
-                    //         res.send(posting);
-                    //     })
-                    //     .catch((error) => {
-                    //         console.log("Opps we ran into an error");
-                    //         console.log(error);
-                    //         res.status(400).send(error);
-                    //     })
                 }
             })
             .catch((error) => {
