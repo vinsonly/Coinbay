@@ -2,7 +2,7 @@ import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
-import { Link } from 'react-router-dom';
+import { BrowserRouter, Route, Link, Router, Redirect, withRouter } from 'react-router-dom';
 import './postingSingle.css';
 import SimpleMap from '../mapsPostLocation/mapsPostLocation';
 import setUpRatingArrays from '../../helpers/postings.js';
@@ -41,6 +41,7 @@ class SinglePosting extends React.Component {
 
     this.arraySetupWrapper = this.arraySetupWrapper.bind(this);
     this.instantiateContract = this.instantiateContract.bind(this);
+    this.offered = this.offered.bind(this);
 
     //get ethereum price from cmc
     fetch('https://api.coinmarketcap.com/v2/ticker/1027/')
@@ -118,72 +119,101 @@ class SinglePosting extends React.Component {
     let buyer = this.props.loggedInUser;
     let seller = this.state.user;
 
-    console.log("buyer", buyer);
-    console.log("seller", seller);
-
     if(buyer.id == seller.id) {
-      swal('You may not buy your own postings');
+      swal({
+        text: 'You may not place an order for own postings',
+        icon: "error",
+      });
       return;
     }
 
     if(!this.props.loggedInUser.id) {
-      swal('Please log in to place offers on items');
+      swal({
+        text: 'Please log in to place offers on items',
+        icon: "info",
+        buttons: {
+          login: "Login Now",
+          cancel: "Cancel"
+        }
+      }).then(res => {
+        if(res == "login") {
+          this.props.history.push(`/login`);
+        }
+      })
       return;
     }
 
     if(this.props.loggedInUser.crypto.length < 10) {
-      swal('Please update your profile with a valid Ethereum Address to start placing offers.');
+      swal({
+        text: 'Please update your profile with a valid Ethereum Address to start placing offers.',
+        icon: "info",
+        buttons: {
+          updateNow: "Update Now",
+          cancel: "Cancel"
+        }
+      }).then(res => {
+        if(res == "updateNow") {
+          this.props.history.push(`/profile`);
+        }
+      })
       return;
     }
 
-    getWeb3
-    .then(results => {
-
-      console.log("results.web3", results.web3);
-
-      this.setState({
-        web3: results.web3
-      })
-
-      let ethPrice;
-
-      if(this.state.ethusd) {
-        ethPrice = parseInt(this.state.posting.price)/this.state.ethusd;
+    swal({
+      text: "Are you sure you would like to send an offer for this item? All gas fees for Ethereum transactions are non-refundable.",
+      icon: "warning",
+      closeOnClickOutside: false,
+      buttons: {
+        submitOffer: "Submit Offer",
+        cancel: "Cancel"
+      } 
+    }).then(res => {
+      if(res == "submitOffer") {
+        return true;
       } else {
-        ethPrice = parseInt(this.state.posting.price)/420;
-      }
-
-      console.log(ethPrice);
-
-      // Instantiate contract once web3 provided.
-      this.instantiateContract(ethPrice)
+        return false
+      } 
     })
-    .catch(() => {
-      console.log('Error finding web3.');
-      swal('Unable to connect to the Ethereum Blockchain. Please install the Metamask for your preferred browser at https://metamask.io/');
+    .then(() => {
+      getWeb3
+      .then(results => {
+  
+        console.log("results.web3", results.web3);
+  
+        this.setState({
+          web3: results.web3
+        })
+  
+        let ethPrice;
+  
+        if(this.state.ethusd) {
+          ethPrice = parseInt(this.state.posting.price)/this.state.ethusd;
+        } else {
+          ethPrice = parseInt(this.state.posting.price)/420;
+        }  
+        // Instantiate contract once web3 provided.
+        this.instantiateContract(ethPrice)
+      })
+      .catch(() => {
+        console.log('Error finding web3.');
+        swal({
+          title: "Unable to connect to the Ethereum Blockchain",
+          text: "Please install the Metamask for your preferred browser at https://metamask.io/",
+          icon: "error"
+        })
+      })
     })
-
-    // create a contract 
-
-    // var bidButton = document.getElementsByClassName('bid-button');
-    // // need condition to check (upon revisit) to see if already bidded
-    // bidButton[0].style.color = "black";
-    // bidButton[0].style.backgroundColor = "grey";
-    // bidButton[0].style.cursor = "default";   
-
-    
-    // this.setState(
-    //     (prevState,props)=>{
-    //       return {buttonText: "Deposit Submitted"};
-    //     }
-    // );
   }
 
   instantiateContract(amount) {
     console.log("instantiating contract with amount:", amount);
 
     if(!this.state.web3.currentProvider) {
-      swal('ERROR: Unable to connect to the Ethereum Blockchain. Please make sure you logged into your Ethereum account and conneced to the Ropsten TestNet on the MetaMask extension'); 
+      swal({
+        title: "Unable to connect to the Ethereum Blockchain",
+        text: "Please make sure you logged into your Ethereum account and conneced to the Ropsten TestNet on the MetaMask extension",
+        icon: "error"
+      })
       return; 
     }
 
@@ -204,47 +234,65 @@ class SinglePosting extends React.Component {
         let lowerCaseBuyer = buyerAddress.toLowerCase()
         let lowerCaseSeller = sellerAddress.toLowerCase();
 
-        let contractAddress;
-
         if(accounts.length < 1) {
-          swal("Please connect your Ethereum Wallet with Metamask and connect to the Ropsten Test Network then try again.");
+          swal({
+            title: "Unable to connect to the Ethereum Blockchain",
+            text: "Please click on your installed Metamask browser, connect Ropsten Test Network, and unlock your Ethereum address, then try again.",
+            icon: "error",
+            closeOnClickOutside: false
+          });
           return;
         }
 
         if(accounts[0].toLowerCase() != buyerAddress.toLowerCase()) {
-          swal("Please set up Metamask with the same address as the one registered to your account and connect to the Ropsten Test Network then try again.");
+          swal({
+            title: "Unable to validate Metamask Ethereum Address",
+            text: "Please make sure your current Metamask address is the same the address registered with Cryptobay. Make sure you are connected to the Ropsten Test Network with the correct account then try again.",
+            icon: "error",
+            closeOnClickOutside: false
+          })
           return;
         }
 
-        swal('Please follow the instructions on Metamask to create the contract and deposit into the newly created smart contract');
-        escrow.new(lowerCaseBuyer, lowerCaseSeller,{
-          from: accounts[0]
+        swal({
+          title: "Processing order",
+          text: "Please confirm the MetaMask transaction with the default 'Gas Limit' and 'Gas Price' values to ensure that the transaction succeeds. Please do not navigate away from this page. Once the transaction is submitted, the transaction will be posted to the Ethereum Blockchain",
+          icon: "info",
+          buttons: {
+            cancel: {
+              text: "Cancel",
+              value: null,
+              visible: false,
+              className: "",
+              closeModal: false,
+            },
+            confirm: {
+              text: "OK",
+              value: true,
+              visible: true,
+              className: "",
+              closeModal: false
+            }
+          },
+          closeOnClickOutside: false,
+        })
+
+        let wei = this.state.web3.toWei(amount, "ether");
+
+        escrow.new(lowerCaseSeller,{
+          from: accounts[0],
+          value: wei
         })
         .then(instance => {
-          swal('Smart contract successfully created');
-          console.log('instance', instance);
-          window.instance = instance;
 
-          // deposit into our newly created smart contract
-
-          let wei = this.state.web3.toWei(amount, "ether");
-
-          console.log("wei", wei);
-
-          contractAddress = instance.address.toLowerCase();
-
-          return instance.deposit({
-            from: accounts[0],
-            value: wei
-          });
-        })
-        .then(result => {
-          console.log("result", result);
+          let contractAddress = instance.address.toLowerCase();
+          let transactionId = instance.transactionHash;
 
           let data = {
             id: this.state.posting.id,
             status: "pendingConfirmation",
-            contractAddress: contractAddress
+            contractAddress: contractAddress,
+            txids: [transactionId]
           }
 
           let status;
@@ -266,7 +314,21 @@ class SinglePosting extends React.Component {
             if(status != 200) {
               swal(`Error: ${body.message}`);
             } else {
-                swal("Successfully submitted offer, please wait for the seller to accept your offer, then meet the seller at the indicated meeting location and that indicated time and date.");
+                swal({
+                  title: 'Successfully Submitted Offer',
+                  text: "Please wait for the seller to accept your offer. Once your offer is accepted, meet the seller at the indicated meeting location at that indicated time and date. You can view the Ethereum transaction hash for the created contract in the 'Manage Transactions' page.",
+                  icon: "success",
+                  buttons: {
+                    transactions: "View Active Transactions",
+                    cancel: "Cancel"
+                  } 
+                }).then(res => {
+                  if(res == "transactions") {
+                    this.props.history.push(`/manage_transactions`);
+                  } else {
+                    return false
+                  } 
+                })
                 console.log(body);
 
                 var bidButton = document.getElementsByClassName('bid-button');
@@ -277,15 +339,9 @@ class SinglePosting extends React.Component {
 
                 this.setState(
                   (prevState,props)=>{
-                    return {buttonText: "Deposit Submitted"};
+                    return {buttonText: "Offer Submitted"};
                   }
                 );
-
-                // redirect user back to the main postings page
-                setTimeout(function() {
-                  window.location.replace('/posts');
-                }, 3000)
-
             }
           })
           .catch(err => {
@@ -362,7 +418,7 @@ class SinglePosting extends React.Component {
                     </div>
                   </div>
                   <br/>
-                  <h5 className="metaMaskWarning"><em>You must have the Metamask browser extension installed to place orders and confirm orders.</em></h5>
+                  <h5 className="metaMaskWarning"><strong>You must have the <a href="https://metamask.io/">Metamask browser extension</a> installed to place orders and confirm orders.</strong></h5>
                   <Button onClick={ () => this.offered() } variant="contained" color="primary" className="bid-button">
                     {this.state.buttonText}
                   </Button>
@@ -370,6 +426,7 @@ class SinglePosting extends React.Component {
             </Grid>
           </Grid>
           <div className="post-map">
+            <h5>Meeting Location</h5>
             <SimpleMap lat={49.282482} lng={-123.118275} />
           </div>
         </div>
@@ -380,4 +437,4 @@ class SinglePosting extends React.Component {
 
 
 
-export default withStyles(styles)(SinglePosting);
+export default withRouter(withStyles(styles)(SinglePosting));

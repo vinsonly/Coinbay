@@ -15,5 +15,5 @@ module.exports = function(deployer) {
   /* deploy the escrow contract with 
     buyer: address9 (0x6841EBBd0CBC33dcD114C548C99396710cc25e5B), seller: address10 (0x9ba1F32F809b6C58945Ada29d10cB82cA078C5E5)
   */
-  deployer.deploy(BasicEscrow, address1, address2) 
+  deployer.deploy(BasicEscrow, address2) 
 };
