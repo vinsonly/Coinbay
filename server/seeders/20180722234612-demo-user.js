@@ -3,7 +3,7 @@
 const faker = require('faker');
 
 var array = [];
-var numUsers = 1000;
+var numUsers = 200;
 
 for (var i = 0; i<numUsers; i++){
   array.push({

@@ -52,7 +52,7 @@ function getRandomInt(max) {
   return Math.floor(Math.random() * Math.floor(max));
 }
 
-var numPostings = 1000; //this needs to match number of users generated, see seeders demo-user.js file
+var numPostings = 200; //this needs to match number of users generated, see seeders demo-user.js file
 for (var i = 0; i<numPostings; i++){
 
   let randomInt = getRandomInt(18);
