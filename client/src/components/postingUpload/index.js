@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './styling.css';
 import ReactSpinner from '../misc/reactspinner.js';
-import TimePickers from '../timePickers/timePickers';
 
 import Map from '../maps';
 
@@ -153,18 +152,6 @@ class PostingUpload extends React.Component {
         // Math.round(price*100)/100
         // use this formula to get the number to the nearest 2 decimal places
 
-    }
-
-    componentDidMount() {
-        document.getElementsByClassName("flatpickr-input")[0].addEventListener('input', function (e) {
-            this.setState(
-                (prevState,props)=>{
-                return {date: e.target.value};
-                }
-            );
-
-            alert(this.state.date);
-        }.bind(this));
     }
 
     handleImageSubmit(base64) {
@@ -377,9 +364,6 @@ class PostingUpload extends React.Component {
                     <input onChange={this.handleChange} type="number" id="lat" className="form-control meetingLocation"/>
                     <label htmlFor="meetingLocation" className="grey-text">Longitude</label>
                     <input onChange={this.handleChange} type="number" id="lng" className="form-control meetingLocation"/> */}
-                    <label htmlFor="date" className="grey-text">Date and Time</label>
-                    <TimePickers />
-                    <br/>
 
                     <label htmlFor="meetingLocation" className="grey-text">Meeting Location</label>
                     <Map setLocation={this.setLocation}/>
