@@ -38,13 +38,32 @@ div.search * {
 	border-radius: 0.7em
 }
 
+.searching-min form {
+	background-color: white !important;
+	border: solid white;
+	border-radius: 0.7em
+}
+
 .searching input {
 	width: 100%;
 	height: 0.6em;
 	padding-bottom: 1em
 }
 
+.searching-min input {
+	width: 100%;
+	height: 0.6em;
+	padding-bottom: 1em
+}
+
 .searching {
+	text-align: right !important;
+	float: right !important;
+    width: 90% !important;
+    margin-top: 15em !important
+}
+
+.searching-min {
 	text-align: right !important;
 	float: right !important;
     width: 90% !important
@@ -87,6 +106,15 @@ input.react-autosuggest__input {
   justify-content: center !important;
   flex-wrap: wrap !important;
   padding-bottom: 10px;
+  height: 22em;
+  background-image: url("https://briffly.com/wp-content/uploads/Google-Maps.jpg")
+}
+
+.center-search-min {
+  display: flex !important;
+  justify-content: center !important;
+  flex-wrap: wrap !important;
+  padding-bottom: 10px
 }
 
 .expand {

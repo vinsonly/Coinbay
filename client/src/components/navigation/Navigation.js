@@ -72,20 +72,41 @@ class Navigation extends Component {
             }
         })
     }
+    homeNavigation() {
+        var is_root = window.location.pathname == "/";
 
+        if (is_root == true) {
+            return(
+                <div className="center-search">
+                    <div className="searching">
+                        <form className="form-inline md-form mt-0" id="searchForm">
+                            <Search handleRouteCallback={this.props.handleRouteCallback}/>
+                        </form>
+                    </div>
+                </div>
+            );
+        } else {
+            return(
+                <div className="center-search-min">
+                    <div className="searching-min">
+                        <form className="form-inline md-form mt-0" id="searchForm">
+                            <Search handleRouteCallback={this.props.handleRouteCallback}/>
+                        </form>
+                    </div>
+                </div>
+            );
+        }
+    }
     render() {
-
         console.log(this.state);
-
         console.log(this.props.loggedInUser);
-
       return (
             <div className="nav-color">
                 <div className="white-text">
                     <Navbar className="expand" dark expand="lg" scrolling>
-                        <NavbarBrand href="/">
+                        <NavLink to="/">
                             <strong>CryptoBay</strong>
-                        </NavbarBrand>
+                        </NavLink>
                         { !this.state.isWideEnough && <NavbarToggler onClick = { this.onClick } />}
                         <Collapse isOpen={ this.state.collapse } navbar>
                             <NavbarNav left>
@@ -136,13 +157,7 @@ class Navigation extends Component {
                     </Navbar>
                 </div>
 
-                <div className="center-search">
-                    <div className="searching">
-                        <form className="form-inline md-form mt-0" id="searchForm">
-                            <Search handleRouteCallback={this.props.handleRouteCallback}/>
-                        </form>
-                    </div>
-                </div>
+                {this.homeNavigation()}
             </div>
       );
     }
