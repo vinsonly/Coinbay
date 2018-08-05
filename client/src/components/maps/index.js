@@ -1,10 +1,10 @@
-
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import GoogleMapReact from 'google-map-react';
+import './styling.css';
 
-import './styling.css'
 
-
+/** Class representing a Google Map component */
 class Map extends Component {
   constructor(props) {
     super(props);
@@ -12,85 +12,101 @@ class Map extends Component {
     this.initialCenter = {
         lat: 49.282482,
         lng: -123.118275
-    }
-    
-    this.zoom = 11
-
+    };
+    this.zoom = 11;
     this.state = {
       lat: 49.282482,
-      lng: -123.118275
+      lng: -123.118275,
+      gmapsOverlayStyle: {}
     };
 
-    this.onClick = this.onClick.bind(this);
     this.onBoundsChange = this.onBoundsChange.bind(this);
+
+    this.gmapsWrapper = React.createRef();
+    this.gmapsOverlay = React.createRef();
+
+    this.gmapsOverlayStyle = {};
   }
-
-  onClick(x, y, _lat, _long, event) {
-    console.log(x, y, _lat, _long, event);
-
-    console.log(x.lat);
-    console.log(x.lng)
-
-    // this.setState({
-    //   lat: x.lat,
-    //   lng: x.lng 
-    // });
-  }
-
-  onBoundsChange(center, zoom, bounds, marginBounds) {
+  /**
+   * Update longitude and latitude (state)
+   * @param {float array} center - Coordinates to locate a map location
+   * @param {integer} zoom - Amount of zoom into a map location
+   */
+  onBoundsChange(center, zoom) {
     console.log(center);
     let lat = center.lat;
     let lng = center.lng;
-    console.log(lat);
-    console.log(lng);
     this.props.setLocation(lat, lng);
     this.setState({
       lat: lat,
       lng: lng
     })
   }
-
   render() {
-
     if(!this.state) {
       return (<div>Loading...</div>)
     }
 
-    console.log(this.state); 
+    let gmapsOverlay = {};
 
     return (
       // Important! Always set the container height explicitly
-      <div id="gmapsWrapper" style={{ height: '600px', width: '100%' }}>
+      <div id="gmapsWrapper" style={{ height: '600px', width: '100%' }} ref={this.gmapsWrapper}>
+      <div id="gmapsOverlay" ref={this.gmapsOverlay} style={this.state.gmapsOverlayStyle}>
+        <div id="tempMarker"/>
+      </div>
         <GoogleMapReact
           bootstrapURLKeys={{ key: "AIzaSyDvtndexGCQLEeLUsklFakSejGOElaVlH8" }}
           defaultCenter={this.initialCenter}
           defaultZoom={this.zoom}
-          onClick={this.onClick}
           onBoundsChange={this.onBoundsChange}
           center={{
             lat: this.state.lat,
             lng: this.state.lng
           }}
         >
-
-          <Marker
-            lat={this.state.lat}
-            lng={this.state.lng}
-          />
+        <Marker
+          lat={this.state.lat}
+          lng={this.state.lng}
+        />
         </GoogleMapReact>
         {/* <div id="tempMarker">
         </div> */}
-        
       </div>
     );
   }
+
+  componentDidUpdate() {
+    let style = window.getComputedStyle(this.gmapsWrapper.current);
+    let width = style.width;
+    if(this.state.gmapsOverlayStyle.width != width ) {
+      this.setState({
+        gmapsOverlayStyle: {
+          width: width
+        }
+      })
+    }
+  }
+
+  componentDidMount() {
+    let style = window.getComputedStyle(this.gmapsWrapper.current);
+    let width = style.width;
+    if(this.state.gmapsOverlayStyle.width != width ) {
+      this.setState({
+        gmapsOverlayStyle: {
+          width: width
+        }
+      })
+    }  }
 }
 
+
+
+/** Class representing a Google Map marker component */
 class Marker extends Component {
   constructor(props) {
     super(props);
   }
-
   render() {
     return(
       <div id="marker">
@@ -101,6 +117,5 @@ class Marker extends Component {
     )
   }
 }
-
 
 export default Map;

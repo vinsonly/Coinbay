@@ -255,7 +255,7 @@ class SinglePosting extends React.Component {
         if(accounts[0].toLowerCase() != buyerAddress.toLowerCase()) {
           swal({
             title: "Unable to validate Metamask Ethereum Address",
-            text: "Please make sure your current Metamask address is the same the address registered with Cryptobay. Make sure you are connected to the Ropsten Test Network with the correct account then try again.",
+            text: "Please make sure your current Metamask address is the same the address registered with CoinBay. Make sure you are connected to the Ropsten Test Network with the correct account then try again.",
             icon: "error",
             closeOnClickOutside: false
           })

@@ -1,14 +1,19 @@
-//20180722234612-demo-user.js
+/*
+GENERATE INITIAL USERS
+Populate database with randomly generated users and associated data.
+Initial test users #1 and #2 will also be created and assigned multiple postings (refer to: demo-postings.js)
+*/
+
 'use strict';
 const faker = require('faker');
 
 var array = [];
-var numUsers = 1000;
+var numUsers = 200;
 
 for (var i = 0; i<numUsers; i++){
 
   if(i == 0) {
-    // password is user1
+    // Creating test user1 (password is the same)
     array.push({
       email: "usertest1@gmail.com",
       username: "user1",
@@ -19,7 +24,7 @@ for (var i = 0; i<numUsers; i++){
       createdAt: faker.date.past(),
       updatedAt: new Date()
     })
-    // password is user2  
+    // Creating test user2 (password is the same)
     array.push({
       email: "usertest2@gmail.com",
       username: "user2",

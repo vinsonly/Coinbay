@@ -7,7 +7,8 @@ import { BrowserRouter, Route, Link, Router, Redirect, withRouter } from 'react-
 
 import swal from 'sweetalert';
 
-import './styles.css'
+import './styles.css';
+import './table-styles.css';
 
 import UserProfile from '../userProfile';
 
@@ -210,13 +211,13 @@ class UserDashboard extends Component {
           {
             Header: "Status",
             accessor: "status",
-            width: 100
+            width: 80
           },   
           {
             Header: 'More Details',
             accessor: 'id',
             Cell: ({value}) => (<button onClick={this.moreDetails.bind(this, value)}>Page</button>),
-            width: 70
+            width: 110
           },   
         ]
       },
@@ -227,14 +228,14 @@ class UserDashboard extends Component {
             Header: "Offers",
             accessor: 'id',
             Cell: ({value}) => (<span>2</span>),
-            width: 35 
+            width: 70
           },
-          {
-            Header: "View Offers",
-            accessor: 'id',
-            Cell: ({value}) => (<button onClick={this.viewOffers.bind(this, value)}>View Offers</button>),
-            width: 110
-          }
+          // {
+          //   Header: "View Offers",
+          //   accessor: 'id',
+          //   Cell: ({value}) => (<button onClick={this.viewOffers.bind(this, value)}>View Offers</button>),
+          //   width: 110
+          // }
         ],
       },
       {

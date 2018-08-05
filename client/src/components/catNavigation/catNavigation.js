@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import { Navbar, NavbarBrand } from 'mdbreact';
 import { BrowserRouter as Router, Link } from 'react-router-dom';
-import 'bootstrap/dist/css/bootstrap.css'
-import 'mdbreact/dist/css/mdb.css'
-import './catNavigation.css'
-
+import 'bootstrap/dist/css/bootstrap.css';
+import 'mdbreact/dist/css/mdb.css';
+import './catNavigation.css';
 
 var categories = {  
             0: "Automotives",
@@ -28,6 +27,7 @@ var categories = {
 };
 
 
+/** Class representing a categories selection component */
 class CatNavigation extends Component {
     constructor(props) {
         super(props);
@@ -37,7 +37,6 @@ class CatNavigation extends Component {
         };
     }
 	componentDidMount() {
-		// click on left most category to observe effect
 		document.getElementById('expand').addEventListener("click", function() {
 			document.querySelector("#tabs").classList.toggle('expand');
 		});
@@ -52,6 +51,10 @@ class CatNavigation extends Component {
             });;
         }
 	}
+    /**
+     * Keep track of navigation bar of categories selection of being expanded or collasped
+     * @param {string} text - String representation of state
+     */
     textChange(text) {
         if(text == "Expand") {
             this.setState(
@@ -71,6 +74,7 @@ class CatNavigation extends Component {
     render() {
         var rows = [];
 
+        // cycle through all categories and create buttons linked to react router
 		for (var i = 0; i < Object.keys(categories).length; i++) {
 		    rows.push(<Link to={"/posts/categories/"+categories[i]} key={categories[i]}><button id={categories[i]}>{categories[i]}</button></Link>);
 		}

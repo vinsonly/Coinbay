@@ -14,8 +14,9 @@ div#notifications > div {
 	align-items: center;
 	padding: 20px;
 	background-color: lightblue;
-	border: 2px solid lightgrey;
+	border: 2px solid grey;
 	border-radius: 15px;
+	box-shadow: 0 0 5px;
 }
 
 div.notificationsPost {

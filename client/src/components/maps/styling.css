@@ -1,12 +1,22 @@
 div#tempMarker {
-    width: 20px;
-    height: 20px;
-    background-color: blue;
+    width: 22px;
+    height: 22px;
+    background-color: red;
     opacity: 0.3;
     position: absolute;
     z-index: 999999;
-    margin-top: -24.5%;
-    margin-left: 20.5%;
+    top: 50%;
+    left: 50%;
+    pointer-events: none;
+    border-radius: 50%;
 } 
 
+div#gmapsOverlay {
+    position: absolute;
+    width: 500px;
+    height: 600px;
+    /* background-color: rgba(255, 0, 0, 0.2); */
+    z-index: 100;
+    pointer-events: none;
+}
 

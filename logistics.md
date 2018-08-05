@@ -50,7 +50,7 @@
     - As a result, they will be penalized and will not be able to withdraw their deposit
 10. An hour after the meetup time, if the transaction has not yet been set to 'sold'
     - Users are able to withdraw all the funds if they have a passcode.
-11. One day after the meetup, any left over funds are send to the Cryptobay Wallet. 
+11. One day after the meetup, any left over funds are send to the CoinBay Wallet. 
 
 ### Contract Specifications
 - Server functions:

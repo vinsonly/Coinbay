@@ -1,3 +1,10 @@
+/*
+GENERATE INITIAL DATA FOR POSTS
+Populate database with randomly generated postings and associated data.
+All postings generated will be under one of the various categories listed.
+Postings will also be created and assigned to test users #1 and #2 (refer to: demo-users.js)
+*/
+
 'use strict';
 
 const faker = require('faker'); //Faker library used for generating fake data
@@ -52,7 +59,7 @@ function getRandomInt(max) {
   return Math.floor(Math.random() * Math.floor(max));
 }
 
-// generate posts for user1 and user2
+// Generate postings that will be owned by User 1
 for(var k = 0; k < 10; k++) {
   let randomInt = getRandomInt(18);
 
@@ -78,14 +85,14 @@ for(var k = 0; k < 10; k++) {
   });
 }
 
-// generate posts for user1 and user2
+// Generate postings that will be owned by User 2
 for(var j = 0; j < 10; j++) {
   let randomInt = getRandomInt(18);
 
   let category = categories[randomInt];
   
   let image = images[randomInt]
-
+  
   array.push({
     postingTitle: faker.commerce.productName(),
     modelName: faker.commerce.productMaterial(),
@@ -105,9 +112,7 @@ for(var j = 0; j < 10; j++) {
 }
 
 
-
-
-var numPostings = 1000; //this needs to match number of users generated, see seeders demo-user.js file
+var numPostings = 200; //this needs to match number of users generated, see seeders demo-user.js file
 for (var i = 0; i<numPostings; i++){
 
   let randomInt = getRandomInt(18);

@@ -1,4 +1,3 @@
-import 'react-notifications/lib/notifications.css';
 import React, { Component } from 'react';
 import {NotificationContainer, NotificationManager} from 'react-notifications';
 import swal from 'sweetalert';
@@ -7,11 +6,13 @@ import getWeb3 from '../../eth/getWeb3';
 import { BrowserRouter, Route, Link, Router, Redirect, withRouter } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import "./notification.css";
+import 'react-notifications/lib/notifications.css';
 
 const contract = require('truffle-contract');
 const escrow = contract(BasicEscrow);
 
 
+/** Class representing a post notifications component */
 class Notification extends React.Component {
   constructor(props) {
     super(props);
@@ -28,16 +29,13 @@ class Notification extends React.Component {
     this.acceptOffer = this.acceptOffer.bind(this);
     this.rejectOffer = this.rejectOffer.bind(this);
   }
-
+  /**
+   * Notification message for accepting and rejecting transactions
+   * @param {string} type - String representation corresponding to type of notification message
+   * @param {string} otherUser - String representation corresponding other user making the offer
+   */
   createNotification(type, otherUser) {
-
-    console.log(this.props.status);
-    console.log(this.props.currentUser);
-
     let selector = otherUser + this.props.status + this.props.currentUser
-
-    console.log(selector);
-    console.log(type);
 
     switch (type) {
         case 'success':
@@ -70,13 +68,14 @@ class Notification extends React.Component {
       })
   }
 
+  /**
+   * Other user making the offer is now accepted and is notified
+   * @param {string} type - String representation corresponding to type of notification message
+   * @param {string} otherUser - String representation corresponding other user making the bid
+   */
   confirmTransaction(type, otherUser) {
-    console.log("confirm transaction");
-    console.log("type", type);
-    console.log("bidderId", otherUser);
-
+    // post to database that this transaction is accepted.
     if(this.props.status == "pendingConfirmation") {
-      // post to database that this transaction is accepted.
       let status;
       let data = {
         id: this.props.post.id,
@@ -156,7 +155,7 @@ class Notification extends React.Component {
             if(accounts[0].toLowerCase() != myAddress.toLowerCase()) {
               swal({
                 title: "Unable to validate Metamask Ethereum Address",
-                text: "Please make sure your current Metamask address is the same the address registered with Cryptobay. Make sure you are connected to the Ropsten Test Network with the correct account then try again.",
+                text: "Please make sure your current Metamask address is the same the address registered with CoinBay. Make sure you are connected to the Ropsten Test Network with the correct account then try again.",
                 icon: "error",
                 closeOnClickOutside: false
               })
@@ -302,7 +301,7 @@ class Notification extends React.Component {
             if(accounts[0].toLowerCase() != myAddress.toLowerCase()) {
               swal({
                 title: "Unable to validate Metamask Ethereum Address",
-                text: "Please make sure your current Metamask address is the same the address registered with Cryptobay. Make sure you are connected to the Ropsten Test Network with the correct account then try again.",
+                text: "Please make sure your current Metamask address is the same the address registered with CoinBay. Make sure you are connected to the Ropsten Test Network with the correct account then try again.",
                 icon: "error",
                 closeOnClickOutside: false
               })
@@ -392,10 +391,12 @@ class Notification extends React.Component {
         })
       })
   }
-
+  /**
+   * Error message for Etheruem Blockchain
+   * @param {string} type - String representation corresponding to type of notification message
+   * @param {string} otherUser - String representation corresponding other user making the bid
+   */
   okTransaction() {
-    console.log("Okaying transaction");
-
     if(!this.state.web3.currentProvider) {
       swal({
         title: "Unable to connect to the Ethereum Blockchain",
@@ -450,7 +451,7 @@ class Notification extends React.Component {
             if(accounts[0].toLowerCase() != myAddress.toLowerCase()) {
               swal({
                 title: "Unable to validate Metamask Ethereum Address",
-                text: "Please make sure your current Metamask address is the same the address registered with Cryptobay. Make sure you are connected to the Ropsten Test Network with the correct account then try again.",
+                text: "Please make sure your current Metamask address is the same the address registered with CoinBay. Make sure you are connected to the Ropsten Test Network with the correct account then try again.",
                 icon: "error",
                 closeOnClickOutside: false
               })
@@ -596,7 +597,7 @@ class Notification extends React.Component {
             if(accounts[0].toLowerCase() != myAddress.toLowerCase()) {
               swal({
                 title: "Unable to validate Metamask Ethereum Address",
-                text: "Please make sure your current Metamask address is the same the address registered with Cryptobay. Make sure you are connected to the Ropsten Test Network with the correct account then try again.",
+                text: "Please make sure your current Metamask address is the same the address registered with CoinBay. Make sure you are connected to the Ropsten Test Network with the correct account then try again.",
                 icon: "error",
                 closeOnClickOutside: false
               })
@@ -717,7 +718,6 @@ class Notification extends React.Component {
   }
  
   render() {
-
     if(!this.props.post) {
       return(<div></div>)
     }
