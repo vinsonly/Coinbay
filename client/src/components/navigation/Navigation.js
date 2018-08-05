@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { Navbar, NavbarBrand, NavbarNav, NavbarToggler, Collapse, NavItem, NavLink, Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'mdbreact';
-import Search from '../search/Search'
+import Search from '../search/Search';
+import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'mdbreact/dist/css/mdb.css';
 import './navigation.css';
 
-import { Link } from 'react-router-dom';
 
-
+/** Class representing a Navigation Bar component */
 class Navigation extends Component {
     constructor(props) {
         super(props);
@@ -20,31 +20,32 @@ class Navigation extends Component {
         this.onClick = this.onClick.bind(this);
         this.toggle = this.toggle.bind(this);
         this.checkUserLoggedIn = this.checkUserLoggedIn.bind(this);
-
-        console.log(props);
-
         this.checkUserLoggedIn();
-
     }
-    onClick(){
+    /**
+     * Keep track of navigation section being expanded via sandwich bar (state)
+     */
+    onClick() {
         this.setState({
             collapse: !this.state.collapse,
         });
     }
-
+    /**
+     * Keep track of navigation section being collasped via sandwich bar (state)
+     */
     toggle() {
         this.setState({
             dropdownOpen: !this.state.dropdownOpen
         });
     }
-
+    /**
+     * Navigation corresponding to a user logged in and guest
+     */
     checkUserLoggedIn() {
         let sessionToken = localStorage.getItem('sessionToken');
-
         let data = {
             token: sessionToken
         }
-
         let status;
         fetch('/api/validateToken', {
             method: 'POST',
@@ -72,6 +73,9 @@ class Navigation extends Component {
             }
         })
     }
+    /**
+     * Navigation is expanded to show google maps image if current page is the home page
+     */
     homeNavigation() {
         var is_root = window.location.pathname == "/";
 
@@ -98,8 +102,6 @@ class Navigation extends Component {
         }
     }
     render() {
-        console.log(this.state);
-        console.log(this.props.loggedInUser);
       return (
             <div className="nav-color">
                 <div className="white-text">

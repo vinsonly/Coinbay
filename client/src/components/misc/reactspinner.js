@@ -1,6 +1,8 @@
 import React from 'react';
 import { ClipLoader } from 'react-spinners';
- 
+
+
+/** Class representing a Loading Icon component */
 class ReactSpinner extends React.Component {
   constructor(props) {
     super(props);
@@ -8,7 +10,6 @@ class ReactSpinner extends React.Component {
       loading: true
     }
   }
-
   render() {
     return (
       <div className='sweet-loading'>

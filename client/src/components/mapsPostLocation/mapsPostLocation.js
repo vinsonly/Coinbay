@@ -2,15 +2,14 @@ import React, { Component } from 'react';
 import GoogleMapReact from 'google-map-react';
 import './mapsPostLocation.css';
 
+
+/** Class representing a Google Map (for single posts) component */
 class SimpleMap extends Component {
-
   render() {
-
     let defaultCenter = {
       lat: this.props.lat,
       lng: this.props.lng
     }
-
     return (
       // Important! Always set the container height explicitly
       <div style={{ height: '50vh', width: '100%' }}>
@@ -29,11 +28,12 @@ class SimpleMap extends Component {
   }
 }
 
+
+/** Class representing a Google Map marker (for single posts) component */
 class PostingSingleMarker extends Component {
   constructor(props) {
     super(props);
   }
-
   render() {
     return(
       <div id="marker">
