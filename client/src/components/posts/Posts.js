@@ -127,6 +127,7 @@ class Posts extends Component {
 		if(!this.state.postings) {
 			return (<div className="grid list detailed-list">Loading</div>)
 		} else {
+			window.postings = this.state.postings;
 			if(idArr != null && idArr.length > 0) {
 				return (
 					<div>

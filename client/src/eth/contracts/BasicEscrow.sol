@@ -40,6 +40,16 @@ contract BasicEscrow {
         }
     }
 
+    function acceptOffer() public {
+        assert(msg.sender == seller);
+        offerAccepted = true;
+    }
+
+    function declineOffer() public {
+        assert(msg.sender == seller);
+        selfdestruct(buyer);
+    }
+
     // transfer funds from smart contract to seller
     function payBalance() private {
         seller.transfer(balance);

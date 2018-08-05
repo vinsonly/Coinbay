@@ -21,9 +21,30 @@ class TransactionHistory extends Component {
 
   }
 
+
+
   fetchTransactions() {
     // get all postings that belong to the user that been fulfilled.
     // store results in the transactions
+    let userId = this.props.loggedInUser.id;
+    
+    console.log(userId);
+
+    let status;
+    fetch(`/api/user/postings/${userId}/transactionHistory`) 
+      .then(res => {
+        status = res.status;
+        return res.json();
+      })
+      .then(postings => {
+        console.log("postings", postings);
+        this.setState({
+          transactionsLoaded: true
+        })
+      })
+      
+
+
   }
   
   moreDetails(postingId) {
@@ -32,6 +53,20 @@ class TransactionHistory extends Component {
       clickedPostingPage: true,
       redirectTo: postingId
     })  
+  }
+
+  componentDidMount(){
+    if(this.props.loggedInUser.id && !this.state.transactionsLoaded) {
+      console.log("User is logged in and transactions not updated, fetching posts");
+      this.fetchTransactions();
+    }
+  }
+
+  componentDidUpdate() {
+    if(this.props.loggedInUser.id && !this.state.transactionsLoaded) {
+      console.log("User is logged in and transactions not updated, fetching posts");
+      this.fetchTransactions();
+    }
   }
 
   render() {

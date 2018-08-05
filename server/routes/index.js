@@ -14,11 +14,12 @@ module.exports = (app) => {
     app.post('/api/user/delete', usersController.delete);
     app.get('/api/user/:id', usersController.findById);
     app.get('/api/user/:id/boughtPosts', usersController.findBoughtPostsByUserId);
+    app.get('/api/user/postings/:userId/transactionHistory', usersController.transactionHistory);
 
     app.get('/api/user/postings/:userId', postingsController.findByUser);
 
     app.get('/api/postings', postingsController.read);
-    app.post('/api/posting/acceptoffer', postingsController.acceptOffer);
+    app.post('/api/posting/setoffer', postingsController.setOffer);
     app.post('/api/posting', authController.verifyToken, postingsController.create);
     app.post('/api/posting/update', postingsController.update);
     app.post('/api/posting/delete', postingsController.delete);
@@ -29,6 +30,7 @@ module.exports = (app) => {
     // app.get('/api/postings/?=asdsadsadsad', postingsController.search); //read the query string from the URL and query the database
 
     app.post('/api/posting/buy/:id', authController.verifyToken, postingsController.setUpTransaction);
+    app.post('/api/posting/set_transaction', authController.verifyToken, postingsController.setTransaction)
 
     app.get('/api/adminusers', adminusersController.read);
     app.post('/api/adminuser', adminusersController.create);

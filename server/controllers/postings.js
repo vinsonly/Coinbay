@@ -260,6 +260,8 @@ module.exports = {
                     let transaction = {
                         contractAddress: contractAddress,
                         txids: txids,
+                        buyerOk: false,
+                        sellerOk: false,
                         startedAt: Date.now(),
                         completedAt: null
                     }
@@ -303,14 +305,7 @@ module.exports = {
             })
     },
 
-    setPostingAsSold(req, res) {
-        // BasicEscrow.new().then(function(instance) {
-        //     // Print the new address
-        //     console.log(instance.address);
-        //   }).catch(function(err) {
-        //     // There was an error! Handle it.
-        //   });
-
+    setPostingStatus(req, res) {
         console.log("req.params.id", req.params.id);
 
         console.log("req.body.validatedUser", req.body.validatedUser);
@@ -324,6 +319,16 @@ module.exports = {
         let userId = req.body.validatedUser.id;
 
         let status = req.body.status;
+
+        if(status != "active" && 
+        status != "pendingConfirmation" && 
+        status != "pending" && 
+        status != "fulfilled" && 
+        status != "cancelled") {
+            return res.status(400).send({
+                message: "status value is invalid"
+            })
+        }
 
         if(!userId || !id || !status) {
             return res.status(400).send({
@@ -392,10 +397,16 @@ module.exports = {
                 })
     },
 
-    acceptOffer(req, res) {
+    setOffer(req, res) {
         
         let id = parseInt(req.body.id);
         console.log(req.body);
+        let txid = req.body.txid;
+        let accepted = Boolean(req.body.accept);
+        let status = "pending"
+        if(!accepted) {
+            status = "active"
+        }
         
         return Posting
             .findById(id)
@@ -405,10 +416,16 @@ module.exports = {
                             message: `posting with id: ${id} not found.`
                         })
                     } else {
+
+                        let newTransaction = posting.transaction;
+                        if(txid) {
+                            newTransaction.txids.push(txid);
+                        }
                         return posting
                             .update({
-                                accepted: true,
-                                status: "pending"
+                                accepted: accepted,
+                                status: status,
+                                transaction: newTransaction
                             })
                             .then(() => {
                                 console.log("Successfully updated posting");
@@ -453,5 +470,64 @@ module.exports = {
                     return res.status(400).send(err);
                 })
     },
+
+    // set the user as confirmed or rejected
+    setTransaction(req, res) {
+        let id = parseInt(req.body.id);
+        let confirmed = Boolean(req.body.confirmed);
+
+        return Posting
+            .findById(id)
+                .then(posting => {
+                    if(!posting) {
+                        return res.status(404).send({
+                            message: `posting with id: ${id} not found.`
+                        })
+                    } else {
+                        let newTransaction = posting.transaction;
+                        let newStatus = posting.status;
+                        let ok = confirmed;
+
+
+
+                        if(req.body.validatedUser.id == posting.userId) {
+                            newTransaction.sellerOk = ok;
+                        } else if(req.body.validatedUser.id == posting.buyerId) {
+                            newTransaction.buyerOk = ok;
+                        }
+
+                        if(newTransaction.sellerOk && newTransaction.buyerOk) {
+                            newStatus = "fulfilled";
+                        } else if(newTransaction.sellerOk == false && newTransaction.buyerOk == false) {
+                            newStatus = "cancelled";
+                        } else if(newTransaction.sellerOk == false && newTransaction.buyerOk == true ||
+                            newTransaction.sellerOk == true && newTransaction.buyerOk == false
+                        ) {
+                            newStatus = "dispute";
+                        }
+                            
+                        return posting
+                            .update({
+                                status: newStatus || posting.status,
+                                transaction: newTransaction
+                            })
+                            .then(() => {
+                                console.log("Successfully updated posting");
+                                res.send(posting);
+                            })
+                            .catch((error) => {
+                                console.log("Opps we ran into an error");
+                                console.log(error);
+                                res.status(400).send(error);
+                            })
+                    }
+                })
+                .catch((error) => {
+                    console.log("Opps we ran into an error");
+                    console.log(error);
+                    res.status(400).send(error);
+                })
+            
+    }    
 
 }

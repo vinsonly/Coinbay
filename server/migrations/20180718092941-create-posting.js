@@ -29,7 +29,7 @@ module.exports = {
         allowNull: false
       },
       status: {
-        type: Sequelize.ENUM('active','pendingConfirmation','pending','sold'),
+        type: Sequelize.ENUM('active','pendingConfirmation','pending','fulfilled', 'cancelled', 'disputing'),
         allowNull: false,
       },
       description: {
