@@ -23,6 +23,15 @@ div.notificationsPost {
 	margin: 15px auto;
 }
 
+div.notificationsPost > div {
+	padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    border: 2px grey solid;
+	box-shadow: 0 0 5px 2px grey;
+	margin-bottom: 20px;
+}
+
 @media (max-width: 900px) {
 	div.notificationsPost {
 		width: 90%;

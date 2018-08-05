@@ -3,7 +3,7 @@
 }
 
 .presence {
-	margin-bottom: 20px;
+	margin-top: 15px;
 }
 
 .notificationsDivider {
@@ -11,4 +11,15 @@
 	background-color: black;
 	width: 100%;
 	display:block;
+}
+
+span.notificationField {
+	font-weight: bold;
+	color: darkblue;
+}
+
+div.presence > button {
+	margin-top: 0;
+	margin-left: 0;
+	border-radius: 5px;
 }

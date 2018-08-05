@@ -1,15 +1,16 @@
 import 'react-notifications/lib/notifications.css';
 import React, { Component } from 'react';
 import {NotificationContainer, NotificationManager} from 'react-notifications';
-
 import swal from 'sweetalert';
- 
 import BasicEscrow from '../../eth/build/contracts/BasicEscrow.json';
-
 import getWeb3 from '../../eth/getWeb3';
+import { BrowserRouter, Route, Link, Router, Redirect, withRouter } from 'react-router-dom';
+import Button from '@material-ui/core/Button';
+import "./notification.css";
 
 const contract = require('truffle-contract');
 const escrow = contract(BasicEscrow);
+
 
 class Notification extends React.Component {
   constructor(props) {
@@ -167,9 +168,6 @@ class Notification extends React.Component {
           }
         })
       })
-
-
-    
   }
 
   rejectTransaction(type, otherUser) {
@@ -207,37 +205,56 @@ class Notification extends React.Component {
 
     let postingId = this.props.post.id;
 
+    let startedAt = convertToDate(this.props.post.transaction.startedAt);
+
     console.log(this.props);
     return (
     	<div id={otherUser + this.props.status + this.props.currentUser}>
         {(this.props.currentUser == "seller") ? (
           <div>
-            <p>Buyer Id: {this.props.post.buyerId}</p>
-            <p>Buyer Username: {this.props.post.Buyer.username}</p>
+            <p><span className="notificationField">Buyer Id:</span> {this.props.post.buyerId}</p>
+            <p><span className="notificationField">Buyer Username:</span> {this.props.post.Buyer.username}</p>
           </div>
         ) : (
           <div>
-            <p>Seller Id: {this.props.post.userId}</p>
-            <p>Seller Username: {this.props.post.User.username}</p>
+            <p><span className="notificationField">Seller Id:</span> {this.props.post.userId}</p>
+            <p><span className="notificationField">Seller Username:</span> {this.props.post.User.username}</p>
           </div>
         )}
-        <p>Posting Id: {this.props.post.id}</p>
-        <p>Posting Title: {this.props.post.postingTitle}</p>
+        <p><span className="notificationField">Posting Id:</span> {this.props.post.id}</p>
+        <p><span className="notificationField">Posting Title:</span> {this.props.post.postingTitle}</p>
+        <p><span className="notificationField">Price:</span> ${this.props.post.price}</p>
+        <p><span className="notificationField">Sent at:</span> {startedAt}</p>
         {/* <p>Meeting Time: {this.props.post.time}</p> */}
-        <a href={`/posts/${postingId}`}><p>Link to Post</p></a>
-	      <div className="presence">
-	        <button className='btn btn-success'
-	          onClick={this.confirmTransaction.bind(this, 'success', otherUser)}>{acceptMsg}
-	        </button>
-		    <button className='btn btn-danger'
-	          onClick={this.rejectTransaction.bind(this, 'error', otherUser)}>{rejectMsg}
-	        </button> 
-	       </div>
-         <div className="notificationsDivider" />
+        {/* <a href={`/posts/${postingId}`}><p>Link to Post</p></a> */}
+        <Button onClick={ () => this.props.history.push(`/posts/${postingId}`) } variant="contained" color="primary" className="bid-button">
+            Link to Post
+        </Button>
+	      
+        {
+          (this.props.currentUser == "buyer" && this.props.status == "pendingConfirmation") ? 
+            (<div/>)
+              :
+            (<div className="presence">
+            <button className='btn btn-success'
+              onClick={this.confirmTransaction.bind(this, 'success', otherUser)}>{acceptMsg}
+            </button>
+          <button className='btn btn-danger'
+              onClick={this.rejectTransaction.bind(this, 'error', otherUser)}>{rejectMsg}
+            </button> 
+           </div>)
+        }
+    
+        {/* <div className="notificationsDivider" /> */}
 	        <NotificationContainer/>
-      	</div>
+      </div>
     );
   }
 }
  
-export default Notification;
+export default withRouter(Notification);
+
+function convertToDate(unixtime) {
+  var date = new Date(unixtime);
+  return date.toString();
+}

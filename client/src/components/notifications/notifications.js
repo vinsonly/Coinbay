@@ -7,11 +7,6 @@ class Notifications extends React.Component {
 	constructor(props) {
 		super(props);
 
-		// this.state = {
-		// 	buyerPosts: [],
-		// 	sellerPosts: []
-		// }
-
 		this.state = {
 			fetchedBuyerPosts: false,
 			fetchedSellerPosts: false
@@ -30,24 +25,27 @@ class Notifications extends React.Component {
 		console.log("userId", userId);
 		fetch(`/api/buyer_postings/${userId}`)
 			.then(res => {
-			status = res.status;
-			return res.json();
+				status = res.status;
+				return res.json();
 			})
 				.then(async body => {
+					console.log("body", body);
 					let pendingPosts = [];
-			if(status == 200) {
-						await body.map(async posting => {
-							if(posting.status == "pending") {
+					console.log("status", status);
+					if(status == 200) {
+						const promises = body.map(async posting => {
+							if(posting.status == "pendingConfirmation") {
 								await pendingPosts.push(posting);
 							}
 						})
-
+						await Promise.all(promises);
 						return {
 							buyerPendingPosts: pendingPosts
 						}
-			}
+					}
 				})
 				.then(res => {
+					console.log("res", res);
 					this.setState({
 						buyerPendingPosts: res.buyerPendingPosts,
 						fetchedBuyerPosts: true
@@ -139,7 +137,7 @@ class Notifications extends React.Component {
 					<h2> Sent Offers </h2>
 					{this.state.buyerPendingPosts.map(post => {
 						return(
-							<Notification post={post} currentUser="buyer" status="pending" loggedInUser={this.props.loggedInUser}/>
+							<Notification post={post} currentUser="buyer" status="pendingConfirmation" loggedInUser={this.props.loggedInUser}/>
 						)
 					})}
 				</div>
@@ -163,17 +161,6 @@ class Notifications extends React.Component {
 						)
 					})}
 				</div>
-
-				<div id="completedTransactions" className="notificationsPost">
-					<h2> Completed Transactions </h2>
-					{this.state.sellerActivePosts.map(post => {
-						return(
-							<Notification post={post} currentUser="seller" status="pendingConfirmation" loggedInUser={this.props.loggedInUser}/>
-						)
-					})}
-				</div>
-
-
 		</div>
     )
   }
