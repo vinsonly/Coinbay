@@ -1,14 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import './styling.css';
 import ReactSpinner from '../misc/reactspinner.js';
-
 import Map from '../maps';
+import Dropzone from 'react-dropzone';
+import './styling.css';
 
-import Dropzone from 'react-dropzone'
 
+/** Class representing a postings creation component */
 class PostingUpload extends React.Component {
-
     constructor(props) {
         super(props);
 
@@ -42,7 +41,6 @@ class PostingUpload extends React.Component {
 
     async handleSubmit(event) {
         event.preventDefault();
-        // console.log(this.state);
 
         if(this.state.status == "Uploading image(s)...") {
             alert("Please wait for image upload to finish");
@@ -54,8 +52,6 @@ class PostingUpload extends React.Component {
                 return;
             }
         }
-
-        console.log("this.state", this.state);
 
         // enforce mandatory values
         if(this.state.postingTitle.length < 1 ||
@@ -80,8 +76,6 @@ class PostingUpload extends React.Component {
         }
 
         let price = parseInt(this.state.priceDollars) + parseInt(this.state.priceCents)/100;
-
-
         let data = {
             postingTitle: this.state.postingTitle,
             modelName: this.state.modelName,
@@ -96,7 +90,6 @@ class PostingUpload extends React.Component {
         }
 
         let abstract = [];
-
         let abstractIsEmpty = true;
 
         for(var ab in this.state.abstract) {
@@ -116,12 +109,9 @@ class PostingUpload extends React.Component {
             data.location = location;
         }
 
-
         if(this.state.images.length > 0) {
             data.images = this.state.images;
         }
-
-        console.log(data);
 
         let status;
         fetch('/api/posting', {
@@ -152,21 +142,18 @@ class PostingUpload extends React.Component {
 
         // Math.round(price*100)/100
         // use this formula to get the number to the nearest 2 decimal places
-
     }
 
     handleImageSubmit(base64) {
         let obj = this;
-
         let data = {
             image: base64
-        }
-
+        };
         let status;
 
         this.setState({
             status: "Uploading image(s)..."
-        })
+        });
 
         fetch('https://api.imgur.com/3/image', {
             method: 'POST', // or 'PUT'
@@ -193,9 +180,7 @@ class PostingUpload extends React.Component {
                     images: newImages
                 })
             }
-
         })
-
     }
 
     setLocation(lat, lng) {
@@ -294,100 +279,99 @@ class PostingUpload extends React.Component {
                 break;
         }
     }
+    render() {
+        return(
+            <div id="postingUploadContainer">
+                <h3>Posting Upload</h3>
+                <div className="formContainer">
+                    <form onSubmit={this.handleSubmit}>
+                        <label htmlFor="postingTitle" className="grey-text">Posting Title</label>
+                        <span className="mandatoryStar">*</span>
+                        <input onChange={this.handleChange} type="text" id="postingTitle" className="form-control"/>
+                        <br/>
 
-  render() {
+                        <label htmlFor="modelName" className="grey-text">Model Name</label>
+                        <span className="mandatoryStar">*</span>
+                        <input onChange={this.handleChange} type="text" id="modelName" className="form-control"/>
+                        <br/>
 
-    return(
-        <div id="postingUploadContainer">
-            <h3>Posting Upload</h3>
-            <div className="formContainer">
-                <form onSubmit={this.handleSubmit}>
-                    <label htmlFor="postingTitle" className="grey-text">Posting Title</label>
-                    <span className="mandatoryStar">*</span>
-                    <input onChange={this.handleChange} type="text" id="postingTitle" className="form-control"/>
-                    <br/>
+                        <label htmlFor="brand" className="grey-text">Brand</label>
+                        <span className="mandatoryStar">*</span>
+                        <input onChange={this.handleChange} type="text" id="brand" className="form-control"/>
+                        <br/>
 
-                    <label htmlFor="modelName" className="grey-text">Model Name</label>
-                    <span className="mandatoryStar">*</span>
-                    <input onChange={this.handleChange} type="text" id="modelName" className="form-control"/>
-                    <br/>
+                        <label htmlFor="Category" className="grey-text">Category*</label><br/>
+                        <div id="categoryDiv">
+                            <select name="category" id="categorySelector" value={this.state.category} onChange={this.handleChange}>
+                                <option value="Beauty">Beauty</option>
+                                <option value="Pets">Pets</option>
+                                <option value="Electronics">Electronics</option>
+                                <option value="Books">Books</option>
+                                <option value="Clothing">Clothing</option>
+                                <option value="Jewelry">Jewelry</option>
+                                <option value="Art">Art</option>
+                                <option value="Health">Health</option>
+                                <option value="Gardening">Gardening</option>
+                                <option value="Office">Office</option>
+                                <option value="Music">Music</option>
+                                <option value="Home">Home</option>
+                                <option value="Outdoors">Outdoors</option>
+                                <option value="Toys">Toys</option>
+                                <option value="Tools">Tools</option>
+                                <option value="Antiques">Antiques</option>
+                                <option value="miscellaneous">miscellaneous</option>
+                            </select>
+                        </div>
+                        <br/>
 
-                    <label htmlFor="brand" className="grey-text">Brand</label>
-                    <span className="mandatoryStar">*</span>
-                    <input onChange={this.handleChange} type="text" id="brand" className="form-control"/>
-                    <br/>
+                        <label htmlFor="price" className="grey-text">Price</label>
+                        <span className="mandatoryStar">*</span>
+                        <div id="priceContainer">
+                            <span id="dollar">$</span>
+                            <input onChange={this.handleChange} value={this.state.priceDollars} type="number" id="priceDollars" className="form-control"/>
+                            <span id="dot">.</span>
+                            <input onChange={this.handleChange} value={this.state.priceCents} type="number" id="priceCents" className="form-control"/>
+                        </div>
+                        <br/>
 
-                    <label htmlFor="Category" className="grey-text">Category*</label><br/>
-                    <div id="categoryDiv">
-                        <select name="category" id="categorySelector" value={this.state.category} onChange={this.handleChange}>
-                            <option value="Beauty">Beauty</option>
-                            <option value="Pets">Pets</option>
-                            <option value="Electronics">Electronics</option>
-                            <option value="Books">Books</option>
-                            <option value="Clothing">Clothing</option>
-                            <option value="Jewelry">Jewelry</option>
-                            <option value="Art">Art</option>
-                            <option value="Health">Health</option>
-                            <option value="Gardening">Gardening</option>
-                            <option value="Office">Office</option>
-                            <option value="Music">Music</option>
-                            <option value="Home">Home</option>
-                            <option value="Outdoors">Outdoors</option>
-                            <option value="Toys">Toys</option>
-                            <option value="Tools">Tools</option>
-                            <option value="Antiques">Antiques</option>
-                            <option value="miscellaneous">miscellaneous</option>
-                        </select>
-                    </div>
-                    <br/>
+                        <label htmlFor="abstract" className="grey-text">Abstract</label>
+                        <input onChange={this.handleChange} type="text" id="abstract1" className="form-control abstract"/>
+                        <input onChange={this.handleChange} type="text" id="abstract2" className="form-control abstract"/>
+                        <input onChange={this.handleChange} type="text" id="abstract3" className="form-control abstract"/>
+                        <br/>
 
-                    <label htmlFor="price" className="grey-text">Price</label>
-                    <span className="mandatoryStar">*</span>
-                    <div id="priceContainer">
-                        <span id="dollar">$</span>
-                        <input onChange={this.handleChange} value={this.state.priceDollars} type="number" id="priceDollars" className="form-control"/>
-                        <span id="dot">.</span>
-                        <input onChange={this.handleChange} value={this.state.priceCents} type="number" id="priceCents" className="form-control"/>
-                    </div>
-                    <br/>
+                        <label htmlFor="description" className="grey-text">Description</label>
+                        <textarea onChange={this.handleChange} type="text" id="description" className="form-control" rows="3"></textarea>
+                        <br/>
 
-                    <label htmlFor="abstract" className="grey-text">Abstract</label>
-                    <input onChange={this.handleChange} type="text" id="abstract1" className="form-control abstract"/>
-                    <input onChange={this.handleChange} type="text" id="abstract2" className="form-control abstract"/>
-                    <input onChange={this.handleChange} type="text" id="abstract3" className="form-control abstract"/>
-                    <br/>
+                        {/* <label htmlFor="meetingLocation" className="grey-text">Latitude</label>
+                        <input onChange={this.handleChange} type="number" id="lat" className="form-control meetingLocation"/>
+                        <label htmlFor="meetingLocation" className="grey-text">Longitude</label>
+                        <input onChange={this.handleChange} type="number" id="lng" className="form-control meetingLocation"/> */}
 
-                    <label htmlFor="description" className="grey-text">Description</label>
-                    <textarea onChange={this.handleChange} type="text" id="description" className="form-control" rows="3"></textarea>
-                    <br/>
+                        <label htmlFor="meetingLocation" className="grey-text">Meeting Location</label>
+                        <Map setLocation={this.setLocation}/>
 
-                    {/* <label htmlFor="meetingLocation" className="grey-text">Latitude</label>
-                    <input onChange={this.handleChange} type="number" id="lat" className="form-control meetingLocation"/>
-                    <label htmlFor="meetingLocation" className="grey-text">Longitude</label>
-                    <input onChange={this.handleChange} type="number" id="lng" className="form-control meetingLocation"/> */}
-
-                    <label htmlFor="meetingLocation" className="grey-text">Meeting Location</label>
-                    <Map setLocation={this.setLocation}/>
-
-                    <Accept handleSubmit={this.handleImageSubmit}/>
-                    Uploaded Images:
-                    <div className="uploadedImages">{
-                        this.state.images.map(image => {
-                            return(
-                                <li><a href={image}>{image}</a></li>
-                            )
-                        })
-                    }</div>
-                    <Status status={this.state.status}/>
-                    <div className="text-center mt-4">
-                        <button className="btn btn-outline-warning" type="submit">Create Posting<i className="fa fa-paper-plane-o ml-2"></i></button>
-                    </div>
-                </form>
+                        <Accept handleSubmit={this.handleImageSubmit}/>
+                        Uploaded Images:
+                        <div className="uploadedImages">{
+                            this.state.images.map(image => {
+                                return(
+                                    <li><a href={image}>{image}</a></li>
+                                )
+                            })
+                        }</div>
+                        <Status status={this.state.status}/>
+                        <div className="text-center mt-4">
+                            <button className="btn btn-outline-warning" type="submit">Create Posting<i className="fa fa-paper-plane-o ml-2"></i></button>
+                        </div>
+                    </form>
+                </div>
             </div>
-        </div>
-    )
-  }
+        )
+    }
 }
+
 
 class Accept extends React.Component {
     constructor(props) {
