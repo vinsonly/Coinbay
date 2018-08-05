@@ -288,6 +288,12 @@ const compareFunctions = {
 	},
 	DescTitleCompare (posting1, posting2){
 		return posting2.postingTitle.localeCompare(posting1.postingTitle);
+	},
+	AscDateCompare (posting1, posting2){
+		return new Date(posting1.createdAt) - new Date(posting2.createdAt);
+	},
+	DescDateCompare (posting1, posting2){
+		return new Date(posting2.createdAt) - new Date(posting1.createdAt);
 	}
 
 }
