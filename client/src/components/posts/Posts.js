@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import SimpleMediaCard from '../simpleMediaCard/SimpleMediaCard';
-import 'bootstrap/dist/css/bootstrap.css'
-import 'mdbreact/dist/css/mdb.css'
+import FilterDropdown from '../dropdown/dropdown';
+import 'bootstrap/dist/css/bootstrap.css';
+import 'mdbreact/dist/css/mdb.css';
 import './posts.css';
 
 class Posts extends Component {
@@ -42,6 +43,8 @@ class Posts extends Component {
 				})
 
 		window.props = props;
+
+		this.changeFilterState = this.changeFilterState.bind(this);
 	}
 	componentDidMount() {
 		window.addEventListener('scroll', function() {
@@ -170,6 +173,12 @@ class Posts extends Component {
 
 		}
 	}
+
+	changeFilterState(value) {
+		console.log("inside changeFilterState");
+		console.log("value:", value);
+	}
+
  	render() {
 		console.log(this.props);
 		console.log(this.state);
@@ -255,6 +264,7 @@ class Posts extends Component {
 							{this.postingView()}
 							{this.filtering()}
 							{this.filteringPostings(this.state.filtering, this.state.postings)}
+							<FilterDropdown changeFilterState={this.changeFilterState}/>
 						</div>
 						<div className="container">
 								{this.state.postings.slice(0, this.state.counter).map((posting, index) => {
