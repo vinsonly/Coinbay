@@ -282,6 +282,12 @@ const compareFunctions = {
 	},
 	DescPriceCompare (posting1, posting2){
 		return parseInt(posting2.price) - parseInt(posting1.price);
+	},
+	AscTitleCompare (posting1, posting2){
+		return posting1.postingTitle.localeCompare(posting2.postingTitle);
+	},
+	DescTitleCompare (posting1, posting2){
+		return posting2.postingTitle.localeCompare(posting1.postingTitle);
 	}
 
 }
