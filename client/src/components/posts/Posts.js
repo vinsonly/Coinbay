@@ -273,3 +273,15 @@ class Posts extends Component {
 }
 
 export default Posts;
+const compareFunctions = {
+	priceBool: true,
+	titleBool: true,
+	dateBool: true,
+	AscPriceCompare (posting1, posting2){
+		return parseInt(posting1.price) - parseInt(posting2.price);
+	},
+	DescPriceCompare (posting1, posting2){
+		return parseInt(posting2.price) - parseInt(posting1.price);
+	}
+
+}
