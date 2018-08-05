@@ -81,30 +81,6 @@ class Posts extends Component {
 				return {format: "detailed-list"};
 				}
 			);
-		} else {
-		}
-	}
-	changeFiltering(filter) {
-		if(filter === "price") {
-			this.setState(
-				(prevState,props)=>{
-				return {filtering: "price"};
-				}
-			);
-		}
-		else if(filter === "title") {
-			this.setState(
-				(prevState,props)=>{
-				return {filtering: "title"};
-				}
-			);
-		}
-		else if(filter === "date") {
-			this.setState(
-				(prevState,props)=>{
-				return {filtering: "date"};
-				}
-			);
 		}
 	}
 	classFormat(form) {
@@ -128,26 +104,13 @@ class Posts extends Component {
 		else
 			return "No results found";
 	}
-	filtering() {
-		return (
-			<div>
-				<button onClick={() => this.changeFiltering("price")}>Sort by Price</button>
-				<button onClick={() => this.changeFiltering("title")}>Sort by Title</button>
-				<button onClick={() => this.changeFiltering("date")}>Sort by Date</button>
-			</div>
-		)
-	}
 	filteringPostings(filter, postings) {
 
-		if(filter === "price") {
-			if(compareFunctions.priceBool == true){
-				postings.sort(compareFunctions.AscPriceCompare);
-				compareFunctions.priceBool = false;
-			}
-			else{
-				postings.sort(compareFunctions.DescPriceCompare);
-				compareFunctions.priceBool = true;
-			}
+		if(filter === "price-h") {
+			postings.sort(compareFunctions.DescPriceCompare);
+		}
+		else if (filter === "price-l") {
+			postings.sort(compareFunctions.AscPriceCompare);
 		}
 
 		else if(filter === "title"){
@@ -175,13 +138,34 @@ class Posts extends Component {
 	}
 
 	changeFilterState(value) {
-		console.log("inside changeFilterState");
-		console.log("value:", value);
+		if (value === "Date") {
+			this.setState(
+				(prevState,props)=>{
+				return {filtering: "date"};
+				}
+			);
+		} else if (value === "Title") {
+			this.setState(
+				(prevState,props)=>{
+				return {filtering: "title"};
+				}
+			);			
+		} else if (value === "Price-H") {
+			this.setState(
+				(prevState,props)=>{
+				return {filtering: "price-h"};
+				}
+			);	
+		} else if (value === "Price-L") {
+			this.setState(
+				(prevState,props)=>{
+				return {filtering: "price-l"};
+				}
+			);	
+		}
 	}
 
  	render() {
-		console.log(this.props);
-		console.log(this.state);
 		window.state = this.state;
 		var idArr;
 
@@ -216,8 +200,8 @@ class Posts extends Component {
 					<div>
 						<div>
 							{this.postingView()}
-							{this.filtering()}
 							{this.filteringPostings(this.state.filtering, this.state.postings)}
+							<FilterDropdown changeFilterState={this.changeFilterState}/>
 						</div>
 						<div className="container">
 								{this.state.postings.map(posting => {
@@ -238,8 +222,8 @@ class Posts extends Component {
 					<div>
 						<div className="format-options">
 							{this.postingView()}
-							{this.filtering()}
 							{this.filteringPostings(this.state.filtering, this.state.postings)}
+							<FilterDropdown changeFilterState={this.changeFilterState}/>
 						</div>
 						<div className="container">
 							{this.state.postings.map(posting => {
@@ -262,7 +246,6 @@ class Posts extends Component {
 					<div>
 						<div className="format-options">
 							{this.postingView()}
-							{this.filtering()}
 							{this.filteringPostings(this.state.filtering, this.state.postings)}
 							<FilterDropdown changeFilterState={this.changeFilterState}/>
 						</div>
@@ -284,7 +267,6 @@ class Posts extends Component {
 
 export default Posts;
 const compareFunctions = {
-	priceBool: true,
 	titleBool: true,
 	dateBool: true,
 	AscPriceCompare (posting1, posting2){
