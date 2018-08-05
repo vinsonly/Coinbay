@@ -89,17 +89,17 @@ class Posts extends Component {
 	postingView() {
 		return (
 			<div className="format-options tabs">
-				<p className="grid" onClick={() => this.changeFormat("grid")}>Grid</p>
-				<p className="detailed-list" onClick={() => this.changeFormat("detailed-list")}>Detailed List</p>
-				<p className="list" onClick={() => this.changeFormat("list")}>Simple List</p>
+				<button className="grid grid-btn" i class="material-icons" onClick={() => this.changeFormat("grid")}>view_module</button>
+				<button className="detailed-list detailed-list-btn" i class="material-icons" onClick={() => this.changeFormat("detailed-list")}>view_list</button>
+				<button className="list list-btn" i class="material-icons" onClick={() => this.changeFormat("list")}>view_headline</button>
 			</div>
 		)
 	}
 	noResultsMsg(number) {
 		if(number > 0)
-			return "Number of results found: " + number;
+			return "Results found: " + number;
 		else
-			return "No results found";
+			return "No results found for that, try a different search?";
 	}
  	render() {
 		console.log(this.props);
