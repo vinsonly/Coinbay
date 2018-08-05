@@ -260,8 +260,6 @@ module.exports = {
                     let transaction = {
                         contractAddress: contractAddress,
                         txids: txids,
-                        buyerOk: false,
-                        sellerOk: false,
                         startedAt: Date.now(),
                         completedAt: null
                     }
@@ -402,7 +400,7 @@ module.exports = {
         let id = parseInt(req.body.id);
         console.log(req.body);
         let txid = req.body.txid;
-        let accepted = Boolean(req.body.accept);
+        let accepted = Boolean(req.body.accepted);
         let status = "pending"
         if(!accepted) {
             status = "active"
@@ -475,6 +473,7 @@ module.exports = {
     setTransaction(req, res) {
         let id = parseInt(req.body.id);
         let confirmed = Boolean(req.body.confirmed);
+        let txid = req.body.txid;
 
         return Posting
             .findById(id)
@@ -488,7 +487,9 @@ module.exports = {
                         let newStatus = posting.status;
                         let ok = confirmed;
 
-
+                        if(txid) {
+                            newTransaction.txids.push(txid);
+                        }
 
                         if(req.body.validatedUser.id == posting.userId) {
                             newTransaction.sellerOk = ok;
@@ -503,7 +504,7 @@ module.exports = {
                         } else if(newTransaction.sellerOk == false && newTransaction.buyerOk == true ||
                             newTransaction.sellerOk == true && newTransaction.buyerOk == false
                         ) {
-                            newStatus = "dispute";
+                            newStatus = "disputing";
                         }
                             
                         return posting

@@ -102,6 +102,10 @@ class SinglePosting extends React.Component {
           })
       })
 
+      getWeb3.then(res => {
+        window.web3 = res;
+      })
+
   }
 
   async arraySetupWrapper() {
@@ -364,11 +368,24 @@ class SinglePosting extends React.Component {
   }
 
   render() {
-
-    window.state = this.state;
+    
     if(!this.state.posting || !this.state.user || this.state.halfStarArray == null || this.state.blackStarArray == null || this.state.emptyStarArray == null ) {
       return(<div></div>);
     }
+
+    // var bidButton = document.getElementsByClassName('bid-button');
+    //             // need condition to check (upon revisit) to see if already bidded
+    //             bidButton[0].style.color = "black";
+    //             bidButton[0].style.backgroundColor = "grey";
+    //             bidButton[0].style.cursor = "default";   
+
+    //             this.setState(
+    //               (prevState,props)=>{
+    //                 return {buttonText: "Offer Submitted"};
+    //               }
+    //             );
+
+    let bidButtonStyles = {};
 
     if(this.state.posting || this.state.user) {
       return (
@@ -422,8 +439,8 @@ class SinglePosting extends React.Component {
                     </div>
                   </div>
                   <br/>
-                  <h5 className="metaMaskWarning"><strong>You must have the <a href="https://metamask.io/">Metamask browser extension</a> installed to place orders and confirm orders.</strong></h5>
-                  <Button onClick={ () => this.offered() } variant="contained" color="primary" className="bid-button">
+                  <h5 className="metaMaskWarning"><strong>Note: You must have the <a target="_blank" href="https://metamask.io/">Metamask browser extension</a> installed to place orders and confirm orders.</strong></h5>
+                  <Button onClick={ () => this.offered() } variant="contained" color="primary" className="bid-button" style={bidButtonStyles}>
                     {this.state.buttonText}
                   </Button>
                 </div>

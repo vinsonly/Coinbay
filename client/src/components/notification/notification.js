@@ -55,6 +55,7 @@ class Notification extends React.Component {
     await getWeb3
       .then(results => {
         console.log("results.web3", results.web3);
+        window.web3res = results
         this.setState({
           web3: results.web3
         })
@@ -509,8 +510,8 @@ class Notification extends React.Component {
                   } else {
                       console.log(body);
                       swal({
-                        title: "Offer Accepted",
-                        text: "You have accepted this offer. Please now meet up with the buyer to follow through with the deal. To receive funds, both you and the seller will be required to 'Approve' the transaction.",
+                        title: "Transaction Confirmed",
+                        text: "You have confirmed this transaction. Once both parties have confirmed the transactions the Ether will be released from the smart contract to the seller.",
                         icon: "success",
                         closeOnClickOutside: false
                       })

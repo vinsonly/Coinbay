@@ -39,6 +39,7 @@ class TransactionHistory extends Component {
       .then(postings => {
         console.log("postings", postings);
         this.setState({
+          data: postings,
           transactionsLoaded: true
         })
       })
@@ -85,7 +86,7 @@ class TransactionHistory extends Component {
     // sold items
     const columns = [
       {
-        Header: "Info",
+        Header: "Posting Info",
         columns: [
           {
             Header: "Posting Title",
@@ -115,23 +116,23 @@ class TransactionHistory extends Component {
         ]
       },
       {
-        Header: "Transaction Information",
+        Header: "Transaction Info",
         columns: [
           {
-            Header: "Initializing Time",
-            accessor: "startTime"
+            Header: "Time Initialized",
+            accessor: "transaction.startedAt"
           },
           {
-            Header: "Transaction Time",
-            accessor: "endTime"
+            Header: "Time Completed",
+            accessor: "transaction.completedAt"
           },
           {
-            Header: "Smart Contract",
-            accessor: "smartContract",
+            Header: "Contract Address",
+            accessor: "transaction.contractAddress",
           },
           {
             Header: "Transactions",
-            accessor: "transactions"
+            accessor: "transaction.txids"
           } 
         ],
       },

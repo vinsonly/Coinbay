@@ -30,16 +30,20 @@ class Notifications extends React.Component {
 			})
 				.then(async body => {
 					console.log("body", body);
+					let pendingConfPosts = [];
 					let pendingPosts = [];
 					console.log("status", status);
 					if(status == 200) {
 						const promises = body.map(async posting => {
 							if(posting.status == "pendingConfirmation") {
+								await pendingConfPosts.push(posting);
+							} else if(posting.status == "pending") {
 								await pendingPosts.push(posting);
 							}
 						})
 						await Promise.all(promises);
 						return {
+							buyerPendingConfPosts: pendingConfPosts,
 							buyerPendingPosts: pendingPosts
 						}
 					}
@@ -48,6 +52,7 @@ class Notifications extends React.Component {
 					console.log("res", res);
 					this.setState({
 						buyerPendingPosts: res.buyerPendingPosts,
+						buyerPendingConfPosts: res.buyerPendingConfPosts,
 						fetchedBuyerPosts: true
 					});
 				})
@@ -69,34 +74,34 @@ class Notifications extends React.Component {
 			.then(async body => {
 					let activePosts = [];
 					let pendingPosts = [];
-			if(status == 200) {
-						await body.map(async posting => {
-							if(posting.status == "pendingConfirmation") {
-								await	activePosts.push(posting);
-							} else if(posting.status == "pending") {
-								await pendingPosts.push(posting);
+				if(status == 200) {
+							await body.map(async posting => {
+								if(posting.status == "pendingConfirmation") {
+									await activePosts.push(posting);
+								} else if(posting.status == "pending") {
+									await pendingPosts.push(posting);
+								}
+							})
+
+							console.log(pendingPosts);
+
+							return {
+								sellerActivePosts: activePosts,
+								sellerPendingPosts: pendingPosts
 							}
-						})
-
-						console.log(pendingPosts);
-
-						return {
-							sellerActivePosts: activePosts,
-							sellerPendingPosts: pendingPosts
-						}
-			}
-				})
-				.then(res => {
-					this.setState({
-						sellerActivePosts: res.sellerActivePosts,
-						sellerPendingPosts: res.sellerPendingPosts,
-						fetchedSellerPosts: true
-					});
-				})
-				.catch(err => {
-					console.log("ERROR!!");
-					console.log(err);
-				})
+				}
+			})
+			.then(res => {
+				this.setState({
+					sellerActivePosts: res.sellerActivePosts,
+					sellerPendingPosts: res.sellerPendingPosts,
+					fetchedSellerPosts: true
+				});
+			})
+			.catch(err => {
+				console.log("ERROR!!");
+				console.log(err);
+			})
 	}
 
 	componentDidUpdate() {
@@ -133,19 +138,17 @@ class Notifications extends React.Component {
 
     return (
 	    <div id="notifications">
-				<div id="buyerPendingPosts" className="notificationsPost">
-					<h2> Sent Offers </h2>
-					{this.state.buyerPendingPosts.map(post => {
+				<div id="sentOffers" className="notificationsPost">
+					<h3> Pending Sent Offers [{this.state.buyerPendingConfPosts.length}]</h3>
+					{this.state.buyerPendingConfPosts.map(post => {
 						return(
 							<Notification post={post} currentUser="buyer" status="pendingConfirmation" loggedInUser={this.props.loggedInUser}/>
 						)
 					})}
 				</div>
 
-				<div id="sellerPendingPosts" className="notificationsPost">
-					<h2> Pending Deals </h2>
-
-
+				<div id="pendingSales" className="notificationsPost">
+					<h3> Pending Sales [{this.state.sellerPendingPosts.length}]</h3>
 					{this.state.sellerPendingPosts.map(post => {
 						return(
 							<Notification post={post} currentUser="seller" status="pending" loggedInUser={this.props.loggedInUser}/>
@@ -153,8 +156,17 @@ class Notifications extends React.Component {
 					})}
 				</div>
 
-				<div id="sellerActivePosts" className="notificationsPost">
-					<h2> Received Offers </h2>
+				<div id="pendingPurchases" className="notificationsPost">
+					<h3> Pending Purchases [{this.state.buyerPendingPosts.length}]</h3>
+					{this.state.buyerPendingPosts.map(post => {
+						return(
+							<Notification post={post} currentUser="buyer" status="pending" loggedInUser={this.props.loggedInUser}/>
+						)
+					})}
+				</div>
+
+				<div id="receivedOffers" className="notificationsPost">
+					<h3> Received Offers [{this.state.sellerActivePosts.length}]</h3>
 					{this.state.sellerActivePosts.map(post => {
 						return(
 							<Notification post={post} currentUser="seller" status="pendingConfirmation" loggedInUser={this.props.loggedInUser}/>
