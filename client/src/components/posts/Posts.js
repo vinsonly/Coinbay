@@ -89,6 +89,20 @@ class Posts extends Component {
 				}
 			);
 		}
+		else if(filter === "title") {
+			this.setState(
+				(prevState,props)=>{
+				return {filtering: "title"};
+				}
+			);
+		}
+		else if(filter === "date") {
+			this.setState(
+				(prevState,props)=>{
+				return {filtering: "date"};
+				}
+			);
+		}
 	}
 	classFormat(form) {
 		if (this.state.format === "grid")
@@ -115,13 +129,45 @@ class Posts extends Component {
 		return (
 			<div>
 				<button onClick={() => this.changeFiltering("price")}>Sort by Price</button>
+				<button onClick={() => this.changeFiltering("title")}>Sort by Title</button>
+				<button onClick={() => this.changeFiltering("date")}>Sort by Date</button>
 			</div>
 		)
 	}
 	filteringPostings(filter, postings) {
+
 		if(filter === "price") {
-			alert("soring by price");
-			// perform sorting here
+			if(compareFunctions.priceBool == true){
+				postings.sort(compareFunctions.AscPriceCompare);
+				compareFunctions.priceBool = false;
+			}
+			else{
+				postings.sort(compareFunctions.DescPriceCompare);
+				compareFunctions.priceBool = true;
+			}
+		}
+
+		else if(filter === "title"){
+			if(compareFunctions.titleBool == true){
+				postings.sort(compareFunctions.AscTitleCompare);
+				compareFunctions.titleBool = false;
+			}
+			else{
+				postings.sort(compareFunctions.DescTitleCompare);
+				compareFunctions.titleBool = true;
+			}
+		}
+
+		else if (filter === "date"){
+			if(compareFunctions.dateBool == true){
+				postings.sort(compareFunctions.AscDateCompare);
+				compareFunctions.dateBool = false;
+			}
+			else{
+				postings.sort(compareFunctions.DescDateCompare);
+				compareFunctions.dateBool = true;
+			}
+
 		}
 	}
  	render() {

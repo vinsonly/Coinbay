@@ -11,7 +11,7 @@ const faker = require('faker'); //Faker library used for generating fake data
 
 var array = [];
 
-var categories = {              
+var categories = {
             0: "Automotives",
             1: "Beauty",
             2: "Pets",
@@ -27,13 +27,13 @@ var categories = {
             12: "Home & Furniture",
             13: "Sports & Outdoors",
             14: "Toys",
-            15: "Tools",                    
+            15: "Tools",
             16: "Antiques",
             17: "Miscellaneous"
 };
 
 // Sample images for each category
-var images = {  
+var images = {
             0: "https://i.imgur.com/Mq5SNYg.jpg",
             1: "https://i.imgur.com/2LVebjF.jpg",
             2: "https://i.imgur.com/HNrEwz3.png",
@@ -49,7 +49,7 @@ var images = {
             12: "https://i.imgur.com/9jPq2hy.jpg",
             13: "https://i.imgur.com/MFhxFEO.jpg",
             14: "https://i.imgur.com/pJCZUGe.jpg",
-            15: "https://i.imgur.com/j5DSa41.jpg",                    
+            15: "https://i.imgur.com/j5DSa41.jpg",
             16: "https://i.imgur.com/DGRm1It.jpg",
             17: "https://i.imgur.com/blvKIcs.jpg"
 };
@@ -64,9 +64,9 @@ for(var k = 0; k < 10; k++) {
   let randomInt = getRandomInt(18);
 
   let category = categories[randomInt];
-  
+
   let image = images[randomInt]
-  
+
   array.push({
     postingTitle: faker.commerce.productName(),
     modelName: faker.commerce.productMaterial(),
@@ -77,7 +77,7 @@ for(var k = 0; k < 10; k++) {
     description: faker.lorem.sentence(),
     images: [image],
     date: faker.date.future(),
-    createdAt: faker.date.past(),
+    createdAt: faker.date.between('2018-01-01', '2018-08-01'),
     updatedAt: new Date(),
     // to randomize use: userId: Math.floor(Math.random() * 100)
     userId: 1,
@@ -90,9 +90,9 @@ for(var j = 0; j < 10; j++) {
   let randomInt = getRandomInt(18);
 
   let category = categories[randomInt];
-  
+
   let image = images[randomInt]
-  
+
   array.push({
     postingTitle: faker.commerce.productName(),
     modelName: faker.commerce.productMaterial(),
@@ -103,7 +103,7 @@ for(var j = 0; j < 10; j++) {
     description: faker.lorem.sentence(),
     images: [image],
     date: faker.date.future(),
-    createdAt: faker.date.past(),
+    createdAt: faker.date.between('2018-01-01', '2018-08-01'),
     updatedAt: new Date(),
     // to randomize use: userId: Math.floor(Math.random() * 100)
     userId: 2,
@@ -118,9 +118,9 @@ for (var i = 0; i<numPostings; i++){
   let randomInt = getRandomInt(18);
 
   let category = categories[randomInt];
-  
+
   let image = images[randomInt]
-  
+
   array.push({
     postingTitle: faker.commerce.productName(),
     modelName: faker.commerce.productMaterial(),
@@ -131,7 +131,7 @@ for (var i = 0; i<numPostings; i++){
     description: faker.lorem.sentence(),
     images: [image],
     date: faker.date.future(),
-    createdAt: faker.date.past(),
+    createdAt: faker.date.between('2018-01-01', '2018-08-01'),
     updatedAt: new Date(),
     // to randomize use: userId: Math.floor(Math.random() * 100)
     userId: i + 1,
