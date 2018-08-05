@@ -1,10 +1,10 @@
 import React from 'react';
 import { Container, Row, Col, Input, Button } from 'mdbreact';
+import './login.css';
 
-import './login.css'
 
+/** Class representing a login form component */
 class Login extends React.Component  {
-
   constructor(props) {
     super(props)
 
@@ -16,14 +16,14 @@ class Login extends React.Component  {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
-  
+  /**
+   * Make a post request to the server to login then redirect the user to the main page
+   * @param {string} text - String representation of state
+   * @return {request} The post request
+   */
   handleSubmit(event) {
     event.preventDefault();
-    console.log(this.state);
-
     let data = this.state;
-  
-    // make a post request to the server to login then redirect the user to the main page
     let status;
     fetch('/api/login', {
         method: 'POST', // or 'PUT'
@@ -42,19 +42,17 @@ class Login extends React.Component  {
         if(status != 200) {
           alert(`Error: ${body.message}`);
         } else {
-          console.log("logged in");
           localStorage.setItem('sessionToken', body.token);
-          
-          //redirect user to main postings page
-          console.log(this.props);
-          // this.props.history.push('/posts');
           window.location.replace('/');
         }
       })
       .catch(err => {
         console.error('ERROR', err);
       })  }
-
+  /**
+   * Update username and password (state)
+   * @param {string} event - String representation of username and password
+   */
   handleChange(event) {
     console.log(event.target);
     console.log(event.target.type);
@@ -71,7 +69,6 @@ class Login extends React.Component  {
         })
     }
   }
-
   render() {
     return(
       <div className="container" id="loginContainer">

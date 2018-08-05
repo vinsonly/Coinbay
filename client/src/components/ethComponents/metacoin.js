@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
+import "./metacoin.css";
 
-import "./metacoin.css"
 
+/** Class representing a value container component */
 class MetaCoin extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            value: ""
-        }
-    }
+  constructor(props) {
+      super(props);
+      this.state = {
+          value: ""
+      }
+  }
 
-    
   render() {
     return (
     	<div className="metacoin">
