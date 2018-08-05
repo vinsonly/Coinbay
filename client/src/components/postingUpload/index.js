@@ -363,7 +363,7 @@ class PostingUpload extends React.Component {
                         }</div>
                         <Status status={this.state.status}/>
                         <div className="text-center mt-4">
-                            <button className="btn btn-outline-warning" type="submit">Create Posting<i className="fa fa-paper-plane-o ml-2"></i></button>
+                            <button className="btn btn-outline-warning" type="submit">+Create Posting<i className="fa fa-paper-plane-o ml-2"></i></button>
                         </div>
                     </form>
                 </div>

@@ -8,6 +8,10 @@ li.nav-item {
     justify-content: center;
 }
 
+#nav-create-posting {
+	background-color: #2bbbad;
+}
+
 div.dropdown {
     width: 150px;
     margin: auto;
@@ -122,3 +126,5 @@ input.react-autosuggest__input {
 .expand {
 	width: 100% !important
 }
+
+

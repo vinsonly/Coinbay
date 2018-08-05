@@ -107,16 +107,17 @@ class Navigation extends Component {
                 <div className="white-text">
                     <Navbar className="expand" dark expand="lg" scrolling>
                         <NavLink to="/">
-                            <strong>CryptoBay</strong>
+                            <strong>CoinBay</strong>
+                            <sup> Classifieds</sup>
                         </NavLink>
                         { !this.state.isWideEnough && <NavbarToggler onClick = { this.onClick } />}
                         <Collapse isOpen={ this.state.collapse } navbar>
                             <NavbarNav left>
-                              <NavItem>
+                              {/* <NavItem tag="nav-postings">
                                   <NavLink to="/posts">Postings</NavLink>
-                              </NavItem>
-                              <NavItem>
-                                  <NavLink to="/new_posting">Create Posting</NavLink>
+                              </NavItem> */}
+                              <NavItem id="nav-create-posting">
+                                  <NavLink to="/new_posting">+Create Posting</NavLink>
                               </NavItem>
                             </NavbarNav>
                             <NavbarNav right>     
