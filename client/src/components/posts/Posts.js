@@ -15,7 +15,8 @@ class Posts extends Component {
 		this.state = {
 			format: "grid",
 			counter: 20,
-			results: 0
+			results: 0,
+			filtering: ""
 		};
 
 		fetch(`/api/postings_with_users`)
@@ -80,6 +81,15 @@ class Posts extends Component {
 		} else {
 		}
 	}
+	changeFiltering(filter) {
+		if(filter === "price") {
+			this.setState(
+				(prevState,props)=>{
+				return {filtering: "price"};
+				}
+			);
+		}
+	}
 	classFormat(form) {
 		if (this.state.format === "grid")
 			return "items";
@@ -89,9 +99,9 @@ class Posts extends Component {
 	postingView() {
 		return (
 			<div className="format-options tabs">
-				<p className="grid" onClick={() => this.changeFormat("grid")}>Grid</p>
-				<p className="detailed-list" onClick={() => this.changeFormat("detailed-list")}>Detailed List</p>
-				<p className="list" onClick={() => this.changeFormat("list")}>Simple List</p>
+				<button className="grid" onClick={() => this.changeFormat("grid")}>Grid</button>
+				<button className="detailed-list" onClick={() => this.changeFormat("detailed-list")}>Detailed List</button>
+				<button className="list" onClick={() => this.changeFormat("list")}>Simple List</button>
 			</div>
 		)
 	}
@@ -100,6 +110,19 @@ class Posts extends Component {
 			return "Number of results found: " + number;
 		else
 			return "No results found";
+	}
+	filtering() {
+		return (
+			<div>
+				<button onClick={() => this.changeFiltering("price")}>Sort by Price</button>
+			</div>
+		)
+	}
+	filteringPostings(filter, postings) {
+		if(filter === "price") {
+			alert("soring by price");
+			// perform sorting here
+		}
 	}
  	render() {
 		console.log(this.props);
@@ -138,6 +161,8 @@ class Posts extends Component {
 					<div>
 						<div>
 							{this.postingView()}
+							{this.filtering()}
+							{this.filteringPostings(this.state.filtering, this.state.postings)}
 						</div>
 						<div className="container">
 								{this.state.postings.map(posting => {
@@ -158,6 +183,8 @@ class Posts extends Component {
 					<div>
 						<div className="format-options">
 							{this.postingView()}
+							{this.filtering()}
+							{this.filteringPostings(this.state.filtering, this.state.postings)}
 						</div>
 						<div className="container">
 							{this.state.postings.map(posting => {
@@ -180,6 +207,8 @@ class Posts extends Component {
 					<div>
 						<div className="format-options">
 							{this.postingView()}
+							{this.filtering()}
+							{this.filteringPostings(this.state.filtering, this.state.postings)}
 						</div>
 						<div className="container">
 								{this.state.postings.slice(0, this.state.counter).map((posting, index) => {
