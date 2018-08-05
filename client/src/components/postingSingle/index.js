@@ -174,7 +174,11 @@ class SinglePosting extends React.Component {
         return false
       } 
     })
-    .then(() => {
+    .then((res) => {
+      if(!res) {
+        return;
+      }
+
       getWeb3
       .then(results => {
   
