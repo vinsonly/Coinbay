@@ -251,7 +251,7 @@ class UserDashboard extends Component {
             Header: "Edit",
             accessor: 'id',
             Cell: ({value}) => (<button onClick={this.editPosting.bind(this, value)}>Edit</button>),
-            width: 50
+            width: 70
           }
         ],
       }

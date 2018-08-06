@@ -14,7 +14,9 @@ class Navigation extends Component {
         this.state = {
             collapse: false,
             isWideEnough: false,
-            dropdownOpen: false
+            dropdownOpen: false,
+            transactionsdropdownOpen: false,
+            collapse2: false
         };
 
         this.onClick = this.onClick.bind(this);
@@ -30,12 +32,25 @@ class Navigation extends Component {
             collapse: !this.state.collapse,
         });
     }
+
+    onClick2() {
+        this.setState({
+            collapse2: !this.state.collapse2,
+        });
+    }
+
     /**
      * Keep track of navigation section being collasped via sandwich bar (state)
      */
     toggle() {
         this.setState({
             dropdownOpen: !this.state.dropdownOpen
+        });
+    }
+    
+    toggle2() {
+        this.setState({
+            transactionsdropdownOpen: !this.state.transactionsdropdownOpen
         });
     }
     /**
@@ -125,9 +140,11 @@ class Navigation extends Component {
                                     (this.props.loggedInUser.id) ? (
                                         <NavItem>
                                             <NavLink to="/manage_transactions">Manage Transactions</NavLink>
+                                            <NavLink to="/transaction_history">Transaction History</NavLink>
                                         </NavItem>
                                     ) : (<div></div>)
                                 }
+                        
                                 {
                                     (this.props.loggedInUser.id) ? (<NavItem>
                                         {/* {this.notifier()} */}

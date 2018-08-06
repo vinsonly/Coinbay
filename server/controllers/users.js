@@ -295,7 +295,15 @@ module.exports = {
                     userId: id
                 },
                 status: "fulfilled"
-            }
+            },
+            include: [{
+                model: User,
+                as: "User"
+            },
+            {
+                model: User,
+                as: "Buyer"
+            }]
         }).then(postings => {
             res.send(postings);
         })

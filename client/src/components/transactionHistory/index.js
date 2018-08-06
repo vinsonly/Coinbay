@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-
 import ReactTable from "react-table";
 import { BrowserRouter, Route, Link, Router, Redirect, withRouter } from 'react-router-dom';
 import swal from 'sweetalert';
-
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
-
+import '../userDashboard/table-styles.css'
+import TransactionModal from './transactionModal';
+import UserModal from './userModal';
 
 class TransactionHistory extends Component {
   constructor(props) {
@@ -18,10 +18,7 @@ class TransactionHistory extends Component {
     }
     this.fetchTransactions = this.fetchTransactions.bind(this);
     this.moreDetails = this.moreDetails.bind(this);
-
   }
-
-
 
   fetchTransactions() {
     // get all postings that belong to the user that been fulfilled.
@@ -43,9 +40,6 @@ class TransactionHistory extends Component {
           transactionsLoaded: true
         })
       })
-      
-
-
   }
   
   moreDetails(postingId) {
@@ -104,15 +98,10 @@ class TransactionHistory extends Component {
             width: 70
           },
           {
-            Header: "Buyer",
-            accessor: 'buyer',
-            width: 100
-          },
-          {
-            Header: "Buyer Info",
-            accessor: 'id',
-            width: 100
-          }   
+            Header: "Buyer/Seller Info",
+            Cell: ({row}) => (<UserModal row={row} loggedInUser={this.props.loggedInUser}/>),
+            width: 150
+          }
         ]
       },
       {
@@ -120,11 +109,13 @@ class TransactionHistory extends Component {
         columns: [
           {
             Header: "Time Initialized",
-            accessor: "transaction.startedAt"
+            accessor: "transaction.startedAt",
+            Cell: ({value}) => (<p>{convertToDate(value)}</p>)
           },
           {
             Header: "Time Completed",
-            accessor: "transaction.completedAt"
+            accessor: "transaction.completedAt",
+            Cell: ({value}) => (<p>{convertToDate(value)}</p>)
           },
           {
             Header: "Contract Address",
@@ -132,7 +123,8 @@ class TransactionHistory extends Component {
           },
           {
             Header: "Transactions",
-            accessor: "transaction.txids"
+            accessor: "transaction.txids",
+            Cell: ({value}) => (<TransactionModal txids={value}/>)
           } 
         ],
       },
@@ -153,4 +145,12 @@ class TransactionHistory extends Component {
   }
 }
 
-export default TransactionHistory;
+export default withRouter(TransactionHistory);
+
+function convertToDate(unixtime) {
+  var date = new Date(unixtime);
+  if(unixtime < 1000 || unixtime == null) {
+    return "n/a";
+  }
+  return date.toString();
+}

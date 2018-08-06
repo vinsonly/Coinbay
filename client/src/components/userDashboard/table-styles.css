@@ -9,6 +9,21 @@
 	cursor:pointer
 }
 
+.rt-td {
+	display: flex;
+	flex-direction: column;
+}
+
+.rt-td button {
+	background-color: rgb(39, 41, 175);
+	color: white;
+	border: none;
+	border-radius: 0.3em;
+	padding: 0.2em 0.5em 0.2em 0.5em;
+	cursor:pointer;
+	margin: auto;
+}
+
 .rt-td:nth-of-type(5) button {
 	background-color: #2bbbad;
 	color: white
@@ -32,4 +47,8 @@
 
 div.rt-th {
 	font-weight: bold;
+}
+
+.ReactTable .rt-td {
+	white-space:unset;
 }
