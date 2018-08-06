@@ -499,8 +499,10 @@ module.exports = {
 
                         if(newTransaction.sellerOk && newTransaction.buyerOk) {
                             newStatus = "fulfilled";
+                            newTransaction.completedAt = Date.now();
                         } else if(newTransaction.sellerOk == false && newTransaction.buyerOk == false) {
                             newStatus = "cancelled";
+                            newTransaction.completedAt = Date.now();
                         } else if(newTransaction.sellerOk == false && newTransaction.buyerOk == true ||
                             newTransaction.sellerOk == true && newTransaction.buyerOk == false
                         ) {
