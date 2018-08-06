@@ -142,7 +142,7 @@ class Notifications extends React.Component {
 					<h3> Pending Sent Offers [{this.state.buyerPendingConfPosts.length}]</h3>
 					{this.state.buyerPendingConfPosts.map(post => {
 						return(
-							<Notification post={post} currentUser="buyer" status="pendingConfirmation" loggedInUser={this.props.loggedInUser}/>
+							<Notification post={post} currentUser="buyer" status="pendingConfirmation" loggedInUser={this.props.loggedInUser} refreshBalance={this.props.refreshBalance}/>
 						)
 					})}
 				</div>
@@ -151,7 +151,7 @@ class Notifications extends React.Component {
 					<h3> Pending Sales [{this.state.sellerPendingPosts.length}]</h3>
 					{this.state.sellerPendingPosts.map(post => {
 						return(
-							<Notification post={post} currentUser="seller" status="pending" loggedInUser={this.props.loggedInUser}/>
+							<Notification post={post} currentUser="seller" status="pending" loggedInUser={this.props.loggedInUser} refreshBalance={this.props.refreshBalance}/>
 						)
 					})}
 				</div>
@@ -160,7 +160,7 @@ class Notifications extends React.Component {
 					<h3> Pending Purchases [{this.state.buyerPendingPosts.length}]</h3>
 					{this.state.buyerPendingPosts.map(post => {
 						return(
-							<Notification post={post} currentUser="buyer" status="pending" loggedInUser={this.props.loggedInUser}/>
+							<Notification post={post} currentUser="buyer" status="pending" loggedInUser={this.props.loggedInUser} refreshBalance={this.props.refreshBalance}/>
 						)
 					})}
 				</div>
@@ -169,7 +169,7 @@ class Notifications extends React.Component {
 					<h3> Received Offers [{this.state.sellerActivePosts.length}]</h3>
 					{this.state.sellerActivePosts.map(post => {
 						return(
-							<Notification post={post} currentUser="seller" status="pendingConfirmation" loggedInUser={this.props.loggedInUser}/>
+							<Notification post={post} currentUser="seller" status="pendingConfirmation" loggedInUser={this.props.loggedInUser} refreshBalance={this.props.refreshBalance}/>
 						)
 					})}
 				</div>

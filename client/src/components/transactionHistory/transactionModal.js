@@ -65,7 +65,9 @@ export default class transactionModal extends React.Component {
               {
                   this.props.txids.map((tx, index) => {
                       return(
-                          <li key={index}>{tx}</li>
+                          <li key={index}>
+                            <a href={`https://ropsten.etherscan.io/tx/${tx}`}>{tx}</a>
+                          </li>
                       );
                   })
               }
