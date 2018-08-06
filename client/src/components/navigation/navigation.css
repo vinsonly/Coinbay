@@ -127,4 +127,14 @@ input.react-autosuggest__input {
 	width: 100% !important
 }
 
+span#createPosting {
+	height: 40px;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    cursor: pointer;
+}
 
+span#createPosting:hover {
+	background-color: lightgrey;
+}
