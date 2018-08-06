@@ -1,6 +1,9 @@
 const Posting = require('../models/').Posting;
 const User = require('../models/').User;
 const verifyToken = require('./auth').verifyToken;
+const Op = require('sequelize').Op;
+// const Op = sequelize.Op;
+
 
 var db = require('../models');
 var sequelize = db.sequelize;
@@ -62,10 +65,10 @@ module.exports = {
     },
 
     update(req, res) {
-        
+
         let id = parseInt(req.body.id);
         console.log(req.body);
-        
+
         return Posting
             .findById(id)
                 .then(posting => {
@@ -81,8 +84,8 @@ module.exports = {
                                 brand: req.body.brand || posting.brand,
                                 price: req.body.price || posting.price,
                                 status: req.body.status || posting.status,
-                                description: req.body.description || posting.description, 
-                                abstract: req.body.abstract || posting.abstract, 
+                                description: req.body.description || posting.description,
+                                abstract: req.body.abstract || posting.abstract,
                                 location: req.body.location || posting.location,
                                 accepted: req.body.accepted || posting.accepted
                             })
@@ -102,13 +105,13 @@ module.exports = {
                     console.log(error);
                     res.status(400).send(error);
                 })
-            
+
     },
 
     delete(req, res) {
         let id = parseInt(req.body.id);
-        
-        return Posting 
+
+        return Posting
             .findById(id)
                 .then(posting => {
                     if(!posting) {
@@ -122,7 +125,7 @@ module.exports = {
                                 let msg = `posting with id: ${id} destroyed.`
                                 console.log(msg);
                                 res.send(posting);
-    
+
                             })
                             .catch(error => {
                                 console.log("Opps, we have encountered an error");
@@ -141,8 +144,8 @@ module.exports = {
 
     findById(req, res) {
         let id = parseInt(req.params.id);
-        
-        return Posting 
+
+        return Posting
             .findById(id)
                 .then(posting => {
                     if(!posting) {
@@ -185,6 +188,35 @@ module.exports = {
                 })
     },
 
+    findByTitle(req, res) {
+      let value = req.params.value;
+      // console.log(value);
+        return Posting
+            .findAll({
+                where: {
+                  postingTitle: {
+                    [Op.iLike]: `%${value}%`
+                    // [Op.iLike]: "%awes%"
+                  }
+                },
+                include: [{
+                    model: User,
+                    required: true,
+                    as: "User"
+                }]
+            })
+                .then((postings) => {
+                    console.log("Here are the searched items:");
+                    console.log(postings);
+                    return res.send(postings);
+                })
+                .catch((err) => {
+                    console.log("We ran into an error:");
+                    console.log(err);
+                    return res.status(400).send(err);
+                })
+    },
+
     getActivePostsWithSellers(req, res) {
         return Posting
             .findAll({
@@ -208,6 +240,35 @@ module.exports = {
                     return res.status(400).send(err);
                 })
     },
+
+    recentPosts(req, res) {
+        return Posting
+            .findAll({
+              //change to 100
+                limit: 100,
+                order: [['updatedAt', 'DESC']],
+                where: {
+                    status: 'active'
+                },
+                include: [{
+                    model: User,
+                    required: true,
+                    as: "User"
+                }]
+            })
+                .then((postings) => {
+                    console.log("Here are 100 postings sorted by date:");
+                    console.log(postings);
+                    return res.send(postings);
+                })
+                .catch((err) => {
+                    console.log("We ran into an error:");
+                    console.log(err);
+                    return res.status(400).send(err);
+                })
+    },
+
+
 
     // set the post to pending, add the transaction to both user's collections
     // the buyerId to the buyer, and the status to pending
@@ -233,7 +294,7 @@ module.exports = {
         let buyerId = req.body.validatedUser.id;
 
         let addy = req.body.contractAddress;
-        
+
         if(!buyerId || !id || !addy) {
             return res.status(400).send({
                 message: "Missing parameters, please check your request and try again."
@@ -281,7 +342,7 @@ module.exports = {
                                     .update({
                                         status: "pendingConfirmation",
                                         buyerId: buyerId,
-                                        transaction: transaction                                        
+                                        transaction: transaction
                                     })
                                     .then(() => {
                                         console.log("Successfully updated posting");
@@ -318,10 +379,10 @@ module.exports = {
 
         let status = req.body.status;
 
-        if(status != "active" && 
-        status != "pendingConfirmation" && 
-        status != "pending" && 
-        status != "fulfilled" && 
+        if(status != "active" &&
+        status != "pendingConfirmation" &&
+        status != "pending" &&
+        status != "fulfilled" &&
         status != "cancelled") {
             return res.status(400).send({
                 message: "status value is invalid"
@@ -381,7 +442,7 @@ module.exports = {
                     model: User,
                     required: true,
                     as: 'User'
-                }] 
+                }]
             })
                 .then((postings) => {
                     console.log(`Here are all of the postings that are associated to user ${userId}:`);
@@ -396,7 +457,7 @@ module.exports = {
     },
 
     setOffer(req, res) {
-        
+
         let id = parseInt(req.body.id);
         console.log(req.body);
         let txid = req.body.txid;
@@ -405,7 +466,7 @@ module.exports = {
         if(!accepted) {
             status = "active"
         }
-        
+
         return Posting
             .findById(id)
                 .then(posting => {
@@ -441,7 +502,7 @@ module.exports = {
                     console.log(error);
                     res.status(400).send(error);
                 })
-            
+
     },
 
     findByUserWithBuyerDetails(req, res) {
@@ -506,7 +567,7 @@ module.exports = {
                         ) {
                             newStatus = "disputing";
                         }
-                            
+
                         return posting
                             .update({
                                 status: newStatus || posting.status,
@@ -528,7 +589,7 @@ module.exports = {
                     console.log(error);
                     res.status(400).send(error);
                 })
-            
-    }    
+
+    }
 
 }

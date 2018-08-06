@@ -16,8 +16,6 @@ function getSuggestionValue(suggestion) {
 function renderSuggestion(suggestion, { query }) {
   const suggestionText = `${suggestion.postingTitle}`;
 
-  // console.log(suggestion.images);
-
   return (
     <span>
         <ListSpan text={suggestion.postingTitle} postingId={suggestion.id} postingImage={suggestion.images[0]}/>
@@ -59,28 +57,33 @@ class SearchInner extends Component {
             value: '',
             suggestions: [],
             postings: [],
+            searchedPostings: [],
             toRedirect: false
         };
 
-  let postingStatus;
+    let postingStatus;
 
-  fetch(`/api/postings`)
-    .then(res => {
-      postingStatus = res.status;
-      return res.json();
-    })
-    .then(body => {
-      if(postingStatus == 200) {
+      fetch(`/api/postings/newest`)
+      .then(res => {
+        // console.log(res);
+        postingStatus = res.status;
+        return res.json();
+      })
+      .then(body => {
+        // console.log(body);
+        // console.log("postingStatus", postingStatus);
+        if(postingStatus == 200) {
         this.setState({
-					postings: body
-				});
-      }
-      return body;
-		})
-		.catch(err => {
-			console.log("ERROR!!");
-			console.log(err);
-		})
+          postings: body
+        });
+        // console.log(this.state.postings);
+        }
+        return body;
+          })
+          .catch(err => {
+            console.log("ERROR!!");
+            console.log(err);
+          })
 
     this.getSuggestions = this.getSuggestions.bind(this);
     this.onChange = this.onChange.bind(this);
@@ -138,12 +141,43 @@ class SearchInner extends Component {
 
     let value = target.childNodes[0].childNodes[0].value;
 
-    if(value != '' && Object.keys(this.state.suggestions).length == 0){
-      this.props.handleRouteCallback("/posts", null);
-    }
-    else{
-      this.props.handleRouteCallback("/posts", this.state.suggestions);
-    }
+
+    let postingStatus;
+    fetch(`/api/postings/search/${value}`)
+      .then(res => {
+        postingStatus = res.status;
+        return res.json();
+      })
+      .then(body => {
+        if(postingStatus == 200) {
+          this.setState({
+  					searchedPostings: body
+  				});
+        }
+        console.log("body", body);
+        return body;
+  		})
+  		.catch(err => {
+  			console.log("ERROR!!");
+  			console.log(err);
+  		})
+      .then(() => {
+        console.log(this.state.searchedPostings);
+        this.props.handleRouteCallback("/posts", this.state.searchedPostings);
+      })
+
+
+
+
+    // if(value != '' && Object.keys(this.state.suggestions).length == 0){
+    //   console.log(this.state.searchedPostings);
+    //   this.props.handleRouteCallback("/posts", this.state.searchedPostings);
+    // }
+    // else{
+    //   this.props.handleRouteCallback("/posts", this.state.suggestions);
+    // }
+
+
 
 
   }
@@ -171,6 +205,7 @@ class SearchInner extends Component {
       else{
         return (
           <div>
+
             <form onSubmit={this.handleSubmit.bind(this)}>
               <Autosuggest
               suggestions={suggestions}

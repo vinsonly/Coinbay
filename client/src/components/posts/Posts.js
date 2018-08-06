@@ -15,10 +15,33 @@ class Posts extends Component {
 		this.state = {
 			format: "grid",
 			counter: 20,
-			results: 0
+			results: 0,
+			allPostings: []
 		};
 
 		fetch(`/api/postings_with_users`)
+		.then(res => {
+			// console.log(res);
+			postingStatus = res.status;
+			return res.json();
+		})
+		.then(body => {
+			// console.log(body);
+			// console.log("postingStatus", postingStatus);
+			if(postingStatus == 200) {
+			this.setState({
+				allPostings: body
+			});
+			// console.log(this.state);
+			}
+			return body;
+				})
+				.catch(err => {
+					console.log("ERROR!!");
+					console.log(err);
+				})
+
+		fetch(`/api/postings/newest/`)
 		.then(res => {
 			// console.log(res);
 			postingStatus = res.status;
@@ -103,13 +126,13 @@ class Posts extends Component {
 	}
  	render() {
 		console.log(this.props);
-		console.log(this.state);
 		window.state = this.state;
 		var idArr;
 
 		// CHECK STATE
 		if(this.props.location.state) {
 				if(Array.isArray(this.props.location.state.searchResults)) {
+					console.log(this.props.location.state.searchResults);
 				idArr = [];
 
 				for(var index = 0; index < Object.keys(this.props.location.state.searchResults).length; index++) {
@@ -134,6 +157,7 @@ class Posts extends Component {
 			return (<div className="grid list detailed-list">Loading</div>)
 		} else {
 			window.postings = this.state.postings;
+			console.log(this.state.allPostings);
 			if(idArr != null && idArr.length > 0) {
 				return (
 					<div>
@@ -141,7 +165,7 @@ class Posts extends Component {
 							{this.postingView()}
 						</div>
 						<div className="container">
-								{this.state.postings.map(posting => {
+								{this.state.allPostings.map(posting => {
 									if (idArr.includes(posting.id)) {
 										return (
 											<div className={this.classFormat(this.state.format)}>
