@@ -94,8 +94,10 @@ class Main extends Component {
                             }}
                         />
                     )
+                    break;
             }
-        }
+        }                    
+
         return(
             <main>
                 <Switch>
@@ -105,7 +107,8 @@ class Main extends Component {
                     <Route path="/posts/search_results" component={Posts} />
                     <Route path="/posts/" component={Posts}/>
                     <Route path="/:user/transaction/:item" render={props => <Transaction {...props } /> } />
-                    <Route path="/new_posting/" component={PostingUpload}/>
+                    <Route path="/new_posting/" render={props => <PostingUpload {...props} isEdit={false} title={"Posting Upload"} />}/>
+                    <Route path="/edit_posting/" render={props => <PostingUpload {...props} isEdit={true} title={"Posting Edit"} />}/>
                     <Route path="/login" component={Login}/>
                     <Route path="/register" component={Register}/>
                     <Route path="/manage_transactions" render={props => <Notifications loggedInUser={this.props.loggedInUser} refreshBalance={this.props.refreshBalance}/> } />

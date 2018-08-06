@@ -142,7 +142,8 @@ class Navigation extends Component {
                                   <NavLink to="/posts">Postings</NavLink>
                               </NavItem> */}
                               <NavItem id="nav-create-posting">
-                                  <NavLink to="/new_posting">+Create Posting</NavLink>
+                                  {/*<NavLink to="/new_posting">+Create Posting</NavLink>*/}
+                                  <span id="createPosting" onClick={() => {window.location.replace("/new_posting")}}>+Create Posting</span>
                               </NavItem>
                             </NavbarNav>
                             <NavbarNav right>     

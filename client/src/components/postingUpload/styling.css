@@ -75,3 +75,11 @@ p#locationInfo {
     margin-bottom: 0px;
     font-size: 12px;
 }
+
+span.removeImageBtn {
+    margin-left: 10px;
+    border-radius: 5px;
+    background-color: #5050ff;
+    color: white;
+    padding: 10px;
+}
