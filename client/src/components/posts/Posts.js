@@ -125,8 +125,8 @@ class Posts extends Component {
 			return "No results found for that, try a different search?";
 	}
  	render() {
-		console.log(this.props);
 		window.state = this.state;
+
 		var idArr;
 
 		// CHECK STATE
@@ -157,8 +157,8 @@ class Posts extends Component {
 			return (<div className="grid list detailed-list">Loading</div>)
 		} else {
 			window.postings = this.state.postings;
-			console.log(this.props.match.params);
 			if(idArr != null && idArr.length > 0) {
+				console.log('hit');
 				return (
 					<div>
 						<div>
@@ -174,6 +174,7 @@ class Posts extends Component {
 										)
 									}
 								})}
+								<p className="return-results">{this.noResultsMsg(idArr.length)}</p>
 						</div>
 					</div>
 				);
