@@ -8,7 +8,7 @@ Initial test users #1 and #2 will also be created and assigned multiple postings
 const faker = require('faker');
 
 var array = [];
-var numUsers = 200;
+var numUsers = 1000;
 
 for (var i = 0; i<numUsers; i++){
 
