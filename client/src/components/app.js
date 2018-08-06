@@ -17,6 +17,8 @@ class App extends Component {
         this.signOut = this.signOut.bind(this);
         this.getEthBalance1 = this.getEthBalance1.bind(this);
         this.getEthBalance2 = this.getEthBalance2.bind(this);
+        this.startBalancePolling = this.startBalancePolling.bind(this);
+        this.stopBalancePolling = this.stopBalancePolling.bind(this);
 
         this.state = {
             loggedInUser: {},
@@ -25,7 +27,8 @@ class App extends Component {
 
         this.clearState();
         this.getLoggedInUser();
-        this.getEthBalance1();
+        // this.getEthBalance1();
+        this.startBalancePolling();
     }
 
     clearState() {
@@ -86,15 +89,14 @@ class App extends Component {
     }
 
     getEthBalance1() {
-        console.log("getting eth balance");
-
         getWeb3
           .then(results => {
-            this.setState({
-              web3: results.web3
-            })
 
-            console.log("results", results);
+            if(results.web3 != this.state.web3) {
+                this.setState({
+                    web3: results.web3
+                })
+            }
             this.getEthBalance2(results.web3);
           })
           .catch(() => {
@@ -104,8 +106,6 @@ class App extends Component {
 
     getEthBalance2(web3) {
         
-        console.log(web3);
-
 
         web3.eth.getAccounts((err, accounts) => {
             let account;
@@ -113,17 +113,24 @@ class App extends Component {
                 console.error(err);
                 return;
             } else {
-                console.log(accounts);
                 account = accounts[0];
-            
+                if(!accounts || accounts.length < 1) {
+                    if(this.state.walletBalance != -1) {
+                        this.setState({
+                            walletBalance: -1
+                        })
+                    }
+                    return;
+                }
                 web3.eth.getBalance(account, (err, balance) => {
-                    console.log("balance", balance);
                     let etherValue = web3.fromWei(balance.toNumber(), "ether");
-                    console.log('etherValue', etherValue);
+                    let walletBalance = convertThreeDecimals(etherValue);
 
-                    this.setState({
-                        walletBalance: convertThreeDecimals(etherValue)
-                    })
+                    if(walletBalance != this.state.walletBalance) {
+                        this.setState({
+                            walletBalance: walletBalance
+                        })
+                    }
                 })
             }
         })
@@ -144,6 +151,16 @@ class App extends Component {
         }) 
     }
 
+    startBalancePolling() {
+        let obj = this;
+        this.accountInterval = setInterval(function() {
+            obj.getEthBalance1();
+        }, 2000);
+    }
+
+    stopBalancePolling() {
+        clearInterval(this.accountInterval);
+    }
     
     render() {
         return(

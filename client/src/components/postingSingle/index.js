@@ -437,6 +437,15 @@ class SinglePosting extends React.Component {
       return(<div></div>);
     }
 
+    let lat, lng;
+    if(this.state.posting.location && this.state.posting.location.lat && this.state.posting.location.lng) {
+      lat = this.state.posting.location.lat;
+      lng = this.state.posting.location.lat;
+    } else {
+      lat = 49.280904;
+      lng =-123.122441;
+    }
+
     if(this.state.posting || this.state.user) {
       return (
         <div id="postingSingleDiv">
@@ -498,7 +507,7 @@ class SinglePosting extends React.Component {
           </Grid>
           <div className="post-map">
             <h5>Meeting Location</h5>
-            <SimpleMap lat={this.state.posting.location.lat} lng={this.state.posting.location.lng} />
+            <SimpleMap lat={lat} lng={lng} />
           </div>
         </div>
       );
