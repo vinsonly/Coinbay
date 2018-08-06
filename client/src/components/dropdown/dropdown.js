@@ -37,10 +37,16 @@ class FilterDropdown extends React.Component {
         return {filterMethod: "Sort By: Price ( Low to High )"};
         }
       );
-    } else {
+    } else if(name === "Title-A") {
       this.setState(
         (prevState,props)=>{
         return {filterMethod: "Sort By: Title ( A-Z )"};
+        }
+      );
+    } else {
+      this.setState(
+        (prevState,props)=>{
+        return {filterMethod: "Sort By: Title ( Z-A )"};
         }
       );
     }
