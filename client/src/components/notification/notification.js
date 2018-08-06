@@ -11,6 +11,7 @@ import 'react-notifications/lib/notifications.css';
 const contract = require('truffle-contract');
 const escrow = contract(BasicEscrow);
 
+let object;
 
 /** Class representing a post notifications component */
 class Notification extends React.Component {
@@ -28,6 +29,7 @@ class Notification extends React.Component {
     
     this.acceptOffer = this.acceptOffer.bind(this);
     this.rejectOffer = this.rejectOffer.bind(this);
+    object = this;
   }
   /**
    * Notification message for accepting and rejecting transactions
@@ -224,15 +226,13 @@ class Notification extends React.Component {
                         icon: "success",
                         closeOnClickOutside: false
                       })
-
                       .then(() => {
                         console.log("accepted offer");
-                        window.location.reload();
+                        // window.location.reload();
+                        object.forceUpdate();
                       })
-                      
-                      // setTimeout(function() {
-                      //   window.location.reload();
-                      // }, 3000)
+
+                      object.props.refreshBalance();
                       
                   }
                 })
@@ -370,11 +370,12 @@ class Notification extends React.Component {
                         icon: "success",
                         closeOnClickOutside: false
                       })
-
                       .then(() => {
                         console.log("rejected offer");
-                        window.location.reload();
+                        // window.location.reload();
+                        object.forceUpdate();
                       })
+                      object.props.refreshBalance();
                       
                   }
                 })
@@ -392,9 +393,7 @@ class Notification extends React.Component {
       })
   }
   /**
-   * Error message for Etheruem Blockchain
-   * @param {string} type - String representation corresponding to type of notification message
-   * @param {string} otherUser - String representation corresponding other user making the bid
+   * Confirm Transaction for Smart Contract on the Etheruem Blockchain
    */
   okTransaction() {
     if(!this.state.web3.currentProvider) {
@@ -516,11 +515,12 @@ class Notification extends React.Component {
                         icon: "success",
                         closeOnClickOutside: false
                       })
-
                       .then(() => {
                         console.log("accepted offer");
-                        window.location.reload();
+                        // window.location.reload();
+                        object.forceUpdate();
                       })
+                      object.props.refreshBalance();
                       
                   }
                 })
@@ -661,16 +661,12 @@ class Notification extends React.Component {
                         icon: "success",
                         closeOnClickOutside: false
                       })
-
                       .then(() => {
                         console.log("declined offer");
-                        window.location.reload();
+                        // window.location.reload();
+                        object.forceUpdate();
                       })
-                      
-                      // setTimeout(function() {
-                      //   window.location.reload();
-                      // }, 3000)
-                      
+                      object.props.refreshBalance();
                   }
                 })
               }
@@ -709,7 +705,7 @@ class Notification extends React.Component {
             this.setState({
               web3: results.web3
             })
-            this.okTransaction();
+            this.declineTransaction();
           })
           .catch(() => {
             console.log('Error finding web3.');

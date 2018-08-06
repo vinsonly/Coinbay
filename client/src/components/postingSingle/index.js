@@ -155,6 +155,9 @@ class SinglePosting extends React.Component {
      * @return {number} The dot's width, in pixels.
     */
   offered() {
+
+    this.props.refreshBalance();
+
     console.log("processing transaction")
     let buyer = this.props.loggedInUser;
     let seller = this.state.user;
@@ -194,6 +197,19 @@ class SinglePosting extends React.Component {
       }).then(res => {
         if(res == "updateNow") {
           this.props.history.push(`/profile`);
+        }
+      })
+      return;
+    }
+
+    if(this.props.walletBalance + 0.01 < this.state.posting) {
+      swal({
+        title: "Insufficient Wallet Balance",
+        text: 'You do not have enough Ether in your account to pay for the item as well as gas fees',
+        icon: "info",
+        buttons: {
+          updateNow: "OK",
+          cancel: "Cancel"
         }
       })
       return;
@@ -357,7 +373,7 @@ class SinglePosting extends React.Component {
           .then(body => {
             if(status != 200) {
               swal(`Error: ${body.message}`);
-            } else {
+            } else {              
                 swal({
                   title: 'Successfully Submitted Offer',
                   text: "Please wait for the seller to accept your offer. Once your offer is accepted, meet the seller at the indicated meeting location at that indicated time and date. You can view the Ethereum transaction hash for the created contract in the 'Manage Transactions' page.",
@@ -373,6 +389,8 @@ class SinglePosting extends React.Component {
                     return false
                   } 
                 })
+                this.props.refreshBalance();
+
                 console.log(body);
 
                 var bidButton = document.getElementsByClassName('bid-button');
@@ -418,18 +436,6 @@ class SinglePosting extends React.Component {
     if(!this.state.posting || !this.state.user || this.state.halfStarArray == null || this.state.blackStarArray == null || this.state.emptyStarArray == null ) {
       return(<div></div>);
     }
-
-    // var bidButton = document.getElementsByClassName('bid-button');
-    //             // need condition to check (upon revisit) to see if already bidded
-    //             bidButton[0].style.color = "black";
-    //             bidButton[0].style.backgroundColor = "grey";
-    //             bidButton[0].style.cursor = "default";   
-
-    //             this.setState(
-    //               (prevState,props)=>{
-    //                 return {buttonText: "Offer Submitted"};
-    //               }
-    //             );
 
     if(this.state.posting || this.state.user) {
       return (
