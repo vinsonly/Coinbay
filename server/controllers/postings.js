@@ -62,10 +62,10 @@ module.exports = {
     },
 
     update(req, res) {
-        
+
         let id = parseInt(req.body.id);
         console.log(req.body);
-        
+
         return Posting
             .findById(id)
                 .then(posting => {
@@ -81,8 +81,8 @@ module.exports = {
                                 brand: req.body.brand || posting.brand,
                                 price: req.body.price || posting.price,
                                 status: req.body.status || posting.status,
-                                description: req.body.description || posting.description, 
-                                abstract: req.body.abstract || posting.abstract, 
+                                description: req.body.description || posting.description,
+                                abstract: req.body.abstract || posting.abstract,
                                 location: req.body.location || posting.location,
                                 accepted: req.body.accepted || posting.accepted
                             })
@@ -102,13 +102,13 @@ module.exports = {
                     console.log(error);
                     res.status(400).send(error);
                 })
-            
+
     },
 
     delete(req, res) {
         let id = parseInt(req.body.id);
-        
-        return Posting 
+
+        return Posting
             .findById(id)
                 .then(posting => {
                     if(!posting) {
@@ -122,7 +122,7 @@ module.exports = {
                                 let msg = `posting with id: ${id} destroyed.`
                                 console.log(msg);
                                 res.send(posting);
-    
+
                             })
                             .catch(error => {
                                 console.log("Opps, we have encountered an error");
@@ -141,8 +141,8 @@ module.exports = {
 
     findById(req, res) {
         let id = parseInt(req.params.id);
-        
-        return Posting 
+
+        return Posting
             .findById(id)
                 .then(posting => {
                     if(!posting) {
@@ -191,6 +191,7 @@ module.exports = {
                 where: {
                     status: 'active'
                 },
+                order: [['createdAt', 'DESC']],
                 include: [{
                     model: User,
                     required: true,
@@ -233,7 +234,7 @@ module.exports = {
         let buyerId = req.body.validatedUser.id;
 
         let addy = req.body.contractAddress;
-        
+
         if(!buyerId || !id || !addy) {
             return res.status(400).send({
                 message: "Missing parameters, please check your request and try again."
@@ -405,7 +406,7 @@ module.exports = {
         if(!accepted) {
             status = "active"
         }
-        
+
         return Posting
             .findById(id)
                 .then(posting => {
@@ -441,7 +442,7 @@ module.exports = {
                     console.log(error);
                     res.status(400).send(error);
                 })
-            
+
     },
 
     findByUserWithBuyerDetails(req, res) {
