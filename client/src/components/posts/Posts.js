@@ -158,7 +158,6 @@ class Posts extends Component {
 		} else {
 			window.postings = this.state.postings;
 			if(idArr != null && idArr.length > 0) {
-				console.log('hit');
 				return (
 					<div>
 						<div>

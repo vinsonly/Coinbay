@@ -137,10 +137,6 @@ class SearchInner extends Component {
   handleSubmit(event) {
     event.preventDefault();
 
-    // let target = event.target;
-
-    // let value = target.childNodes[0].childNodes[0].value;
-
     let value = this.state.value;
 
     let postingStatus;
@@ -166,14 +162,6 @@ class SearchInner extends Component {
         console.log(this.state.searchedPostings);
         this.props.handleRouteCallback("/posts", this.state.searchedPostings);
       })
-
-    // if(value != '' && Object.keys(this.state.suggestions).length == 0){
-    //   console.log(this.state.searchedPostings);
-    //   this.props.handleRouteCallback("/posts", this.state.searchedPostings);
-    // }
-    // else{
-    //   this.props.handleRouteCallback("/posts", this.state.suggestions);
-    // }
 
     this.setState({
       value: ''
