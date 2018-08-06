@@ -37,11 +37,17 @@ class SinglePosting extends React.Component {
     let postingStatus;
     let userStatus;
 
-    this.state = {buttonText: "Buy Now"};
+    this.state = {
+      buttonText: "Buy Now",
+      buttonDisabled: false,
+      bidButtonStyle: {},
+      buttonStylesSet: false
+    };
 
     this.arraySetupWrapper = this.arraySetupWrapper.bind(this);
     this.instantiateContract = this.instantiateContract.bind(this);
     this.offered = this.offered.bind(this);
+    this.setButtonStyle = this.setButtonStyle.bind(this);
 
     //get ethereum price from cmc
     fetch('https://api.coinmarketcap.com/v2/ticker/1027/')
@@ -59,7 +65,6 @@ class SinglePosting extends React.Component {
       console.log(err);
     });
 
-
     fetch(`/api/posting/${postingId}`)
       .then(res => {
         console.log(res);
@@ -70,7 +75,9 @@ class SinglePosting extends React.Component {
         console.log(body);
         console.log("postingStatus", postingStatus);
         if(postingStatus == 200) {
-          this.state.posting = body;
+          this.setState({
+            posting: body
+          })
           console.log(this.state);
         }
         return body;
@@ -112,6 +119,35 @@ class SinglePosting extends React.Component {
     let result = await setUpRatingArrays(this.state.user.rating);
     console.log(result);
     this.setState(result);
+  }
+
+  setButtonStyle() {
+    console.log("setting button style");
+
+    if(!this.state.posting || this.state.buttonStylesSet) {
+      return;
+    } else {
+
+      console.log(this.state.posting);
+      console.log(this.state.buttonStylesSet);
+      // check post status
+      let status = this.state.posting.status;
+
+      let buttonStyle = {
+        color: "black",
+        backgroundColor: "grey",
+        cursor: "default"
+      }
+
+      if(status != "active") {
+        this.setState({
+          buttonText: "Item Unavailable",
+          buttonDisabled: true,
+          bidButtonStyle: buttonStyle,
+          buttonStylesSet: true
+        })
+      }
+    }
   }
 
   /**
@@ -346,7 +382,7 @@ class SinglePosting extends React.Component {
                 bidButton[0].style.cursor = "default";   
 
                 this.setState(
-                  (prevState,props)=>{
+                  (prevState,props) => {
                     return {buttonText: "Offer Submitted"};
                   }
                 );
@@ -364,7 +400,17 @@ class SinglePosting extends React.Component {
 
       }
     })
-    
+  }
+
+  componentDidMount() {
+    this.setButtonStyle();
+  }
+
+  componentDidUpdate() {
+    if(this.state.buttonStylesSet) {
+      return;
+    }
+    this.setButtonStyle();
   }
 
   render() {
@@ -384,8 +430,6 @@ class SinglePosting extends React.Component {
     //                 return {buttonText: "Offer Submitted"};
     //               }
     //             );
-
-    let bidButtonStyles = {};
 
     if(this.state.posting || this.state.user) {
       return (
@@ -440,7 +484,7 @@ class SinglePosting extends React.Component {
                   </div>
                   <br/>
                   <h5 className="metaMaskWarning"><strong>Note: You must have the <a target="_blank" href="https://metamask.io/">Metamask browser extension</a> installed to place orders and confirm orders.</strong></h5>
-                  <Button onClick={ () => this.offered() } variant="contained" color="primary" className="bid-button" style={bidButtonStyles}>
+                  <Button onClick={ () => this.offered() } variant="contained" color="primary" className="bid-button" style={this.state.bidButtonStyle} disabled={this.state.buttonDisabled}>
                     {this.state.buttonText}
                   </Button>
                 </div>

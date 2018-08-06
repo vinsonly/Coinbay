@@ -27,6 +27,8 @@ module.exports = (app) => {
     app.get('/api/postings_with_users/', postingsController.getActivePostsWithSellers);
     app.get('/api/buyer_postings/:userId', postingsController.findBuyerPosts);
     app.get('/api/seller_postings/:userId/with_buyer', postingsController.findByUserWithBuyerDetails);
+    app.get('/api/postings/search/:value', postingsController.findByTitle);
+    app.get('/api/postings/newest/', postingsController.recentPosts);
     // app.get('/api/postings/?=asdsadsadsad', postingsController.search); //read the query string from the URL and query the database
 
     app.post('/api/posting/buy/:id', authController.verifyToken, postingsController.setUpTransaction);
@@ -35,7 +37,7 @@ module.exports = (app) => {
     app.get('/api/adminusers', adminusersController.read);
     app.post('/api/adminuser', adminusersController.create);
 
-    
+
     // WRITE THE OTHER ENDPOINTS DOWN HERE
 
     app.post('/api/login', authController.login);

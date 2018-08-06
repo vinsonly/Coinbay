@@ -80,7 +80,7 @@ button.btn.btn-default.Ripple-parent {
 
 .time-position {
 	position: absolute;
-	top: -0.45em;
+	top: 0em;
 	color: black;
 	background-color: rgb(255,255,255, 0.8);
 	padding: 0em 0.4em 0em 0.4em;
@@ -108,4 +108,14 @@ button.btn.btn-default.Ripple-parent {
   max-height:6em;
   width: auto;
   height: auto;
+}
+
+.card .card-body p.card-text {
+	height: 50px ;
+    overflow-y: hidden;
+    word-wrap: break-word;
+}
+
+div.card-body {
+	padding-top: 0;	
 }

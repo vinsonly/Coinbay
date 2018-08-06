@@ -97,6 +97,7 @@ class Navigation extends Component {
         if (is_root == true) {
             return(
                 <div className="center-search" style={{backgroundImage: 'url(' + require('./img/splash-map-lower-mainland.png') + ')'}} >
+                    <h1 id="slogan">Buy With Cryptocurrency, Sell With Certainty</h1>
                     <div className="searching">
                         <form className="form-inline md-form mt-0" id="searchForm">
                             <Search handleRouteCallback={this.props.handleRouteCallback}/>
@@ -136,14 +137,18 @@ class Navigation extends Component {
                               </NavItem>
                             </NavbarNav>
                             <NavbarNav right>     
-                                {
+                                {/* {
                                     (this.props.loggedInUser.id) ? (
                                         <NavItem>
-                                            <NavLink to="/manage_transactions">Manage Transactions</NavLink>
-                                            <NavLink to="/transaction_history">Transaction History</NavLink>
+                                            <span id="navEth">
+                                                <i class="material-icons">
+                                                    account_balance_wallet
+                                                </i>
+                                                97.567 ETH
+                                            </span>
                                         </NavItem>
                                     ) : (<div></div>)
-                                }
+                                } */}
                         
                                 {
                                     (this.props.loggedInUser.id) ? (<NavItem>
@@ -151,8 +156,10 @@ class Navigation extends Component {
                                         <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
                                         <DropdownToggle nav caret>{this.props.loggedInUser.username}</DropdownToggle>
                                         <DropdownMenu>
+                                            <DropdownItem><NavLink to="/manage_transactions">Manage Transactions</NavLink></DropdownItem>
+                                            <DropdownItem><NavLink to="/transaction_history">Transaction History</NavLink></DropdownItem>
                                             <DropdownItem><NavLink to="/profile">Profile</NavLink></DropdownItem>
-                                            <DropdownItem onClick={this.props.signOut}>Sign Out</DropdownItem>
+                                            <DropdownItem onClick={this.props.signOut}><span id="signOut">Sign Out</span></DropdownItem>
                                         </DropdownMenu>
                                         </Dropdown>
                                     </NavItem>  ) : (<div></div>)
@@ -176,7 +183,6 @@ class Navigation extends Component {
                         </Collapse>
                     </Navbar>
                 </div>
-
                 {this.homeNavigation()}
             </div>
       );

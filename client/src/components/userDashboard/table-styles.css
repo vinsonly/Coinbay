@@ -50,5 +50,6 @@ div.rt-th {
 }
 
 .ReactTable .rt-td {
-	white-space:unset;
+	white-space: unset;
+	word-wrap: break-word;	
 }

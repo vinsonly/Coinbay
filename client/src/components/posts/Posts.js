@@ -17,10 +17,36 @@ class Posts extends Component {
 			format: "grid",
 			counter: 20,
 			results: 0,
+<<<<<<< HEAD
 			filtering: "date"
+=======
+			allPostings: []
+>>>>>>> e641f7b2cba21c6a7442e68eb6e9e8c16dd54f4e
 		};
 
 		fetch(`/api/postings_with_users`)
+		.then(res => {
+			// console.log(res);
+			postingStatus = res.status;
+			return res.json();
+		})
+		.then(body => {
+			// console.log(body);
+			// console.log("postingStatus", postingStatus);
+			if(postingStatus == 200) {
+			this.setState({
+				allPostings: body
+			});
+			// console.log(this.state);
+			}
+			return body;
+				})
+				.catch(err => {
+					console.log("ERROR!!");
+					console.log(err);
+				})
+
+		fetch(`/api/postings/newest`)
 		.then(res => {
 			// console.log(res);
 			postingStatus = res.status;
@@ -159,11 +185,13 @@ class Posts extends Component {
 
  	render() {
 		window.state = this.state;
+
 		var idArr;
 
 		// CHECK STATE
 		if(this.props.location.state) {
 				if(Array.isArray(this.props.location.state.searchResults)) {
+					console.log(this.props.location.state.searchResults);
 				idArr = [];
 
 				for(var index = 0; index < Object.keys(this.props.location.state.searchResults).length; index++) {
@@ -197,7 +225,7 @@ class Posts extends Component {
 							<FilterDropdown changeFilterState={this.changeFilterState}/>
 						</div>
 						<div className="container">
-								{this.state.postings.map(posting => {
+								{this.state.allPostings.map(posting => {
 									if (idArr.includes(posting.id)) {
 										return (
 											<div className={this.classFormat(this.state.format)}>
@@ -206,10 +234,11 @@ class Posts extends Component {
 										)
 									}
 								})}
+								<p className="return-results">{this.noResultsMsg(idArr.length)}</p>
 						</div>
 					</div>
 				);
-			} else if (this.props.match.params.category != null || (this.props.location.state != undefined && idArr == null)) {
+			} else if (this.props.match.params.category != null || (this.props.location.state != undefined && idArr == 0 && this.props.location.state.searchResults == 0)) {
 				var counter = 0;
 				return (
 					<div>
@@ -219,7 +248,7 @@ class Posts extends Component {
 							<FilterDropdown changeFilterState={this.changeFilterState}/>
 						</div>
 						<div className="container">
-							{this.state.postings.map(posting => {
+							{this.state.allPostings.map(posting => {
 								if (posting.category == this.props.match.params.category) {
 									counter++;
 									return (

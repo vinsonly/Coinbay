@@ -21,12 +21,16 @@ var categories = {
             6: "Jewelry & Accessories",
             7: "Art",
             8: "Health",
-            9: "Gardening",
+            9: "Home & Garden",
             10: "Office",
             11: "Music",
-            12: "Home & Furniture",
+            12: "Housing",
             13: "Sports & Outdoors",
+<<<<<<< HEAD
             14: "Toys",
+=======
+            14: "Toys & Entertainment",
+>>>>>>> e641f7b2cba21c6a7442e68eb6e9e8c16dd54f4e
             15: "Tools",
             16: "Antiques",
             17: "Miscellaneous"
@@ -112,7 +116,7 @@ for(var j = 0; j < 10; j++) {
 }
 
 
-var numPostings = 200; //this needs to match number of users generated, see seeders demo-user.js file
+var numPostings = 1000; //this needs to match number of users generated, see seeders demo-user.js file
 for (var i = 0; i<numPostings; i++){
 
   let randomInt = getRandomInt(18);

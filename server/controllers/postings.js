@@ -1,6 +1,9 @@
 const Posting = require('../models/').Posting;
 const User = require('../models/').User;
 const verifyToken = require('./auth').verifyToken;
+const Op = require('sequelize').Op;
+// const Op = sequelize.Op;
+
 
 var db = require('../models');
 var sequelize = db.sequelize;
@@ -185,6 +188,35 @@ module.exports = {
                 })
     },
 
+    findByTitle(req, res) {
+      let value = req.params.value;
+      // console.log(value);
+        return Posting
+            .findAll({
+                where: {
+                  postingTitle: {
+                    [Op.iLike]: `%${value}%`
+                    // [Op.iLike]: "%awes%"
+                  }
+                },
+                include: [{
+                    model: User,
+                    required: true,
+                    as: "User"
+                }]
+            })
+                .then((postings) => {
+                    console.log("Here are the searched items:");
+                    console.log(postings);
+                    return res.send(postings);
+                })
+                .catch((err) => {
+                    console.log("We ran into an error:");
+                    console.log(err);
+                    return res.status(400).send(err);
+                })
+    },
+
     getActivePostsWithSellers(req, res) {
         return Posting
             .findAll({
@@ -209,6 +241,35 @@ module.exports = {
                     return res.status(400).send(err);
                 })
     },
+
+    recentPosts(req, res) {
+        return Posting
+            .findAll({
+              //change to 100
+                limit: 100,
+                order: [['updatedAt', 'DESC']],
+                where: {
+                    status: 'active'
+                },
+                include: [{
+                    model: User,
+                    required: true,
+                    as: "User"
+                }]
+            })
+                .then((postings) => {
+                    console.log("Here are 100 postings sorted by date:");
+                    console.log(postings);
+                    return res.send(postings);
+                })
+                .catch((err) => {
+                    console.log("We ran into an error:");
+                    console.log(err);
+                    return res.status(400).send(err);
+                })
+    },
+
+
 
     // set the post to pending, add the transaction to both user's collections
     // the buyerId to the buyer, and the status to pending
@@ -282,7 +343,7 @@ module.exports = {
                                     .update({
                                         status: "pendingConfirmation",
                                         buyerId: buyerId,
-                                        transaction: transaction                                        
+                                        transaction: transaction
                                     })
                                     .then(() => {
                                         console.log("Successfully updated posting");
@@ -319,10 +380,10 @@ module.exports = {
 
         let status = req.body.status;
 
-        if(status != "active" && 
-        status != "pendingConfirmation" && 
-        status != "pending" && 
-        status != "fulfilled" && 
+        if(status != "active" &&
+        status != "pendingConfirmation" &&
+        status != "pending" &&
+        status != "fulfilled" &&
         status != "cancelled") {
             return res.status(400).send({
                 message: "status value is invalid"
@@ -382,7 +443,7 @@ module.exports = {
                     model: User,
                     required: true,
                     as: 'User'
-                }] 
+                }]
             })
                 .then((postings) => {
                     console.log(`Here are all of the postings that are associated to user ${userId}:`);
@@ -397,7 +458,7 @@ module.exports = {
     },
 
     setOffer(req, res) {
-        
+
         let id = parseInt(req.body.id);
         console.log(req.body);
         let txid = req.body.txid;
@@ -500,14 +561,16 @@ module.exports = {
 
                         if(newTransaction.sellerOk && newTransaction.buyerOk) {
                             newStatus = "fulfilled";
+                            newTransaction.completedAt = Date.now();
                         } else if(newTransaction.sellerOk == false && newTransaction.buyerOk == false) {
                             newStatus = "cancelled";
+                            newTransaction.completedAt = Date.now();
                         } else if(newTransaction.sellerOk == false && newTransaction.buyerOk == true ||
                             newTransaction.sellerOk == true && newTransaction.buyerOk == false
                         ) {
                             newStatus = "disputing";
                         }
-                            
+
                         return posting
                             .update({
                                 status: newStatus || posting.status,
@@ -529,7 +592,7 @@ module.exports = {
                     console.log(error);
                     res.status(400).send(error);
                 })
-            
-    }    
+
+    }
 
 }

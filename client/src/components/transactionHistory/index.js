@@ -7,6 +7,7 @@ import Button from '@material-ui/core/Button';
 import '../userDashboard/table-styles.css'
 import TransactionModal from './transactionModal';
 import UserModal from './userModal';
+import './styles.css';
 
 class TransactionHistory extends Component {
   constructor(props) {
