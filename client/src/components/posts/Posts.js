@@ -157,6 +157,7 @@ class Posts extends Component {
 			return (<div className="grid list detailed-list">Loading</div>)
 		} else {
 			window.postings = this.state.postings;
+			console.log(this.props.match.params);
 			if(idArr != null && idArr.length > 0) {
 				return (
 					<div>
@@ -184,7 +185,7 @@ class Posts extends Component {
 							{this.postingView()}
 						</div>
 						<div className="container">
-							{this.state.postings.map(posting => {
+							{this.state.allPostings.map(posting => {
 								if (posting.category == this.props.match.params.category) {
 									counter++;
 									return (
