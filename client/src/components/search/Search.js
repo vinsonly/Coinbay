@@ -167,8 +167,6 @@ class SearchInner extends Component {
       })
 
 
-
-
     // if(value != '' && Object.keys(this.state.suggestions).length == 0){
     //   console.log(this.state.searchedPostings);
     //   this.props.handleRouteCallback("/posts", this.state.searchedPostings);

@@ -41,7 +41,7 @@ class Posts extends Component {
 					console.log(err);
 				})
 
-		fetch(`/api/postings/newest/`)
+		fetch(`/api/postings/newest`)
 		.then(res => {
 			// console.log(res);
 			postingStatus = res.status;
@@ -157,7 +157,6 @@ class Posts extends Component {
 			return (<div className="grid list detailed-list">Loading</div>)
 		} else {
 			window.postings = this.state.postings;
-			console.log(this.state.allPostings);
 			if(idArr != null && idArr.length > 0) {
 				return (
 					<div>
@@ -177,7 +176,7 @@ class Posts extends Component {
 						</div>
 					</div>
 				);
-			} else if (this.props.match.params.category != null || (this.props.location.state != undefined && idArr == null)) {
+			} else if (this.props.match.params.category != null || (this.props.location.state != undefined && idArr == 0 && this.props.location.state.searchResults == 0)) {
 				var counter = 0;
 				return (
 					<div>

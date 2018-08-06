@@ -112,7 +112,7 @@ for(var j = 0; j < 10; j++) {
 }
 
 
-var numPostings = 1000; //this needs to match number of users generated, see seeders demo-user.js file
+var numPostings = 10000; //this needs to match number of users generated, see seeders demo-user.js file
 for (var i = 0; i<numPostings; i++){
 
   let randomInt = getRandomInt(18);
