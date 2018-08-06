@@ -17,7 +17,7 @@ class Posts extends Component {
 			format: "grid",
 			counter: 20,
 			results: 0,
-			filtering: ""
+			filtering: "date"
 		};
 
 		fetch(`/api/postings_with_users`)
@@ -112,28 +112,14 @@ class Posts extends Component {
 		else if (filter === "price-l") {
 			postings.sort(compareFunctions.AscPriceCompare);
 		}
-
-		else if(filter === "title"){
-			if(compareFunctions.titleBool == true){
-				postings.sort(compareFunctions.AscTitleCompare);
-				compareFunctions.titleBool = false;
-			}
-			else{
-				postings.sort(compareFunctions.DescTitleCompare);
-				compareFunctions.titleBool = true;
-			}
+		else if (filter === "title-a") {
+			postings.sort(compareFunctions.AscTitleCompare);
 		}
-
-		else if (filter === "date"){
-			if(compareFunctions.dateBool == true){
-				postings.sort(compareFunctions.AscDateCompare);
-				compareFunctions.dateBool = false;
-			}
-			else{
-				postings.sort(compareFunctions.DescDateCompare);
-				compareFunctions.dateBool = true;
-			}
-
+		else if (filter === "title-z") {
+			postings.sort(compareFunctions.DescTitleCompare);
+		} 
+		else if (filter === "date") {
+			postings.sort(compareFunctions.DescDateCompare);
 		}
 	}
 
@@ -144,12 +130,18 @@ class Posts extends Component {
 				return {filtering: "date"};
 				}
 			);
-		} else if (value === "Title") {
+		} else if (value === "Title-A") {
 			this.setState(
 				(prevState,props)=>{
-				return {filtering: "title"};
+				return {filtering: "title-a"};
 				}
-			);			
+			);	
+		} else if (value === "Title-Z") {
+			this.setState(
+				(prevState,props)=>{
+				return {filtering: "title-z"};
+				}
+			);				
 		} else if (value === "Price-H") {
 			this.setState(
 				(prevState,props)=>{
@@ -267,8 +259,6 @@ class Posts extends Component {
 
 export default Posts;
 const compareFunctions = {
-	titleBool: true,
-	dateBool: true,
 	AscPriceCompare (posting1, posting2){
 		return parseInt(posting1.price) - parseInt(posting2.price);
 	},

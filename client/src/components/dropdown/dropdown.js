@@ -2,11 +2,12 @@ import React from 'react';
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+import './dropdown.css';
 
 class FilterDropdown extends React.Component {
   state = {
     anchorEl: null,
-    filterMethod: "Filter By"
+    filterMethod: "Filter By: Date ( Most Recent )"
   };
 
   handleClick = event => {
@@ -21,25 +22,25 @@ class FilterDropdown extends React.Component {
     if (name === "Date") {
       this.setState(
         (prevState,props)=>{
-        return {filterMethod: "Filter By: Date"};
+        return {filterMethod: "Filter By: Date ( Most Recent )"};
         }
       );
     } else if (name === "Price-H") {
       this.setState(
         (prevState,props)=>{
-        return {filterMethod: "Sort By: Price"};
+        return {filterMethod: "Sort By: Price ( High to Low )"};
         }
       );
     } else if(name === "Price-L") {
       this.setState(
         (prevState,props)=>{
-        return {filterMethod: "Sort By: Price"};
+        return {filterMethod: "Sort By: Price ( Low to High )"};
         }
       );
     } else {
       this.setState(
         (prevState,props)=>{
-        return {filterMethod: "Sort By: Title A-Z"};
+        return {filterMethod: "Sort By: Title ( A-Z )"};
         }
       );
     }
@@ -58,25 +59,15 @@ class FilterDropdown extends React.Component {
   }
   render() {
     const { anchorEl } = this.state;
-
-    let icon
-    switch(this.state.filterMethod) {
-      case "Price-H":
-        icon = (<p>blah</p>)
-      case "Price-L":
-        icon = (<p>Down</p>)
-    }
-
-    console.log(icon);
-
     return (
       <div>
         <Button
           aria-owns={anchorEl ? 'simple-menu' : null}
           aria-haspopup="true"
           onClick={this.handleClick}
+          className="dropdown-button"
         >
-          {this.state.filterMethod} {icon}
+          {this.state.filterMethod}
         </Button>
         <Menu
           id="simple-menu"
@@ -84,10 +75,11 @@ class FilterDropdown extends React.Component {
           open={Boolean(anchorEl)}
           onClose={this.handleClose}
         >
-          <MenuItem onClick={() => this.onClickAction("Date")}>Date (Most Recent)</MenuItem>
-          <MenuItem onClick={() => this.onClickAction("Price-H")}>Price (High to Low)</MenuItem>
-          <MenuItem onClick={() => this.onClickAction("Price-L")}>Price (Low to High)</MenuItem>
-          <MenuItem onClick={() => this.onClickAction("Title")}>Title (Alphabetical)</MenuItem>
+          <MenuItem onClick={() => this.onClickAction("Date")}>Date ( Most Recent )</MenuItem>
+          <MenuItem onClick={() => this.onClickAction("Price-L")}>Price ( Low to High )</MenuItem>
+          <MenuItem onClick={() => this.onClickAction("Price-H")}>Price ( High to Low )</MenuItem>
+          <MenuItem onClick={() => this.onClickAction("Title-A")}>Title ( Alphabetical A-Z )</MenuItem>
+          <MenuItem onClick={() => this.onClickAction("Title-Z")}>Title ( Alphabetical Z-A )</MenuItem>
         </Menu>
       </div>
     );
