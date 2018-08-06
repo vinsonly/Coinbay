@@ -4,6 +4,7 @@ import Main from './main';
 import Navigation from './navigation/Navigation';
 import Search from './search/Search'
 import CatNavigation from './catNavigation/catNavigation';
+import { BrowserRouter, Route, Link, Router, Redirect, withRouter } from 'react-router-dom';
 
 class App extends Component {
 
@@ -74,10 +75,11 @@ class App extends Component {
     signOut() {
         console.log("signing out in app.js");
         localStorage.removeItem('sessionToken');
-
         this.setState({
             loggedInUser: {}
         })
+        this.props.history.push('/');
+
     }
 
     handleRouteCallback(routePath, routeProps) {
@@ -105,4 +107,4 @@ class App extends Component {
     }
 }
 
-export default App;
+export default withRouter(App);

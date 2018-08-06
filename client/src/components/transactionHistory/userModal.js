@@ -53,6 +53,7 @@ export default class UserModal extends React.Component {
     let user;
 
     let typeOfUser;
+
     if(this.props.loggedInUser.id == posting.userId) {
         typeOfUser = "seller"
     } else {
@@ -60,9 +61,9 @@ export default class UserModal extends React.Component {
     }
 
     if(typeOfUser == "buyer") {
-        user = posting.Buyer
-    } else {
         user = posting.User
+    } else {
+        user = posting.Buyer
     }
 
     return (
@@ -80,6 +81,7 @@ export default class UserModal extends React.Component {
           contentLabel="Example Modal"
         >
           <h4>User [{user.id}]</h4>
+          <p><span className="fieldTitles">Username</span>: {user.username}</p>
           <p><span className="fieldTitles">Email</span>: {user.email}</p>
           <p><span className="fieldTitles">Phone Number</span>: {user.phone}</p>
           <p><span className="fieldTitles">Ethereum Address</span>: {user.crypto}</p>
