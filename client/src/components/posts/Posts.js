@@ -17,11 +17,8 @@ class Posts extends Component {
 			format: "grid",
 			counter: 20,
 			results: 0,
-<<<<<<< HEAD
-			filtering: "date"
-=======
+			filtering: "date",
 			allPostings: []
->>>>>>> e641f7b2cba21c6a7442e68eb6e9e8c16dd54f4e
 		};
 
 		fetch(`/api/postings_with_users`)

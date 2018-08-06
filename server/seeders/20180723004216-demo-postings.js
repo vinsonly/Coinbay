@@ -26,11 +26,7 @@ var categories = {
             11: "Music",
             12: "Housing",
             13: "Sports & Outdoors",
-<<<<<<< HEAD
-            14: "Toys",
-=======
             14: "Toys & Entertainment",
->>>>>>> e641f7b2cba21c6a7442e68eb6e9e8c16dd54f4e
             15: "Tools",
             16: "Antiques",
             17: "Miscellaneous"
