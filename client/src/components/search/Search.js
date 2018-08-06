@@ -55,6 +55,7 @@ class SearchInner extends Component {
         super(props);
         this.state = {
             value: '',
+            searchBy: 'title',
             suggestions: [],
             postings: [],
             postingsByTitle: [],
@@ -66,18 +67,14 @@ class SearchInner extends Component {
 
       fetch(`/api/postings/newest`)
       .then(res => {
-        // console.log(res);
         postingStatus = res.status;
         return res.json();
       })
       .then(body => {
-        // console.log(body);
-        // console.log("postingStatus", postingStatus);
         if(postingStatus == 200) {
         this.setState({
           postings: body
         });
-        // console.log(this.state.postings);
         }
         return body;
           })
@@ -112,7 +109,7 @@ class SearchInner extends Component {
   };
 
   onSuggestionsFetchRequested = ({ value }) => {
-    if(document.getElementById('searchBy').value == 'title'){
+    if(this.state.searchBy == 'title'){
       this.setState({
         suggestions: this.getSuggestions(value)
       });
@@ -145,7 +142,7 @@ class SearchInner extends Component {
 
     let postingStatus;
 
-    if(document.getElementById('searchBy').value == 'title'){
+    if(this.state.searchBy == 'title'){
       fetch(`/api/postings/searchTitle/${value}`)
         .then(res => {
           postingStatus = res.status;
@@ -157,7 +154,6 @@ class SearchInner extends Component {
     					postingsByTitle: body
     				});
           }
-          console.log("body", body);
           return body;
     		})
     		.catch(err => {
@@ -165,11 +161,10 @@ class SearchInner extends Component {
     			console.log(err);
     		})
         .then(() => {
-          console.log(this.state.postingsByTitle);
           this.props.handleRouteCallback("/posts", this.state.postingsByTitle);
         })
     }
-    else if (document.getElementById('searchBy').value == 'user'){
+    else if (this.state.searchBy == 'user'){
       fetch(`/api/postings/searchUsername/${value}`)
         .then(res => {
           postingStatus = res.status;
@@ -181,7 +176,6 @@ class SearchInner extends Component {
     					postingsByUsername: body
     				});
           }
-          console.log("body", body);
           return body;
     		})
     		.catch(err => {
@@ -189,27 +183,26 @@ class SearchInner extends Component {
     			console.log(err);
     		})
         .then(() => {
-          console.log(this.state.postingsByUsername);
           this.props.handleRouteCallback("/posts", this.state.postingsByUsername);
         })
     }
-
-
 
     this.setState({
       value: ''
     });
 
-    console.log(this.state);
+  }
 
-
-
+  handleSearchByChange(event) {
+    this.setState({
+      searchBy: event.target.value
+    });
   }
 
     render() {
       const { value, suggestions } = this.state;
       const inputProps = {
-        placeholder: "Search by",
+        placeholder: `Search by ${this.state.searchBy}`,
         value,
         onChange: this.onChange
       };
@@ -240,7 +233,7 @@ class SearchInner extends Component {
               onSuggestionSelected={this.onSuggestionSelected}
               inputProps={inputProps} />
             </form>
-            <select id="searchBy">
+            <select id="searchBy" value={this.state.searchBy} onChange={this.handleSearchByChange.bind(this)}>
               <option value="title">Title</option>
               <option value="user">User</option>
             </select>
