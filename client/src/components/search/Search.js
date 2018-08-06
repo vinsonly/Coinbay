@@ -57,7 +57,8 @@ class SearchInner extends Component {
             value: '',
             suggestions: [],
             postings: [],
-            searchedPostings: [],
+            postingsByTitle: [],
+            postingsByUsername: [],
             toRedirect: false
         };
 
@@ -111,9 +112,12 @@ class SearchInner extends Component {
   };
 
   onSuggestionsFetchRequested = ({ value }) => {
-    this.setState({
-      suggestions: this.getSuggestions(value)
-    });
+    if(document.getElementById('searchBy').value == 'title'){
+      this.setState({
+        suggestions: this.getSuggestions(value)
+      });
+    }
+
   };
 
   onSuggestionsClearRequested = () => {
@@ -140,28 +144,57 @@ class SearchInner extends Component {
     let value = this.state.value;
 
     let postingStatus;
-    fetch(`/api/postings/search/${value}`)
-      .then(res => {
-        postingStatus = res.status;
-        return res.json();
-      })
-      .then(body => {
-        if(postingStatus == 200) {
-          this.setState({
-  					searchedPostings: body
-  				});
-        }
-        console.log("body", body);
-        return body;
-  		})
-  		.catch(err => {
-  			console.log("ERROR!!");
-  			console.log(err);
-  		})
-      .then(() => {
-        console.log(this.state.searchedPostings);
-        this.props.handleRouteCallback("/posts", this.state.searchedPostings);
-      })
+
+    if(document.getElementById('searchBy').value == 'title'){
+      fetch(`/api/postings/searchTitle/${value}`)
+        .then(res => {
+          postingStatus = res.status;
+          return res.json();
+        })
+        .then(body => {
+          if(postingStatus == 200) {
+            this.setState({
+    					postingsByTitle: body
+    				});
+          }
+          console.log("body", body);
+          return body;
+    		})
+    		.catch(err => {
+    			console.log("ERROR!!");
+    			console.log(err);
+    		})
+        .then(() => {
+          console.log(this.state.postingsByTitle);
+          this.props.handleRouteCallback("/posts", this.state.postingsByTitle);
+        })
+    }
+    else if (document.getElementById('searchBy').value == 'user'){
+      fetch(`/api/postings/searchUsername/${value}`)
+        .then(res => {
+          postingStatus = res.status;
+          return res.json();
+        })
+        .then(body => {
+          if(postingStatus == 200) {
+            this.setState({
+    					postingsByUsername: body
+    				});
+          }
+          console.log("body", body);
+          return body;
+    		})
+    		.catch(err => {
+    			console.log("ERROR!!");
+    			console.log(err);
+    		})
+        .then(() => {
+          console.log(this.state.postingsByUsername);
+          this.props.handleRouteCallback("/posts", this.state.postingsByUsername);
+        })
+    }
+
+
 
     this.setState({
       value: ''
@@ -176,7 +209,7 @@ class SearchInner extends Component {
     render() {
       const { value, suggestions } = this.state;
       const inputProps = {
-        placeholder: "Search",
+        placeholder: "Search by",
         value,
         onChange: this.onChange
       };
@@ -207,6 +240,10 @@ class SearchInner extends Component {
               onSuggestionSelected={this.onSuggestionSelected}
               inputProps={inputProps} />
             </form>
+            <select id="searchBy">
+              <option value="title">Title</option>
+              <option value="user">User</option>
+            </select>
           </div>
         )
       }

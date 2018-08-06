@@ -2,6 +2,7 @@ const Posting = require('../models/').Posting;
 const User = require('../models/').User;
 const verifyToken = require('./auth').verifyToken;
 const Op = require('sequelize').Op;
+const Sequelize = require('sequelize');
 // const Op = sequelize.Op;
 
 
@@ -199,7 +200,6 @@ module.exports = {
                 where: {
                   postingTitle: {
                     [Op.iLike]: `%${value}%`
-                    // [Op.iLike]: "%awes%"
                   }
                 },
                 include: [{
@@ -207,9 +207,40 @@ module.exports = {
                     required: true,
                     as: "User"
                 }]
+
             })
                 .then((postings) => {
                     console.log("Here are the searched items:");
+                    console.log(postings);
+                    return res.send(postings);
+                })
+                .catch((err) => {
+                    console.log("We ran into an error:");
+                    console.log(err);
+                    return res.status(400).send(err);
+                })
+    },
+
+    findByUsername(req, res) {
+      let value = req.params.value;
+      // console.log(value);
+        return Posting
+            .findAll({
+                include: [{
+                    model: User,
+                    required: true,
+                    as: "User",
+                    where: {
+                      username: {
+                        [Op.iLike]: `%${value}%`
+                        // [Op.iLike]: `%user%`
+                      }
+                    }
+                }]
+
+            })
+                .then((postings) => {
+                    console.log("Here are the searched users:");
                     console.log(postings);
                     return res.send(postings);
                 })
