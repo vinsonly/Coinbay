@@ -498,7 +498,7 @@ class SinglePosting extends React.Component {
           </Grid>
           <div className="post-map">
             <h5>Meeting Location</h5>
-            <SimpleMap lat={49.282482} lng={-123.118275} />
+            <SimpleMap lat={this.state.posting.location.lat} lng={this.state.posting.location.lng} />
           </div>
         </div>
       );
