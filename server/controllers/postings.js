@@ -326,7 +326,7 @@ module.exports = {
                         contractAddress: contractAddress,
                         txids: txids,
                         startedAt: Date.now(),
-                        completedAt: null
+                        completedAt: 1000
                     }
 
                     await User.findById(buyerId)
@@ -483,6 +483,9 @@ module.exports = {
                         let newTransaction = posting.transaction;
                         if(txid) {
                             newTransaction.txids.push(txid);
+                        }
+                        if(status == "active") {
+                            newTransaction.txids = []
                         }
                         return posting
                             .update({

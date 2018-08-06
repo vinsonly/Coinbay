@@ -339,9 +339,12 @@ class SinglePosting extends React.Component {
 
         let wei = this.state.web3.toWei(amount, "ether");
 
+        // set default gas 40 gwei
+        let gwei = new Number(40000000000)
         escrow.new(lowerCaseSeller,{
           from: accounts[0],
-          value: wei
+          value: wei,
+          gasPrice: gwei
         })
         .then(instance => {
 
@@ -443,7 +446,7 @@ class SinglePosting extends React.Component {
       lng = this.state.posting.location.lat;
     } else {
       lat = 49.280904;
-      lng =-123.122441;
+      lng = -123.122441;
     }
 
     if(this.state.posting || this.state.user) {

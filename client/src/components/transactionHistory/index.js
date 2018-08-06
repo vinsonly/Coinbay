@@ -7,6 +7,7 @@ import Button from '@material-ui/core/Button';
 import '../userDashboard/table-styles.css'
 import TransactionModal from './transactionModal';
 import UserModal from './userModal';
+import DisputeModal from './disputeModal';
 import './styles.css';
 
 class TransactionHistory extends Component {
@@ -90,6 +91,7 @@ class TransactionHistory extends Component {
           {
             Header: "Status",
             accessor: "status",
+            Cell: ({value}) => (checkStatus(value)),
             width: 100
           },   
           {
@@ -154,4 +156,19 @@ function convertToDate(unixtime) {
     return "n/a";
   }
   return date.toString();
+}
+
+function checkStatus(status){
+  if(status == "disputing") {
+    return (
+      <div>
+        <p>disputing</p>
+        <DisputeModal/>
+      </div>
+    )
+  } else {
+    return (
+      <p>{status}</p>
+    )
+  }
 }
