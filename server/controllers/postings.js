@@ -80,11 +80,14 @@ module.exports = {
                                 modelName: req.body.modelName || posting.modelName,
                                 brand: req.body.brand || posting.brand,
                                 price: req.body.price || posting.price,
+                                category: req.body.category || posting.category,
                                 status: req.body.status || posting.status,
                                 description: req.body.description || posting.description, 
                                 abstract: req.body.abstract || posting.abstract, 
                                 location: req.body.location || posting.location,
-                                accepted: req.body.accepted || posting.accepted
+                                images: req.body.images || posting.images,
+                                accepted: req.body.accepted || posting.accepted,
+                                transaction: req.body.transaction || posting.transaction
                             })
                             .then(() => {
                                 console.log("Successfully updated posting");
@@ -93,14 +96,14 @@ module.exports = {
                             .catch((error) => {
                                 console.log("Opps we ran into an error");
                                 console.log(error);
-                                res.status(400).send(error);
+                                res.status(400).send({error});
                             })
                     }
                 })
                 .catch((error) => {
                     console.log("Opps we ran into an error");
                     console.log(error);
-                    res.status(400).send(error);
+                    res.status(400).send({error});
                 })
             
     },
