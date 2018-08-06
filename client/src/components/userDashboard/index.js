@@ -140,10 +140,20 @@ class UserDashboard extends Component {
   }
 
   // set the state to redirect to the posting edit page
-  editPosting(postingId) {
-    console.log("editting posting", postingId);
-    console.log("this", this);
-    console.log("obj", obj);
+  editPosting(row) {
+    console.log("editting posting");
+
+    let posting = row._original
+
+    console.log("posting", posting);
+
+    this.props.history.push({
+      pathname: '/edit_posting',
+      state: { 
+        posting: posting
+      }
+    })
+
   }
 
   // set the state to redirect to the view offers page
@@ -249,8 +259,7 @@ class UserDashboard extends Component {
           },
           {
             Header: "Edit",
-            accessor: 'id',
-            Cell: ({value}) => (<button onClick={this.editPosting.bind(this, value)}>Edit</button>),
+            Cell: ({row}) => (<button onClick={this.editPosting.bind(this, row)}>Edit</button>),
             width: 70
           }
         ],

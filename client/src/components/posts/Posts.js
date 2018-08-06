@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import SimpleMediaCard from '../simpleMediaCard/SimpleMediaCard';
-import 'bootstrap/dist/css/bootstrap.css'
-import 'mdbreact/dist/css/mdb.css'
+import FilterDropdown from '../dropdown/dropdown';
+import 'bootstrap/dist/css/bootstrap.css';
+import 'mdbreact/dist/css/mdb.css';
 import './posts.css';
 
 class Posts extends Component {
@@ -16,6 +17,7 @@ class Posts extends Component {
 			format: "grid",
 			counter: 20,
 			results: 0,
+			filtering: "date",
 			allPostings: []
 		};
 
@@ -64,6 +66,8 @@ class Posts extends Component {
 				})
 
 		window.props = props;
+
+		this.changeFilterState = this.changeFilterState.bind(this);
 	}
 	componentDidMount() {
 		window.addEventListener('scroll', function() {
@@ -100,7 +104,6 @@ class Posts extends Component {
 				return {format: "detailed-list"};
 				}
 			);
-		} else {
 		}
 	}
 	classFormat(form) {
@@ -124,6 +127,59 @@ class Posts extends Component {
 		else
 			return "No results found for that, try a different search?";
 	}
+	filteringPostings(filter, postings) {
+
+		if(filter === "price-h") {
+			postings.sort(compareFunctions.DescPriceCompare);
+		}
+		else if (filter === "price-l") {
+			postings.sort(compareFunctions.AscPriceCompare);
+		}
+		else if (filter === "title-a") {
+			postings.sort(compareFunctions.AscTitleCompare);
+		}
+		else if (filter === "title-z") {
+			postings.sort(compareFunctions.DescTitleCompare);
+		} 
+		else if (filter === "date") {
+			postings.sort(compareFunctions.DescDateCompare);
+		}
+	}
+
+	changeFilterState(value) {
+		if (value === "Date") {
+			this.setState(
+				(prevState,props)=>{
+				return {filtering: "date"};
+				}
+			);
+		} else if (value === "Title-A") {
+			this.setState(
+				(prevState,props)=>{
+				return {filtering: "title-a"};
+				}
+			);	
+		} else if (value === "Title-Z") {
+			this.setState(
+				(prevState,props)=>{
+				return {filtering: "title-z"};
+				}
+			);				
+		} else if (value === "Price-H") {
+			this.setState(
+				(prevState,props)=>{
+				return {filtering: "price-h"};
+				}
+			);	
+		} else if (value === "Price-L") {
+			this.setState(
+				(prevState,props)=>{
+				return {filtering: "price-l"};
+				}
+			);	
+		}
+	}
+
  	render() {
 		window.state = this.state;
 
@@ -162,6 +218,8 @@ class Posts extends Component {
 					<div>
 						<div>
 							{this.postingView()}
+							{this.filteringPostings(this.state.filtering, this.state.postings)}
+							<FilterDropdown changeFilterState={this.changeFilterState}/>
 						</div>
 						<div className="container">
 								{this.state.allPostings.map(posting => {
@@ -183,6 +241,8 @@ class Posts extends Component {
 					<div>
 						<div className="format-options">
 							{this.postingView()}
+							{this.filteringPostings(this.state.filtering, this.state.postings)}
+							<FilterDropdown changeFilterState={this.changeFilterState}/>
 						</div>
 						<div className="container">
 							{this.state.allPostings.map(posting => {
@@ -205,6 +265,8 @@ class Posts extends Component {
 					<div>
 						<div className="format-options">
 							{this.postingView()}
+							{this.filteringPostings(this.state.filtering, this.state.postings)}
+							<FilterDropdown changeFilterState={this.changeFilterState}/>
 						</div>
 						<div className="container">
 								{this.state.postings.slice(0, this.state.counter).map((posting, index) => {
@@ -223,3 +285,24 @@ class Posts extends Component {
 }
 
 export default Posts;
+const compareFunctions = {
+	AscPriceCompare (posting1, posting2){
+		return parseInt(posting1.price) - parseInt(posting2.price);
+	},
+	DescPriceCompare (posting1, posting2){
+		return parseInt(posting2.price) - parseInt(posting1.price);
+	},
+	AscTitleCompare (posting1, posting2){
+		return posting1.postingTitle.localeCompare(posting2.postingTitle);
+	},
+	DescTitleCompare (posting1, posting2){
+		return posting2.postingTitle.localeCompare(posting1.postingTitle);
+	},
+	AscDateCompare (posting1, posting2){
+		return new Date(posting1.createdAt) - new Date(posting2.createdAt);
+	},
+	DescDateCompare (posting1, posting2){
+		return new Date(posting2.createdAt) - new Date(posting1.createdAt);
+	}
+
+}

@@ -294,7 +294,11 @@ module.exports = {
                     buyerId: id,
                     userId: id
                 },
-                status: "fulfilled"
+                [or]: [
+                    {status: "fulfilled"},
+                    {status: "cancelled"},
+                    {status: "disputing"}
+                ]
             },
             include: [{
                 model: User,

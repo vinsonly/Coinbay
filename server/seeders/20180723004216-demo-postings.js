@@ -77,7 +77,7 @@ for(var k = 0; k < 10; k++) {
     description: faker.lorem.sentence(),
     images: [image],
     date: faker.date.future(),
-    createdAt: faker.date.past(),
+    createdAt: faker.date.between('2018-01-01', '2018-08-01'),
     updatedAt: new Date(),
     // to randomize use: userId: Math.floor(Math.random() * 100)
     userId: 1,
@@ -103,7 +103,7 @@ for(var j = 0; j < 10; j++) {
     description: faker.lorem.sentence(),
     images: [image],
     date: faker.date.future(),
-    createdAt: faker.date.past(),
+    createdAt: faker.date.between('2018-01-01', '2018-08-01'),
     updatedAt: new Date(),
     // to randomize use: userId: Math.floor(Math.random() * 100)
     userId: 2,
@@ -131,7 +131,7 @@ for (var i = 0; i<numPostings; i++){
     description: faker.lorem.sentence(),
     images: [image],
     date: faker.date.future(),
-    createdAt: faker.date.past(),
+    createdAt: faker.date.between('2018-01-01', '2018-08-01'),
     updatedAt: new Date(),
     // to randomize use: userId: Math.floor(Math.random() * 100)
     userId: i + 1,

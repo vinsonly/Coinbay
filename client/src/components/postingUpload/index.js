@@ -1,11 +1,13 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import ReactSpinner from '../misc/reactspinner.js';
 import Map from '../maps';
 import Dropzone from 'react-dropzone';
 import './styling.css';
+import swal from 'sweetalert';
+import { Button } from 'mdbreact';
 
-
+let object;
 /** Class representing a postings creation component */
 class PostingUpload extends React.Component {
     constructor(props) {
@@ -19,11 +21,11 @@ class PostingUpload extends React.Component {
             priceDollars: 0,
             priceCents: 0,
             description: "",
-            abstract: {
-                abstract1: "",
-                abstract2: "",
-                abstract3: ""
-            },
+            // abstract: {
+            //     abstract1: "",
+            //     abstract2: "",
+            //     abstract3: ""
+            // },
             date: "",
             location: {
                 lat: "",
@@ -37,13 +39,44 @@ class PostingUpload extends React.Component {
         this.handleChange = this.handleChange.bind(this);
         this.handleImageSubmit = this.handleImageSubmit.bind(this);
         this.setLocation = this.setLocation.bind(this);
+        object = this;
     }
+    componentDidMount() {
 
+       console.log(this.props.location);
+
+       if(!this.props.location.state || !this.props.location.state.posting) {
+        return;
+       }
+
+       if(typeof this.props.location.state.posting !== 'undefined') {
+            let p = this.props.location.state.posting;
+
+            console.log("p", p);
+
+            this.setState({
+                id: p.id,
+                postingTitle: p.postingTitle,
+                modelName: p.modelName,
+                brand: p.brand,
+                category: p.category,
+                priceDollars: Math.floor(p.price),
+                priceCents: Math.floor((p.price*100)%100),
+                description: p.description || "",
+                date: "",
+                location: p.location || {
+                    lat: "",
+                    lng: ""
+                },
+                images: p.images || []
+            });
+        }
+    }
     async handleSubmit(event) {
         event.preventDefault();
 
         if(this.state.status == "Uploading image(s)...") {
-            alert("Please wait for image upload to finish");
+            swal("Please wait for image upload to finish");
             return;
         }
 
@@ -59,19 +92,19 @@ class PostingUpload extends React.Component {
         this.state.brand.length < 1 ||
         this.state.category.length < 1 ||
         !this.state.priceDollars ) {
-            alert("Please fill out all mandatory fields");
+            swal("Please fill out all mandatory fields");
             return;
         }
 
         if(!(this.state.images && this.state.images.length > 0)) {
-            alert("You must upload at least one image");
+            swal("You must upload at least one image");
             return;
         }
 
         if( (this.state.location.lat && !this.state.location.lng) ||
             (!this.state.location.lat && this.state.location.lng)
         ) {
-            alert("You can not leave one location field empty.");
+            swal("You can not leave one location field empty.");
             return;
         }
 
@@ -89,18 +122,6 @@ class PostingUpload extends React.Component {
             data.description = this.state.description;
         }
 
-        let abstract = [];
-        let abstractIsEmpty = true;
-
-        for(var ab in this.state.abstract) {
-            if(ab.length > 1) {
-                await abstract.push(this.state.abstract[ab]);
-                abstractIsEmpty = false;
-            }
-        }
-
-        data.abstract = abstract;
-
         if(this.state.location.lat.length > 0) {
             let location = {
                 lat: this.state.location.lat,
@@ -113,8 +134,21 @@ class PostingUpload extends React.Component {
             data.images = this.state.images;
         }
 
+        if(this.props.isEdit) {
+            data.id = this.state.id
+        }
+
         let status;
-        fetch('/api/posting', {
+        let url;
+        if(this.props.isEdit) {
+            url = "/api/posting/update"
+        } else {
+            url = "/api/posting"
+        }
+
+        console.log("data", data);
+
+        fetch(url, {
             method: 'POST',
             body: JSON.stringify(data), // data can be `string` or {object}!
             headers:{
@@ -127,21 +161,44 @@ class PostingUpload extends React.Component {
             return res.json();
           })
           .then(body => {
-            if(status != 201) {
-              alert(`Error: ${body.message}`);
-            } else {
-                alert("Posting created!");
-
+              console.log(body);
+              console.log(status);
+            if(status != 201 && !this.props.isEdit) {
+              swal({
+                  title: "Error",
+                  icon: "error",
+                  text: `${body.message}`
+              });
+            } else if(status != 200 && this.props.isEdit) 
+                swal({
+                    title: "Error",
+                    icon: "error",
+                    text: `${body.message}`
+                });            
+            else {
+                let title;
+                if(this.props.isEdit) {
+                    title = "Posting updated!"
+                } else {
+                    title = "Posting created!"
+                }
                 console.log(body);
                 // redirect the user to their post
+
+                console.log(body.id);
+                swal({
+                    title: title,
+                    icon: "success"
+                })
+                .then(() => {
+                    this.props.history.push(`/posts/${body.id}`);
+                })
             }
           })
           .catch(err => {
             console.error('ERROR', err);
           })
 
-        // Math.round(price*100)/100
-        // use this formula to get the number to the nearest 2 decimal places
     }
 
     handleImageSubmit(base64) {
@@ -193,9 +250,6 @@ class PostingUpload extends React.Component {
     }
 
     handleChange(event) {
-        let abstract1 = this.state.abstract.abstract1;
-        let abstract2 = this.state.abstract.abstract2;
-        let abstract3 = this.state.abstract.abstract3;
 
         switch(event.target.id) {
             case 'postingTitle':
@@ -223,33 +277,6 @@ class PostingUpload extends React.Component {
                 this.setState({
                     priceCents: value
                 })
-                break;
-            case 'abstract1':
-                this.setState({
-                    abstract: {
-                        abstract1: event.target.value,
-                        abstract2: abstract2,
-                        abstract3: abstract3
-                    }
-                });
-                break;
-            case 'abstract2':
-                this.setState({
-                    abstract: {
-                        abstract1: abstract1,
-                        abstract2: event.target.value,
-                        abstract3: abstract3
-                    }
-                });
-                break;
-            case 'abstract3':
-                this.setState({
-                    abstract: {
-                        abstract1: abstract1,
-                        abstract2: abstract2,
-                        abstract3: event.target.value
-                    }
-                });
                 break;
             case 'description':
                 this.setState({
@@ -279,25 +306,40 @@ class PostingUpload extends React.Component {
                 break;
         }
     }
+
+    removeImage(index) {
+        console.log("removeImage", index);
+        let images = this.state.images;
+        console.log("images", images);
+        images.splice(index, 1);
+        object.setState({
+            images: images
+        })
+    }
+
     render() {
+            // swal(this.props.location.state.posting.id);
+            // swal(this.props.isEdit);
+            console.log(this.state.images);
         return(
             <div id="postingUploadContainer">
-                <h3>Posting Upload</h3>
+                <h3>{this.props.title}</h3>
                 <div className="formContainer">
                     <form onSubmit={this.handleSubmit}>
+
                         <label htmlFor="postingTitle" className="grey-text">Posting Title</label>
                         <span className="mandatoryStar">*</span>
-                        <input onChange={this.handleChange} type="text" id="postingTitle" className="form-control"/>
+                        <input onChange={this.handleChange} type="text" id="postingTitle" value={this.state.postingTitle} className="form-control"/>
                         <br/>
 
                         <label htmlFor="modelName" className="grey-text">Model Name</label>
                         <span className="mandatoryStar">*</span>
-                        <input onChange={this.handleChange} type="text" id="modelName" className="form-control"/>
+                        <input onChange={this.handleChange} type="text" id="modelName" value={this.state.modelName} className="form-control"/>
                         <br/>
 
                         <label htmlFor="brand" className="grey-text">Brand</label>
                         <span className="mandatoryStar">*</span>
-                        <input onChange={this.handleChange} type="text" id="brand" className="form-control"/>
+                        <input onChange={this.handleChange} type="text" id="brand" value={this.state.brand} className="form-control"/>
                         <br/>
 
                         <label htmlFor="Category" className="grey-text">Category*</label><br/>
@@ -334,20 +376,9 @@ class PostingUpload extends React.Component {
                         </div>
                         <br/>
 
-                        <label htmlFor="abstract" className="grey-text">Abstract</label>
-                        <input onChange={this.handleChange} type="text" id="abstract1" className="form-control abstract"/>
-                        <input onChange={this.handleChange} type="text" id="abstract2" className="form-control abstract"/>
-                        <input onChange={this.handleChange} type="text" id="abstract3" className="form-control abstract"/>
-                        <br/>
-
                         <label htmlFor="description" className="grey-text">Description</label>
-                        <textarea onChange={this.handleChange} type="text" id="description" className="form-control" rows="3"></textarea>
+                        <textarea onChange={this.handleChange} type="text" id="description" value={this.state.description} className="form-control" rows="3"></textarea>
                         <br/>
-
-                        {/* <label htmlFor="meetingLocation" className="grey-text">Latitude</label>
-                        <input onChange={this.handleChange} type="number" id="lat" className="form-control meetingLocation"/>
-                        <label htmlFor="meetingLocation" className="grey-text">Longitude</label>
-                        <input onChange={this.handleChange} type="number" id="lng" className="form-control meetingLocation"/> */}
 
                         <label htmlFor="meetingLocation" className="grey-text">Meeting Location</label>
                         <p id="locationInfo" className="grey-text">Please drag the map around to select your desired meeting location.</p>
@@ -356,15 +387,31 @@ class PostingUpload extends React.Component {
                         <Accept handleSubmit={this.handleImageSubmit}/>
                         Uploaded Images:
                         <div className="uploadedImages">{
-                            this.state.images.map(image => {
+                            this.state.images.map((image, index) => {
+
+                                if(this.props.isEdit) {
+                                    return(
+                                        <li key={index}>
+                                            <a href={image}>{image}</a>
+                                            <span className="removeImageBtn" type="text" onClick={this.removeImage.bind(this, index)}>Remove</span>
+                                        </li>
+                                    )
+                                }
+
                                 return(
-                                    <li><a href={image}>{image}</a></li>
+                                    <li key={index}><a href={image}>{image}</a></li>
                                 )
                             })
                         }</div>
                         <Status status={this.state.status}/>
                         <div className="text-center mt-4">
-                            <button className="btn btn-outline-warning" type="submit">+Create Posting<i className="fa fa-paper-plane-o ml-2"></i></button>
+                            {
+                                (this.props.isEdit) ? (
+                                    <button className="btn btn-outline-warning" type="submit">+Update Posting<i className="fa fa-paper-plane-o ml-2"></i></button>
+                                ) : (
+                                    <button className="btn btn-outline-warning" type="submit">+Create Posting<i className="fa fa-paper-plane-o ml-2"></i></button>
+                                )
+                            }
                         </div>
                     </form>
                 </div>
@@ -394,7 +441,7 @@ class Accept extends React.Component {
         let props = this.props;
 
         if(rejected.length > 0) {
-            alert("Only jpg, jpeg, and png files are accepted.");
+            swal("Only jpg, jpeg, and png files are accepted.");
         }
 
         if(accepted.length > 0) {
@@ -411,8 +458,6 @@ class Accept extends React.Component {
                     acceptedBase64.push(base64);
 
                     props.handleSubmit(base64);
-
-                    // upload to imgur and wait for callback before continuing with posting
                 }
             })
         }
@@ -435,18 +480,6 @@ class Accept extends React.Component {
             </Dropzone>
             </div>
             <aside>
-            {/* <p>Accepted files:</p>
-            <ul>
-                {
-                    this.state.accepted.map(f => <li key={f.name}>{f.name} - {f.size} bytes</li>)
-                }
-            </ul> */}
-            {/* <p>Rejected files</p>
-            <ul>
-                {
-                    this.state.rejected.map(f => <li key={f.name}>{f.name} - {f.size} bytes</li>)
-                }
-            </ul> */}
             </aside>
         </section>
         );
@@ -504,4 +537,4 @@ function removeFirstChars(base64, type) {
     return base64.substring(toRemove, base64.length);
 }
 
-export default PostingUpload;
+export default withRouter(PostingUpload);

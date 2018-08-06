@@ -11,6 +11,9 @@ import 'react-notifications/lib/notifications.css';
 const contract = require('truffle-contract');
 const escrow = contract(BasicEscrow);
 
+let object;
+const defaultGas = new Number(250000);
+const defaultGwei = new Number(40000000000);
 
 /** Class representing a post notifications component */
 class Notification extends React.Component {
@@ -28,6 +31,8 @@ class Notification extends React.Component {
     
     this.acceptOffer = this.acceptOffer.bind(this);
     this.rejectOffer = this.rejectOffer.bind(this);
+    object = this;
+    window.notificationProps = object.props;
   }
   /**
    * Notification message for accepting and rejecting transactions
@@ -186,7 +191,9 @@ class Notification extends React.Component {
             })
 
             instance.acceptOffer({
-              from: accounts[0]
+              from: accounts[0],
+              gasPrice: defaultGwei,
+              gas: defaultGas
             }).then(function(result) {
               console.log('result', result);
               if(result.tx) {
@@ -224,15 +231,13 @@ class Notification extends React.Component {
                         icon: "success",
                         closeOnClickOutside: false
                       })
-
                       .then(() => {
                         console.log("accepted offer");
-                        window.location.reload();
+                        // window.location.reload();
+                        object.props.refreshPosts();
                       })
-                      
-                      // setTimeout(function() {
-                      //   window.location.reload();
-                      // }, 3000)
+
+                      object.props.refreshBalance();
                       
                   }
                 })
@@ -332,7 +337,9 @@ class Notification extends React.Component {
             })
 
             instance.declineOffer({
-              from: accounts[0]
+              from: accounts[0],
+              gasPrice: defaultGwei,
+              gas: defaultGas
             }).then(function(result) {
               console.log('result', result);
               if(result.tx) {
@@ -366,15 +373,16 @@ class Notification extends React.Component {
                       console.log(body);
                       swal({
                         title: "Offer Rejected",
-                        text: "You have rejected this offer. Please now meet up with the buyer to follow through with the deal. To receive funds, both you and the seller will be required to 'Approve' the transaction.",
+                        text: "You have rejected this offer. Once both users have rejected the transaction, funds deposited into the smart contract will automatically be returned to the buyer",
                         icon: "success",
                         closeOnClickOutside: false
                       })
-
                       .then(() => {
                         console.log("rejected offer");
-                        window.location.reload();
+                        // window.location.reload();
+                        object.props.refreshPosts();
                       })
+                      object.props.refreshBalance();
                       
                   }
                 })
@@ -392,9 +400,7 @@ class Notification extends React.Component {
       })
   }
   /**
-   * Error message for Etheruem Blockchain
-   * @param {string} type - String representation corresponding to type of notification message
-   * @param {string} otherUser - String representation corresponding other user making the bid
+   * Confirm Transaction for Smart Contract on the Etheruem Blockchain
    */
   okTransaction() {
     if(!this.state.web3.currentProvider) {
@@ -459,7 +465,7 @@ class Notification extends React.Component {
             }
 
             swal({
-              title: "Accepting Offer",
+              title: "Confirming Transaction",
               text: "Please confirm the MetaMask transaction with the default 'Gas Limit' and 'Gas Price' values to ensure that the transaction succeeds. Please do not navigate away from this page. Once the transaction is submitted, the transaction will be posted to the Ethereum Blockchain",
               icon: "info",
               buttons: {
@@ -482,7 +488,9 @@ class Notification extends React.Component {
             })
 
             instance.accept({
-              from: accounts[0]
+              from: accounts[0],
+              gasPrice: defaultGwei,
+              gas: defaultGas
             }).then(function(result) {
               console.log('result', result);
               if(result.tx) {
@@ -516,11 +524,12 @@ class Notification extends React.Component {
                         icon: "success",
                         closeOnClickOutside: false
                       })
-
                       .then(() => {
                         console.log("accepted offer");
-                        window.location.reload();
+                        // window.location.reload();
+                        object.props.refreshPosts();
                       })
+                      object.props.refreshBalance();
                       
                   }
                 })
@@ -605,7 +614,7 @@ class Notification extends React.Component {
             }
 
             swal({
-              title: "Declining Offer",
+              title: "Declining Transaction",
               text: "Please confirm the MetaMask transaction with the default 'Gas Limit' and 'Gas Price' values to ensure that the transaction succeeds. Please do not navigate away from this page. Once the transaction is submitted, the transaction will be posted to the Ethereum Blockchain",
               icon: "info",
               buttons: {
@@ -628,7 +637,9 @@ class Notification extends React.Component {
             })
 
             instance.cancel({
-              from: accounts[0]
+              from: accounts[0],
+              gasPrice: defaultGwei,
+              gas: defaultGas
             }).then(function(result) {
               console.log('result', result);
               if(result.tx) {
@@ -661,16 +672,12 @@ class Notification extends React.Component {
                         icon: "success",
                         closeOnClickOutside: false
                       })
-
                       .then(() => {
                         console.log("declined offer");
-                        window.location.reload();
+                        // window.location.reload();
+                        object.props.refreshPosts();
                       })
-                      
-                      // setTimeout(function() {
-                      //   window.location.reload();
-                      // }, 3000)
-                      
+                      object.props.refreshBalance();
                   }
                 })
               }
@@ -709,7 +716,7 @@ class Notification extends React.Component {
             this.setState({
               web3: results.web3
             })
-            this.okTransaction();
+            this.declineTransaction();
           })
           .catch(() => {
             console.log('Error finding web3.');
@@ -769,18 +776,18 @@ class Notification extends React.Component {
     console.log(this.props);
 
     let buyerStatus;
-    if(this.props.post.transaction.buyerStatus == null) {
+    if(this.props.post.transaction.buyerOk == null) {
       buyerStatus = "pending"
-    } else if(this.props.post.transaction.buyerStatus) {
+    } else if(this.props.post.transaction.buyerOk) {
       buyerStatus = "confirmed"
     } else {
       buyerStatus = "rejected"
     }
 
     let sellerStatus;
-    if(this.props.post.transaction.sellerStatus == null) {
+    if(this.props.post.transaction.sellerOk == null) {
       sellerStatus = "pending"
-    } else if(this.props.post.transaction.sellerStatus) {
+    } else if(this.props.post.transaction.sellerOk) {
       sellerStatus = "confirmed"
     } else {
       sellerStatus = "rejected"

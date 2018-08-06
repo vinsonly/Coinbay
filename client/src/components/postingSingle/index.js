@@ -155,6 +155,9 @@ class SinglePosting extends React.Component {
      * @return {number} The dot's width, in pixels.
     */
   offered() {
+
+    this.props.refreshBalance();
+
     console.log("processing transaction")
     let buyer = this.props.loggedInUser;
     let seller = this.state.user;
@@ -194,6 +197,19 @@ class SinglePosting extends React.Component {
       }).then(res => {
         if(res == "updateNow") {
           this.props.history.push(`/profile`);
+        }
+      })
+      return;
+    }
+
+    if(this.props.walletBalance + 0.01 < this.state.posting) {
+      swal({
+        title: "Insufficient Wallet Balance",
+        text: 'You do not have enough Ether in your account to pay for the item as well as gas fees',
+        icon: "info",
+        buttons: {
+          updateNow: "OK",
+          cancel: "Cancel"
         }
       })
       return;
@@ -323,9 +339,12 @@ class SinglePosting extends React.Component {
 
         let wei = this.state.web3.toWei(amount, "ether");
 
+        // set default gas 40 gwei
+        let gwei = new Number(40000000000)
         escrow.new(lowerCaseSeller,{
           from: accounts[0],
-          value: wei
+          value: wei,
+          gasPrice: gwei
         })
         .then(instance => {
 
@@ -357,7 +376,7 @@ class SinglePosting extends React.Component {
           .then(body => {
             if(status != 200) {
               swal(`Error: ${body.message}`);
-            } else {
+            } else {              
                 swal({
                   title: 'Successfully Submitted Offer',
                   text: "Please wait for the seller to accept your offer. Once your offer is accepted, meet the seller at the indicated meeting location at that indicated time and date. You can view the Ethereum transaction hash for the created contract in the 'Manage Transactions' page.",
@@ -373,6 +392,8 @@ class SinglePosting extends React.Component {
                     return false
                   } 
                 })
+                this.props.refreshBalance();
+
                 console.log(body);
 
                 var bidButton = document.getElementsByClassName('bid-button');
@@ -419,17 +440,14 @@ class SinglePosting extends React.Component {
       return(<div></div>);
     }
 
-    // var bidButton = document.getElementsByClassName('bid-button');
-    //             // need condition to check (upon revisit) to see if already bidded
-    //             bidButton[0].style.color = "black";
-    //             bidButton[0].style.backgroundColor = "grey";
-    //             bidButton[0].style.cursor = "default";   
-
-    //             this.setState(
-    //               (prevState,props)=>{
-    //                 return {buttonText: "Offer Submitted"};
-    //               }
-    //             );
+    let lat, lng;
+    if(this.state.posting.location && this.state.posting.location.lat && this.state.posting.location.lng) {
+      lat = this.state.posting.location.lat;
+      lng = this.state.posting.location.lat;
+    } else {
+      lat = 49.280904;
+      lng = -123.122441;
+    }
 
     if(this.state.posting || this.state.user) {
       return (
@@ -492,7 +510,7 @@ class SinglePosting extends React.Component {
           </Grid>
           <div className="post-map">
             <h5>Meeting Location</h5>
-            <SimpleMap lat={49.282482} lng={-123.118275} />
+            <SimpleMap lat={lat} lng={lng} />
           </div>
         </div>
       );

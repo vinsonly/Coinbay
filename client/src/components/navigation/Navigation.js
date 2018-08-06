@@ -16,7 +16,8 @@ class Navigation extends Component {
             isWideEnough: false,
             dropdownOpen: false,
             transactionsdropdownOpen: false,
-            collapse2: false
+            collapse2: false,
+            walletBalance: -1
         };
 
         this.onClick = this.onClick.bind(this);
@@ -118,6 +119,14 @@ class Navigation extends Component {
         }
     }
     render() {
+
+        let walletBalance
+        if(this.props.walletBalance == -1) {
+            walletBalance = "n/a"
+        } else {
+            walletBalance = this.props.walletBalance + " ETH"
+        }
+
       return (
             <div className="nav-color">
                 <div className="white-text">
@@ -133,28 +142,31 @@ class Navigation extends Component {
                                   <NavLink to="/posts">Postings</NavLink>
                               </NavItem> */}
                               <NavItem id="nav-create-posting">
-                                  <NavLink to="/new_posting">+Create Posting</NavLink>
+                                  {/*<NavLink to="/new_posting">+Create Posting</NavLink>*/}
+                                  <span id="createPosting" onClick={() => {window.location.replace("/new_posting")}}>+Create Posting</span>
                               </NavItem>
                             </NavbarNav>
                             <NavbarNav right>     
-                                {/* {
+                                {
                                     (this.props.loggedInUser.id) ? (
                                         <NavItem>
                                             <span id="navEth">
                                                 <i class="material-icons">
                                                     account_balance_wallet
                                                 </i>
-                                                97.567 ETH
+                                                {walletBalance}
                                             </span>
                                         </NavItem>
                                     ) : (<div></div>)
-                                } */}
+                                }
                         
                                 {
                                     (this.props.loggedInUser.id) ? (<NavItem>
                                         {/* {this.notifier()} */}
                                         <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
-                                        <DropdownToggle nav caret>{this.props.loggedInUser.username}</DropdownToggle>
+                                        <DropdownToggle nav caret><span><i id="buddy" class="material-icons">
+                                            person
+                                            </i>{this.props.loggedInUser.username}</span></DropdownToggle>
                                         <DropdownMenu>
                                             <DropdownItem><NavLink to="/manage_transactions">Manage Transactions</NavLink></DropdownItem>
                                             <DropdownItem><NavLink to="/transaction_history">Transaction History</NavLink></DropdownItem>
@@ -188,7 +200,5 @@ class Navigation extends Component {
       );
     }
 }
-
-{/* <NavLink to="/sign_out">Sign Out</NavLink> */}
 
 export default Navigation;

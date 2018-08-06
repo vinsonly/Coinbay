@@ -15,7 +15,7 @@ const customStyles = {
  
 Modal.setAppElement('#root')
  
-export default class TransactionModal extends React.Component {
+export default class DisputeModal extends React.Component {
   constructor() {
     super();
  
@@ -42,17 +42,13 @@ export default class TransactionModal extends React.Component {
  
   render() {
 
-    if(!this.props.txids) {
-        return(<div>Loading...</div>)
-    }
-
     return (
     <div style={{
             display: "flex",
             width: "100%",
             height: "100%"
         }}>        
-        <button onClick={this.openModal}>View</button>
+        <button onClick={this.openModal}>Contact Admin</button>
         <Modal
           isOpen={this.state.modalIsOpen}
           onAfterOpen={this.afterOpenModal}
@@ -60,20 +56,9 @@ export default class TransactionModal extends React.Component {
           style={customStyles}
           contentLabel="Example Modal"
         >
-          <h4>Ethereum Transactions</h4>
-          <ul>
-              {
-                  this.props.txids.map((tx, index) => {
-                      return(
-                          <li key={index}>
-                            <a href={`https://ropsten.etherscan.io/tx/${tx}`}>{tx}</a>
-                          </li>
-                      );
-                  })
-              }
-          </ul>
-
-
+          <h4>Contact Coinbay Admin to Resolve Dispute</h4>
+            <h6>Name: Vinson Ly</h6>
+            <h6>Email: vinsonly@coinbay.com</h6>
           <button onClick={this.closeModal}>close</button>          
         </Modal>
       </div>
