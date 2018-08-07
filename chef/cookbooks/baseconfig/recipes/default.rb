@@ -27,6 +27,11 @@ execute 'install_postgres1' do
   command 'sudo apt install postgresql -y'
 end
 
+#install nginx
+execute 'install_nginx' do
+  command 'sudo apt install nginx -y'
+end
+
 execute 'install_postgres2' do
   command 'sudo apt install postgresql-contrib -y'
 end
@@ -72,14 +77,13 @@ execute 'install_server_dependencies' do
   command 'cd /home/vagrant/project && sudo yarn install'
 end
 
-# # create psql user
-# execute 'create_db_user' do
-#   command 'sudo -u postgres createuser cbadmin -s -w'
-# end
-
 # create psql user
 execute 'create_db_user' do
   command 'cd /home/vagrant/project && ./createuser.sh'
+end
+
+cookbook_file "nginx-default" do
+  path "/etc/nginx/sites-available/default"
 end
 
 # create databases
@@ -95,6 +99,10 @@ execute 'create_database_test' do
   command 'sudo -u postgres createdb cryptobay-test'
 end
 
+execute 'stop_nginx' do
+  command 'sudo service nginx stop'
+end
+
 execute 'install_client_dependencies' do
   command 'cd /home/vagrant/project/client && sudo yarn install'
 end
@@ -104,7 +112,7 @@ execute 'reset_db' do
 end
 
 # execute 'start_server' do
-#   command 'cd /home/vagrant/project && sudo yarn start &'
+#   command 'sudo yarn start &'
 # end
 
 # execute 'start_server' do
@@ -115,8 +123,15 @@ end
 #   command 'cd /home/vagrant/project/client && sudo yarn start'
 # end 
 
+# execute 'start_app' do
+#   command 'cd /home/vagrant/project && sudo yarn prod'
+# end
+
 execute 'start_app' do
-  command 'cd /home/vagrant/project && sudo yarn prod'
+  command 'cd /home/vagrant/project && sudo yarn nginxstart'
 end
 
+# execute 'start_nginx' do
+#   command 'sudo service nginx restart'
+# end
 

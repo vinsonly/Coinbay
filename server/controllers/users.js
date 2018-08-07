@@ -75,8 +75,12 @@ module.exports = {
         let id = parseInt(req.body.id);
 
         // validate endpoint
-        if(!auth.userAdminUserCheck(req.body.validatedUser, id)) {
-            return;
+        // if(!auth.userAdminUserCheck(req.body.validatedUser, id)) {
+        //     return;
+        // }
+
+        if(req.body.validatedUser.id != id) {
+            return res.status(400).send({message: "forbidden"});
         }
 
         return User
