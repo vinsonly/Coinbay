@@ -71,7 +71,8 @@ div.search * {
 .searching-min {
 	text-align: right !important;
 	float: right !important;
-    width: 90% !important
+    width: 90% !important;
+    padding-bottom: 3em !important
 }
 
 form#searchForm div{
