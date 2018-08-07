@@ -119,7 +119,7 @@ div.searchElement span {
 }
 
 .react-autosuggest__suggestions-list {
-  height: 25em;
+  max-height: 25em;
   overflow: auto
 }
 
