@@ -294,6 +294,15 @@ class SinglePosting extends React.Component {
         let lowerCaseBuyer = buyerAddress.toLowerCase()
         let lowerCaseSeller = sellerAddress.toLowerCase();
 
+        if(!this.state.web3.isAddress(lowerCaseSeller)) {
+          swal({
+            title: "Seller has Invalid Ethereum Address",
+            text: "Unable to purchase this item.",
+            icon: "error"
+          })
+          return;
+        }
+
         if(accounts.length < 1) {
           swal({
             title: "Unable to connect to the Ethereum Blockchain",

@@ -6,7 +6,8 @@
     "server": "nodemon server.js",
     "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\"",
     "start": "node server/server.js",
-    "prod": "concurrently --kill-others-on-fail \"yarn start\" \"yarn client\""
+    "prod": "concurrently --kill-others-on-fail \"yarn start\" \"yarn client\"",
+    "nginxstart": "concurrently --kill-others-on-fail \"yarn start\" \"sudo service nginx restart\""
   },
   "dependencies": {
     "@google/maps": "^0.5.5",
