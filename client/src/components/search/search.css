@@ -99,9 +99,12 @@ body {
 
 div.searchElement {
   display: flex;
-  justify-content: space-between;
   align-items: center;
   width: 100%;
+}
+
+div.searchElement span {
+  margin-left: 1.5em !important
 }
 
 @media (max-width: 400px) {
@@ -116,6 +119,21 @@ div.searchElement {
 }
 
 .react-autosuggest__suggestions-list {
-  height: 25em;
+  max-height: 25em;
   overflow: auto
+}
+
+.search-container {
+  position: relative
+}
+
+.searchBy {
+  position: absolute;
+  top: 3.6em;
+  right: 1.4em;
+  padding: 0.5em 0.5em 0.5em 0.5em;
+  color: white;
+  border-radius: 0.25em;
+  font-weight: bold;
+  background-color: #007bff
 }
