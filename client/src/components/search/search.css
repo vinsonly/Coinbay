@@ -99,9 +99,12 @@ body {
 
 div.searchElement {
   display: flex;
-  justify-content: space-between;
   align-items: center;
   width: 100%;
+}
+
+div.searchElement span {
+  margin-left: 1.5em !important
 }
 
 @media (max-width: 400px) {
