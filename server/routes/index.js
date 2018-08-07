@@ -10,7 +10,7 @@ module.exports = (app) => {
 
     app.post('/api/user', usersController.isExistingUser, usersController.create); // anyone
     app.get('/api/users', [authController.verifyToken, authController.onlyAdminMiddleware], usersController.read); // only admin
-    app.post('/api/user/update', usersController.isValidUpdate, usersController.update); // only user or admin
+    app.post('/api/user/update', [authController.verifyToken, usersController.isValidUpdate], usersController.update); // only user or admin
     app.post('/api/user/delete', authController.verifyToken, usersController.delete); // only user or admin
     app.get('/api/user/:id', usersController.findById); // anyone
     // app.get('/api/user/:id/boughtPosts', usersController.findBoughtPostsByUserId);
@@ -22,7 +22,7 @@ module.exports = (app) => {
     app.post('/api/posting/setoffer', authController.verifyToken, postingsController.setOffer); // only posting owner
     app.post('/api/posting', authController.verifyToken, postingsController.create); // user must be logged in
     app.post('/api/posting/update', authController.verifyToken, postingsController.update); // only posting owner
-    app.post('/api/posting/delete', postingsController.delete);// posting owner or admin
+    app.post('/api/posting/delete', authController.verifyToken, postingsController.delete);// posting owner or admin
     app.get('/api/posting/:id', postingsController.findById); // anyone
     app.get('/api/postings_with_users/', postingsController.getActivePostsWithSellers); // anyone
     app.get('/api/buyer_postings/:userId', postingsController.findBuyerPosts); // anyone

@@ -122,6 +122,8 @@ module.exports = {
 
         let user = req.body.validatedUser;
 
+        console.log("user", user);
+
         return Posting
             .findById(id)
                 .then(posting => {

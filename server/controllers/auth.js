@@ -127,6 +127,8 @@ module.exports = {
                     // console.log("user", authData.user)
                     req.body.validatedUser = authData.user;
                     
+                    console.log("validatedUser", req.body.validatedUser);
+
                     next();
                 }
             });  

@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const Sequelize = require('sequelize');
 const {or, and, gt, lt} = Sequelize.Op;
-require('./auth');
+const auth = require('./auth');
 
 module.exports = {
 
@@ -75,7 +75,7 @@ module.exports = {
         let id = parseInt(req.body.id);
 
         // validate endpoint
-        if(!userAdminUserCheck(req.body.validatedUser, id)) {
+        if(!auth.userAdminUserCheck(req.body.validatedUser, id)) {
             return;
         }
 
