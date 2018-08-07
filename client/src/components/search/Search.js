@@ -221,8 +221,7 @@ class SearchInner extends Component {
       }
       else{
         return (
-          <div>
-
+          <div className="search-container">
             <form onSubmit={this.handleSubmit.bind(this)}>
               <Autosuggest
               suggestions={suggestions}
@@ -233,7 +232,7 @@ class SearchInner extends Component {
               onSuggestionSelected={this.onSuggestionSelected}
               inputProps={inputProps} />
             </form>
-            <select id="searchBy" value={this.state.searchBy} onChange={this.handleSearchByChange.bind(this)}>
+            <select className="searchBy" value={this.state.searchBy} onChange={this.handleSearchByChange.bind(this)}>
               <option value="title">Title</option>
               <option value="user">User</option>
             </select>

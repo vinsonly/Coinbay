@@ -119,3 +119,18 @@ div.searchElement {
   height: 25em;
   overflow: auto
 }
+
+.search-container {
+  position: relative
+}
+
+.searchBy {
+  position: absolute;
+  top: 3.6em;
+  right: 1.4em;
+  padding: 0.5em 0.5em 0.5em 0.5em;
+  color: white;
+  border-radius: 0.25em;
+  font-weight: bold;
+  background-color: #007bff
+}
