@@ -11,6 +11,9 @@
 - *Username: user1 (Password: user1) 
 - *Username: user2 (Password: user2)
     - *These accounts will have some postings assigned to their account so that you can immediately view and use functionality within the profile dashboard
+## Transaction Workflow
+Follow the steps listed below for setting up and testing the transaction (escrow) process 
+- https://docs.google.com/document/d/1bUKYl6C1ZQrLa4gN1gG0-LMMjQoN7OE2ZUx7OLtJB2o/edit?usp=sharing
 
 # Features (End-User)
 ## Database keyword search
@@ -81,7 +84,7 @@ Ethereum Wallet Balance in the NavBar is updated live when a user switches walle
 ## CRUD Postings Workflow:
 - https://drive.google.com/open?id=16sBLdIIC8AKQKOYwphKs_4stFWkgGPif
 
-## Transaction Workflow:
+##Transaction Workflow:
 - https://drive.google.com/open?id=1N5Wsu0N-ZMG9mKe7bJNHMQCoUcjjDeKy
 
 
