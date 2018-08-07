@@ -1,55 +1,89 @@
-# Current State of App
-Our application is a eBay style marketplace application with in-app cryptocurrency support with the Ethereum Blockchain. 
-We currently have the boilerplate of the entire project implemented with some basic React components for the front end. 
-We have finished all the basic CRUD commands that we need our Server to support. Through the weeks, we will be refactoring the endpoints
-    for security and speed
+# CoinBay 
+## Setup Instructions
+1. Run ```$ vagrant up```
+2. Navigate to project dir ~/coinbay-web-app/  
+3. In the root/client dir, run ```$ yarn install```
+4. Do the same in root/server dir, run ```$ yarn install```
+5. Back in root dir, run the initial data script ```$ ./resetdb.sh ```
+6. And now we can launch the app using ```$ yarn dev```
+7. Open your browser and navigate to http://localhost:8000/ to view the CoinBay app
+8. You can register a new account or use a default user as listed below:
+- *Username: user1 (Password: user1) 
+- *Username: user2 (Password: user2)
+    - *These accounts will have some postings assigned to their account so that you can immediately view and use functionality within the profile dashboard
 
-Currently, we are developing the login system and integrating the React front-end with the Express/Node backend.
+# Features (End-User)
+## Database keyword search
+- Reactive search results/suggestions for top 100 relevant postings
+- Can search by “user” or “title” depending on dropdown selection (bottom-right of search)
 
-# Technologies
-We are using React for the front end
-Express/Nodejs for the backend
-We are using PostgreSQL as our database with Sequelize as our ORM
-For Cryptocurrency payments, we will be using Ethereum with the Metamask browser extension
+## Sorting
+- Filter by date (ascending/descending)
+- Filter by price (high/low)
+- Filter by title (A-Z/ Z-A)
 
-Here is how the app currently looks like on the landing page.
-![App Screenshot](https://i.snag.gy/Hg4Dep.jpg)
+## Categorical Filtering
+- Fully responsive layout with ability to expand/collapse drawer for smaller screen sizes
 
-# Contribution Guide
-1. Clone the repo
-```
-git@csil-git1.cs.surrey.sfu.ca:tamkylet/CMPT470-project-application.git
-```
+## Marketplace Layouts
+- Grid, Detailed-List, and List views 
 
-2.  Make sure you have yarn installed on your computer, check by executing:
-```
-yarn --version
-```
-The current latest yarn version as of June 9, 2018 is 1.7.0
-If you do not have yarn installed, follow the steps found here: [Yarn installation guide](https://yarnpkg.com/lang/en/docs/install/#debian-stable)
+## Google Maps API
+- Integration with the API allows users to pin a location on a map during posting creation
+- Known issue: The Google Map API for React component currently does not properly save the user’s location after posting is saved
+- Future work: include a search bar
 
-3. When in the root directory of the project, install dependencies for server
-```
-sudo yarn install
-```
-4. cd to /client and install dependencies
-```
-sudo yarn install
-```
+## Using Imgur API
+- Allow users to upload an image file for their posting; imgur handles the upload, hosting, and URL creation which is later referenced in the posting details
 
-5. cd to root dir of the project and start the project
-```
-cd ..
-sudo yarn dev
-```
-6. View the app at [localhost:3000](http://localhost:3000/);
-7. To access the app from another LAN, port the app over to ngrok
-   - Follow the steps here: [ngrok installation guide](https://ngrok.com/download)
-   - Start the http tunnel on the correct port (default is 3000)
+## Posting CRUD
+- Full suite of functionality pertaining to postings in the marketplace (some features require you to be an owner of the posting) 
+- There is an image size constraint for non-animated images (i.e. JPG, PNG, etc) is 20MB, anything larger will not be permitted during posting creation
 
-# Code Deployment Guide
+## Lazy Loading
+- Scrolling to bottom of the page triggers a fetch to load more posts
 
-- Please visit the [Code Deployment Wiki](https://csil-git1.cs.surrey.sfu.ca/vinsonl/CMPT470-ReduxDemoSite/wikis/Code-Deployment/Code-Deployment-Guide)
+# Features (Back-end)
+## Session Tokens 
+- Session handling fully implemented using JWT (Json Web Tokens) 
+- User sessions means improved security and usability
 
-# Boilerplate Code
-- Boilerplate Code from: [How to get create-react-app to work with a Node.js back-end API](https://medium.freecodecamp.org/how-to-make-create-react-app-work-with-a-node-backend-api-7c5c48acb1b0)
+## Secure Endpoints
+- Fully secured endpoints removes potential for unauthorized access
+
+## Fake Data Generation
+- Using Faker API to generate customizeable (fake) data for various components/fields (e.g. Title, User, Reviews, Description, Address, Phone Number, etc.)
+- Populated through Sequelize seed files
+- Default generation is 1000 users and 1000 posts, can be easily modified with a variable change (must remain 1:1 in the file)
+
+## Ethereum Smart-Contract Integration for Escrow Transactions
+- *Buy Now button will not work without MetaMask Extension*
+- Integrated with MetaMask, which is a Chrome extension that allows users to interface with the Ethereum - Blockchain without hosting a full node.
+- Wallet balance on top right fetched from Metamask
+- Can be used as an escrow through Smart Contracts
+- Connected to Ropsten Testnet, identical to Mainnet except with fake money
+- Transactions are done through Smart Contracts
+- When a user clicks “buy now” the item will be “unavailable”
+- Can view the Ethereum transaction on Ropsten’s Etherscan
+    - Example: https://ropsten.etherscan.io/tx/0x4940cdd9db4394c5ae0d82c85aacaca4ccd4ec1688ca87fa6cc099fe6cce039f
+- All transaction scenarios accounted for:
+    - Both users accept transaction, Ether is sent from the contract to the seller
+    - Both users decline transaction, Ether is returned from the smart contract to the buyer
+    - One user declines, If there is conflict where one user accepts and one user declines the transaction, a third party or administrator will be referred to to resolve potential conflicts
+- We keep a full history of all transactions performed on our web app
+Ethereum Wallet Balance in the NavBar is updated live when a user switches wallets or completes a transaction
+
+
+# Videos (Screen Recordings)
+## Searching & Registration Workflow: 
+- https://drive.google.com/open?id=1Eomh3whoNRRYFnFCvqxuHJdKCWBFoHB3
+
+## CRUD Postings Workflow:
+- https://drive.google.com/open?id=16sBLdIIC8AKQKOYwphKs_4stFWkgGPif
+
+## Transaction Workflow:
+- https://drive.google.com/open?id=1N5Wsu0N-ZMG9mKe7bJNHMQCoUcjjDeKy
+
+
+
+
