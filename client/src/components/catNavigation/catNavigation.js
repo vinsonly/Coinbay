@@ -47,7 +47,7 @@ class CatNavigation extends Component {
                     document.getElementById(categories[j]).style.backgroundColor = "#2bbbad";
                 }
 
-                this.style.backgroundColor = "#6EC5E9";
+                // this.style.backgroundColor = "#6EC5E9";
             });;
         }
 	}

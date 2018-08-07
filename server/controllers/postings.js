@@ -4,7 +4,7 @@ const verifyToken = require('./auth').verifyToken;
 const Op = require('sequelize').Op;
 const Sequelize = require('sequelize');
 // const Op = sequelize.Op;
-require('./auth');
+const auth = require('./auth');
 
 
 var db = require('../models');
@@ -129,7 +129,7 @@ module.exports = {
                         return res.status(404).send({
                             message: `posting with id: ${id} not found.`
                         })
-                    } else if(!postingAdminUserCheck(user, posting)) {
+                    } else if(!auth.postingAdminUserCheck(user, posting)) {
                         return res.status(403).send({
                             message: `Only admin or posting owner may delete posting`
                         })
