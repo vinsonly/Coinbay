@@ -13,7 +13,7 @@ const escrow = contract(BasicEscrow);
 
 let object;
 const defaultGas = new Number(250000);
-const defaultGwei = new Number(40000000000);
+const defaultGwei = new Number(80000000000);
 
 /** Class representing a post notifications component */
 class Notification extends React.Component {
@@ -22,13 +22,13 @@ class Notification extends React.Component {
 
     this.confirmTransaction = this.confirmTransaction.bind(this);
     this.rejectTransaction = this.rejectTransaction.bind(this);
-    
+
     this.createNotification = this.createNotification.bind(this);
     this.connectToWeb3 = this.connectToWeb3.bind(this);
 
     this.okTransaction = this.okTransaction.bind(this);
     this.declineTransaction = this.declineTransaction.bind(this);
-    
+
     this.acceptOffer = this.acceptOffer.bind(this);
     this.rejectOffer = this.rejectOffer.bind(this);
     object = this;
@@ -93,7 +93,7 @@ class Notification extends React.Component {
         })
 
       return;
-      
+
     } else if(this.props.status == "pending") {
       // ok the transaction with metamask as well as the database
         getWeb3
@@ -106,7 +106,7 @@ class Notification extends React.Component {
           .catch(() => {
             console.log('Error finding web3.');
           })
-    }    
+    }
   }
 
   acceptOffer() {
@@ -116,7 +116,7 @@ class Notification extends React.Component {
         text: "Please make sure you logged into your Ethereum account and conneced to the Ropsten TestNet on the MetaMask extension",
         icon: "error"
       })
-      return; 
+      return;
     }
 
     escrow.setProvider(this.state.web3.currentProvider);
@@ -238,7 +238,7 @@ class Notification extends React.Component {
                       })
 
                       object.props.refreshBalance();
-                      
+
                   }
                 })
                 .catch(err => {
@@ -262,7 +262,7 @@ class Notification extends React.Component {
         text: "Please make sure you logged into your Ethereum account and conneced to the Ropsten TestNet on the MetaMask extension",
         icon: "error"
       })
-      return; 
+      return;
     }
 
     escrow.setProvider(this.state.web3.currentProvider);
@@ -383,7 +383,7 @@ class Notification extends React.Component {
                         object.props.refreshPosts();
                       })
                       object.props.refreshBalance();
-                      
+
                   }
                 })
                 .catch(err => {
@@ -409,7 +409,7 @@ class Notification extends React.Component {
         text: "Please make sure you logged into your Ethereum account and conneced to the Ropsten TestNet on the MetaMask extension",
         icon: "error"
       })
-      return; 
+      return;
     }
 
     let obj = this;
@@ -446,7 +446,7 @@ class Notification extends React.Component {
             console.log("error", error)
           } else {
             console.log("accounts", accounts);
-    
+
             console.log("sellerAddress", sellerAddress);
             console.log("buyerAddress", buyerAddress);
 
@@ -530,7 +530,7 @@ class Notification extends React.Component {
                         object.props.refreshPosts();
                       })
                       object.props.refreshBalance();
-                      
+
                   }
                 })
                 swal({
@@ -558,7 +558,7 @@ class Notification extends React.Component {
         text: "Please make sure you logged into your Ethereum account and conneced to the Ropsten TestNet on the MetaMask extension",
         icon: "error"
       })
-      return; 
+      return;
     }
 
     let obj = this;
@@ -595,7 +595,7 @@ class Notification extends React.Component {
             console.log("error", error)
           } else {
             console.log("accounts", accounts);
-    
+
             console.log("sellerAddress", sellerAddress);
             console.log("buyerAddress", buyerAddress);
 
@@ -708,7 +708,7 @@ class Notification extends React.Component {
         })
 
       return;
-      
+
     } else if(this.props.status == "pending") {
       // ok the transaction with metamask as well as the database
         getWeb3
@@ -721,9 +721,9 @@ class Notification extends React.Component {
           .catch(() => {
             console.log('Error finding web3.');
           })
-    }   
+    }
   }
- 
+
   render() {
     if(!this.props.post) {
       return(<div></div>)
@@ -757,7 +757,7 @@ class Notification extends React.Component {
       rejectMsg = "Reject Offer"
     } else if(hideRejectButton) {
       acceptMsg = "Accepted"
-    } 
+    }
     else {
       acceptMsg = "Confirm Transaction"
       rejectMsg = "Reject Transaction"
@@ -816,9 +816,9 @@ class Notification extends React.Component {
         <Button onClick={ () => this.props.history.push(`/posts/${postingId}`) } variant="contained" color="primary" className="bid-button">
             Link to Post
         </Button>
-	      
+
         {
-          (this.props.currentUser == "buyer" && this.props.status == "pendingConfirmation") ? 
+          (this.props.currentUser == "buyer" && this.props.status == "pendingConfirmation") ?
             (<div/>)
               :
             (<div className="presence">
@@ -834,19 +834,19 @@ class Notification extends React.Component {
             ) : (
               <button className='btn btn-danger'
                 onClick={this.rejectTransaction.bind(this, 'error', otherUser)}>{rejectMsg}
-              </button> 
+              </button>
             )}
-           
+
            </div>)
         }
-    
+
         {/* <div className="notificationsDivider" /> */}
 	        <NotificationContainer/>
       </div>
     );
   }
 }
- 
+
 export default withRouter(Notification);
 
 function convertToDate(unixtime) {
