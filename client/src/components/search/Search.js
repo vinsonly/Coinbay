@@ -55,9 +55,11 @@ class SearchInner extends Component {
         super(props);
         this.state = {
             value: '',
+            searchBy: 'title',
             suggestions: [],
             postings: [],
-            searchedPostings: [],
+            postingsByTitle: [],
+            postingsByUsername: [],
             toRedirect: false
         };
 
@@ -65,18 +67,14 @@ class SearchInner extends Component {
 
       fetch(`/api/postings/newest`)
       .then(res => {
-        // console.log(res);
         postingStatus = res.status;
         return res.json();
       })
       .then(body => {
-        // console.log(body);
-        // console.log("postingStatus", postingStatus);
         if(postingStatus == 200) {
         this.setState({
           postings: body
         });
-        // console.log(this.state.postings);
         }
         return body;
           })
@@ -111,9 +109,12 @@ class SearchInner extends Component {
   };
 
   onSuggestionsFetchRequested = ({ value }) => {
-    this.setState({
-      suggestions: this.getSuggestions(value)
-    });
+    if(this.state.searchBy == 'title'){
+      this.setState({
+        suggestions: this.getSuggestions(value)
+      });
+    }
+
   };
 
   onSuggestionsClearRequested = () => {
@@ -140,52 +141,75 @@ class SearchInner extends Component {
     let value = this.state.value;
 
     let postingStatus;
-    fetch(`/api/postings/search/${value}`)
-      .then(res => {
-        postingStatus = res.status;
-        return res.json();
-      })
-      .then(body => {
-        if(postingStatus == 200) {
-          this.setState({
-  					searchedPostings: body
-  				});
-        }
-        console.log("body", body);
-        return body;
-  		})
-  		.catch(err => {
-  			console.log("ERROR!!");
-  			console.log(err);
-  		})
-      .then(() => {
-        console.log(this.state.searchedPostings);
-        this.props.handleRouteCallback("/posts", this.state.searchedPostings);
-      })
+
+    if(this.state.searchBy == 'title'){
+      fetch(`/api/postings/searchTitle/${value}`)
+        .then(res => {
+          postingStatus = res.status;
+          return res.json();
+        })
+        .then(body => {
+          if(postingStatus == 200) {
+            this.setState({
+    					postingsByTitle: body
+    				});
+          }
+          return body;
+    		})
+    		.catch(err => {
+    			console.log("ERROR!!");
+    			console.log(err);
+    		})
+        .then(() => {
+          this.props.handleRouteCallback("/posts", this.state.postingsByTitle);
+        })
+    }
+    else if (this.state.searchBy == 'user'){
+      fetch(`/api/postings/searchUsername/${value}`)
+        .then(res => {
+          postingStatus = res.status;
+          return res.json();
+        })
+        .then(body => {
+          if(postingStatus == 200) {
+            this.setState({
+    					postingsByUsername: body,
+    				});
+          }
+          return body;
+    		})
+    		.catch(err => {
+    			console.log("ERROR!!");
+    			console.log(err);
+    		})
+        .then(() => {
+          this.props.handleRouteCallback("/posts", this.state.postingsByUsername);
+        })
+    }
 
     this.setState({
       value: ''
     });
 
-    console.log(this.state);
+  }
 
-
-
+  handleSearchByChange(event) {
+    this.setState({
+      searchBy: event.target.value
+    });
   }
 
     render() {
       const { value, suggestions } = this.state;
       const inputProps = {
-        placeholder: "Search",
+        placeholder: `Search by ${this.state.searchBy}`,
         value,
         onChange: this.onChange
       };
 
       if(this.state.toRedirect) {
-
         console.log('redirecting');
         return(
-          // <Redirect to="/posts" />
           <Route path="/posts/" render={(props) => ( <Posts searchResults={this.state.suggestions}/> )} />
         )
       }
@@ -195,8 +219,7 @@ class SearchInner extends Component {
       }
       else{
         return (
-          <div>
-
+          <div className="search-container">
             <form onSubmit={this.handleSubmit.bind(this)}>
               <Autosuggest
               suggestions={suggestions}
@@ -207,6 +230,10 @@ class SearchInner extends Component {
               onSuggestionSelected={this.onSuggestionSelected}
               inputProps={inputProps} />
             </form>
+            <select className="searchBy" value={this.state.searchBy} onChange={this.handleSearchByChange.bind(this)}>
+              <option value="title">Title</option>
+              <option value="user">User</option>
+            </select>
           </div>
         )
       }

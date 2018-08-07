@@ -9,8 +9,6 @@ class Posts extends Component {
 	constructor(props) {
 		super(props);
 
-		console.log(props);
-
 		let postingStatus;
 
 		this.state = {
@@ -18,23 +16,20 @@ class Posts extends Component {
 			counter: 20,
 			results: 0,
 			filtering: "date",
-			allPostings: []
+			allPostings: [],
+			resetted: false
 		};
 
 		fetch(`/api/postings_with_users`)
 		.then(res => {
-			// console.log(res);
 			postingStatus = res.status;
 			return res.json();
 		})
 		.then(body => {
-			// console.log(body);
-			// console.log("postingStatus", postingStatus);
 			if(postingStatus == 200) {
 			this.setState({
 				allPostings: body
 			});
-			// console.log(this.state);
 			}
 			return body;
 				})
@@ -45,18 +40,14 @@ class Posts extends Component {
 
 		fetch(`/api/postings/newest`)
 		.then(res => {
-			// console.log(res);
 			postingStatus = res.status;
 			return res.json();
 		})
 		.then(body => {
-			// console.log(body);
-			// console.log("postingStatus", postingStatus);
 			if(postingStatus == 200) {
 			this.setState({
 				postings: body
 			});
-			// console.log(this.state);
 			}
 			return body;
 				})
@@ -84,7 +75,19 @@ class Posts extends Component {
 				);
 			}
 		}.bind(this));
+
+		if(this.props.isCategory) {
+				this.props.clearRouteState();
+		}
 	}
+
+	componentDidUpdate() {
+		if(this.props.isCategory) {
+				this.props.clearRouteState();
+		}
+	}
+
+
 	changeFormat(form) {
 		if (form == "grid" && this.state.format !== "grid") {
 			this.setState(
@@ -140,7 +143,7 @@ class Posts extends Component {
 		}
 		else if (filter === "title-z") {
 			postings.sort(compareFunctions.DescTitleCompare);
-		} 
+		}
 		else if (filter === "date") {
 			postings.sort(compareFunctions.DescDateCompare);
 		}
@@ -158,25 +161,25 @@ class Posts extends Component {
 				(prevState,props)=>{
 				return {filtering: "title-a"};
 				}
-			);	
+			);
 		} else if (value === "Title-Z") {
 			this.setState(
 				(prevState,props)=>{
 				return {filtering: "title-z"};
 				}
-			);				
+			);
 		} else if (value === "Price-H") {
 			this.setState(
 				(prevState,props)=>{
 				return {filtering: "price-h"};
 				}
-			);	
+			);
 		} else if (value === "Price-L") {
 			this.setState(
 				(prevState,props)=>{
 				return {filtering: "price-l"};
 				}
-			);	
+			);
 		}
 	}
 
@@ -185,10 +188,9 @@ class Posts extends Component {
 
 		var idArr;
 
-		// CHECK STATE
+		// check if searchResults are being passed in from react router with the router callback
 		if(this.props.location.state) {
 				if(Array.isArray(this.props.location.state.searchResults)) {
-					console.log(this.props.location.state.searchResults);
 				idArr = [];
 
 				for(var index = 0; index < Object.keys(this.props.location.state.searchResults).length; index++) {
@@ -198,7 +200,6 @@ class Posts extends Component {
 				console.log(idArr);
 			}
 		}
-
 		else if (this.props.searchResults) {
 			idArr = [];
 
@@ -218,7 +219,7 @@ class Posts extends Component {
 					<div>
 						<div>
 							{this.postingView()}
-							{this.filteringPostings(this.state.filtering, this.state.postings)}
+							{this.filteringPostings(this.state.filtering, this.state.allPostings)}
 							<FilterDropdown changeFilterState={this.changeFilterState}/>
 						</div>
 						<div className="container">
@@ -241,7 +242,7 @@ class Posts extends Component {
 					<div>
 						<div className="format-options">
 							{this.postingView()}
-							{this.filteringPostings(this.state.filtering, this.state.postings)}
+							{this.filteringPostings(this.state.filtering, this.state.allPostings)}
 							<FilterDropdown changeFilterState={this.changeFilterState}/>
 						</div>
 						<div className="container">

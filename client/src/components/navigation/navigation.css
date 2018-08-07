@@ -165,9 +165,15 @@ i#buddy {
 	margin-right: 5px;
 }
 
-@media (max-width: 767px) {
+@media screen and (min-width: 405px) and (max-width: 790px) {
 	h1#slogan {
 		font-size: 40px;
+	}
+}
+
+@media (max-width: 404px) {
+	h1#slogan {
+		font-size: 30px;
 	}
 }
 
