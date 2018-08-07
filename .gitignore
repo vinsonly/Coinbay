@@ -25,3 +25,12 @@ yarn-error.log*
 server/config/config.json
 
 /config.json
+*~
+.vagrant
+
+*.pyc
+*.sqite3
+
+Gemfile.lock
+log/*
+.bundle

@@ -29,6 +29,10 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: true,
       validate: { min: 0, max: 10 }
     },
+    role: { // user, admin
+      type: DataTypes.ENUM('user', 'admin'),
+      allowNull: false
+    },
   }, {});
   User.associate = function(models) {
     // associations can be defined here

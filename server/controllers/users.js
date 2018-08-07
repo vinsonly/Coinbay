@@ -4,10 +4,11 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const Sequelize = require('sequelize');
 const {or, and, gt, lt} = Sequelize.Op;
+require('./auth');
 
 module.exports = {
-    // define your route handlers here, see below for details
 
+    // create new user
     create(req, res) {
         console.log("req.body:");
         console.log(req.body);
@@ -47,7 +48,13 @@ module.exports = {
         return 
     },
 
+    // 
     read(req, res) {
+
+        if(req.body.validatedUser.role != "admin") {
+            res.status(403).send({message:"forbiddden"});
+        }
+
         return User
             .findAll()
                 .then((users) => {
@@ -65,9 +72,11 @@ module.exports = {
     update(req, res) {
         
         let id = parseInt(req.body.id);
-        console.log("req.body", req.body);
 
-        console.log(id);
+        // validate endpoint
+        if(!userAdminUserCheck(req.body.validatedUser, id)) {
+            return;
+        }
         
         return User
             .findById(id)
@@ -107,6 +116,11 @@ module.exports = {
 
     delete(req, res) {
         let id = parseInt(req.body.id);
+
+        // validate endpoint
+        if(!userAdminUserCheck(req.body.validatedUser, id)) {
+            return;
+        }
         
         return User 
             .findById(id)
@@ -286,7 +300,11 @@ module.exports = {
     
     // get all posts that belong to the user or the user is a buyer
     transactionHistory(req, res) {
+
         let id = parseInt(req.params.userId);
+        if(id != parseInt(req.body.validatedUser.id) && req.body.validatedUser.role != "admin") {
+            return res.status(403).send({message: "Forbidden"})
+        }
 
         Posting.findAll({
             where: {
@@ -316,28 +334,3 @@ module.exports = {
         })
     }
 }
-
-/*
-    deleteAll(req, res) {
-        return user
-            .destroy({
-                where: {
-                    
-                },
-                truncate: true
-            })
-                .then((rowsDeleted) => {
-
-                    console.log(rowsDeleted);
-
-                    console.log("rowsDeleted = " + resolve(rowsDeleted));
-
-                    return res.send("Successfully deleted " + rowsDeleted + " rows.");
-                })
-                .catch((error) => {
-                    return res.status(400).send(error);
-                })
-    }
-
-}
-*/

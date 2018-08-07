@@ -146,19 +146,47 @@ module.exports = {
         jwt.verify(token, 'secretkey', (err, authData) => {
             if(err) {
                 // Forbidden
-                res.status(403).json({
+                res.status(403).send({
                     message: errMsg
                 });
             } else {
-                // Next middleware, user verified, process the request
-                // console.log("authData", authData);
-                // console.log("user", authData.user)
-                
                 console.log(authData);
                 res.send(authData.user);
-
             }
         }); 
+    },
+
+    onlyAdminMiddleware(req, res, next) {
+        if(req.body.validatedUser.role != "admin") {
+            res.status(403).send({message: "forbidden, need to be admin"})
+        } else {
+            next();
+        }
+    },
+
+    postingAdminUserCheck(user, posting) {
+        if(user.role != "admin" && posting.userId != user.id) {
+            res.status(403).send({message: "forbidden, need to be the posting owner or admin"});
+            return false;
+        }
+        return true;
+    },
+
+    postingAdminUserBuyerCheck(user, posting) {
+        if(user.role != "admin" && posting.userId != user.id && posting.buyerId != user.id) {
+            res.status(403).send({message: "forbidden, need to be the posting owner, buyer or admin"});
+            return false;
+        }
+        return true;
+    },
+
+    userAdminUserCheck(validatedUser, userId) {
+        if(validatedUser.id != userId && validatedUser.role != admin) {
+            res.status(403).send({message: "forbidden, need to be the account owner or admin"});
+            return false;
+        }
+        return true;
     }
+
 
 }

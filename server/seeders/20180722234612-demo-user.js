@@ -21,8 +21,9 @@ for (var i = 0; i<numUsers; i++){
       phone: faker.phone.phoneNumber(),
       crypto: "0x6841EBBd0CBC33dcD114C548C99396710cc25e5B",
       rating: Math.floor(Math.random() * 10),
+      role: "user",
       createdAt: faker.date.past(),
-      updatedAt: new Date()
+      updatedAt: new Date(),
     })
     // Creating test user2 (password is the same)
     array.push({
@@ -32,8 +33,21 @@ for (var i = 0; i<numUsers; i++){
       phone: faker.phone.phoneNumber(),
       crypto: "0x9ba1F32F809b6C58945Ada29d10cB82cA078C5E5",
       rating: Math.floor(Math.random() * 10),
+      role: "user",
       createdAt: faker.date.past(),
-      updatedAt: new Date()
+      updatedAt: new Date(),
+    })
+    // create admin user
+    array.push({
+      email: "admintest@gmail.com",
+      username: "admin",
+      password: "$2b$10$YFN3uq9wjR1it.ICD0oxw.uD3hTKYeJql7kEh.7hOmijb9HqFsXNK",
+      phone: faker.phone.phoneNumber(),
+      crypto: "0x96b78740DC0c15B79E3bb0037A2c90576148ECAC",
+      rating: Math.floor(Math.random() * 10),
+      role: "admin",
+      createdAt: faker.date.past(),
+      updatedAt: new Date(),
     })
   }
 
@@ -44,6 +58,7 @@ for (var i = 0; i<numUsers; i++){
     phone: faker.phone.phoneNumber(),
     crypto: faker.finance.bitcoinAddress(),
     rating: Math.floor(Math.random() * 10),
+    role: "user",
     createdAt: faker.date.past(),
     updatedAt: new Date()
   });

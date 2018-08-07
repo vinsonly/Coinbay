@@ -30,7 +30,13 @@ class TransactionHistory extends Component {
     console.log(userId);
 
     let status;
-    fetch(`/api/user/postings/${userId}/transactionHistory`) 
+    fetch(`/api/user/postings/${userId}/transactionHistory`,{
+      method: 'GET',
+      headers:{
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + localStorage.getItem('sessionToken')
+      }
+    }) 
       .then(res => {
         status = res.status;
         return res.json();

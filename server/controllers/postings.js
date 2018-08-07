@@ -3,6 +3,7 @@ const User = require('../models/').User;
 const verifyToken = require('./auth').verifyToken;
 const Op = require('sequelize').Op;
 // const Op = sequelize.Op;
+require('./auth');
 
 
 var db = require('../models');
@@ -76,6 +77,10 @@ module.exports = {
                         return res.status(404).send({
                             message: `posting with id: ${id} not found.`
                         })
+                    } else if(req.body.validatedUser.id != posting.userId) {
+                        return res.status(403).send({
+                            message: "Only posting owner can update the posting"
+                        })
                     } else {
                         return posting
                             .update({
@@ -114,12 +119,18 @@ module.exports = {
     delete(req, res) {
         let id = parseInt(req.body.id);
 
+        let user = req.body.validatedUser;
+
         return Posting
             .findById(id)
                 .then(posting => {
                     if(!posting) {
                         return res.status(404).send({
                             message: `posting with id: ${id} not found.`
+                        })
+                    } else if(!postingAdminUserCheck(user, posting)) {
+                        return res.status(403).send({
+                            message: `Only admin or posting owner may delete posting`
                         })
                     } else {
                         return posting
@@ -282,21 +293,12 @@ module.exports = {
 
 
     setUpTransaction(req, res) {
-
-        console.log("req.params.id", req.params.id);
-
-        console.log("req.body.validatedUser", req.body.validatedUser);
-
         let id = parseInt(req.params.id);
-
         if(req.body.id) {
             id = parseInt(req.body.id);
         }
-
         let txids = req.body.txids || [];
-
         let buyerId = req.body.validatedUser.id;
-
         let addy = req.body.contractAddress;
 
         if(!buyerId || !id || !addy) {
@@ -478,8 +480,11 @@ module.exports = {
                         return res.status(404).send({
                             message: `posting with id: ${id} not found.`
                         })
+                    } else if(req.body.validatedUser.id != posting.userId) {
+                        return res.status(403).send({
+                            message: "Only posting owner can accept ofers"
+                        })
                     } else {
-
                         let newTransaction = posting.transaction;
                         if(txid) {
                             newTransaction.txids.push(txid);
@@ -563,6 +568,10 @@ module.exports = {
                             newTransaction.sellerOk = ok;
                         } else if(req.body.validatedUser.id == posting.buyerId) {
                             newTransaction.buyerOk = ok;
+                        } else {
+                            return res.status(404).send({
+                                message: `Only buyer or seller of an item is able to confirm the transaction`
+                            })
                         }
 
                         if(newTransaction.sellerOk && newTransaction.buyerOk) {

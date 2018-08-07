@@ -36,6 +36,10 @@ module.exports = {
         allowNull: true,
         validate: { min: 0, max: 10 }
       },
+      role: { // user, admin
+        type: Sequelize.ENUM('user', 'admin'),
+        allowNull: false
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

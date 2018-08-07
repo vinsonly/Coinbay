@@ -8,10 +8,6 @@ const port = process.env.PORT || 5000;
 
 app.locals.appName = 'Our Application';
 
-// app.set('view engine', 'ejs');
-// app.set('views', '../client/views');
-// app.use(express.static('../client/public'));
-
 app.get('/api/hello', (req, res) => {
   res.send({ express: 'Hello From Express' });
 });
