@@ -173,7 +173,7 @@ class SearchInner extends Component {
         .then(body => {
           if(postingStatus == 200) {
             this.setState({
-    					postingsByUsername: body
+    					postingsByUsername: body,
     				});
           }
           return body;
@@ -208,10 +208,8 @@ class SearchInner extends Component {
       };
 
       if(this.state.toRedirect) {
-
         console.log('redirecting');
         return(
-          // <Redirect to="/posts" />
           <Route path="/posts/" render={(props) => ( <Posts searchResults={this.state.suggestions}/> )} />
         )
       }

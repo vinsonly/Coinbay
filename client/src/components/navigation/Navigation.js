@@ -48,7 +48,7 @@ class Navigation extends Component {
             dropdownOpen: !this.state.dropdownOpen
         });
     }
-    
+
     toggle2() {
         this.setState({
             transactionsdropdownOpen: !this.state.transactionsdropdownOpen
@@ -131,7 +131,7 @@ class Navigation extends Component {
             <div className="nav-color">
                 <div className="white-text">
                     <Navbar className="expand" dark expand="lg" scrolling>
-                        <NavLink to="/">
+                        <NavLink to="#" onClick={() => {window.location.replace('/')}}>
                             <strong>CoinBay</strong>
                             <sup> Classifieds</sup>
                         </NavLink>
@@ -146,7 +146,7 @@ class Navigation extends Component {
                                   <span id="createPosting" onClick={() => {window.location.replace("/new_posting")}}>+Create Posting</span>
                               </NavItem>
                             </NavbarNav>
-                            <NavbarNav right>     
+                            <NavbarNav right>
                                 {
                                     (this.props.loggedInUser.id) ? (
                                         <NavItem>
@@ -159,7 +159,7 @@ class Navigation extends Component {
                                         </NavItem>
                                     ) : (<div></div>)
                                 }
-                        
+
                                 {
                                     (this.props.loggedInUser.id) ? (<NavItem>
                                         {/* {this.notifier()} */}
@@ -175,14 +175,14 @@ class Navigation extends Component {
                                         </DropdownMenu>
                                         </Dropdown>
                                     </NavItem>  ) : (<div></div>)
-                                } 
+                                }
                                 {
-                                    (!this.props.loggedInUser.id) ? (        
+                                    (!this.props.loggedInUser.id) ? (
                                         <NavItem>
                                             <NavLink to="/register">Register</NavLink>
                                         </NavItem>
                                     ) : (<div></div>)
-                                }    
+                                }
 
                                 {
                                     (!this.props.loggedInUser.id) ? (
@@ -190,7 +190,7 @@ class Navigation extends Component {
                                             <NavLink to="/login">Login</NavLink>
                                         </NavItem>
                                     ) : (<div></div>)
-                                }        
+                                }
                             </NavbarNav>
                         </Collapse>
                     </Navbar>

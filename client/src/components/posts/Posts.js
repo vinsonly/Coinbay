@@ -16,7 +16,8 @@ class Posts extends Component {
 			counter: 20,
 			results: 0,
 			filtering: "date",
-			allPostings: []
+			allPostings: [],
+			resetted: false
 		};
 
 		fetch(`/api/postings_with_users`)
@@ -74,7 +75,19 @@ class Posts extends Component {
 				);
 			}
 		}.bind(this));
+
+		if(this.props.isCategory) {
+				this.props.clearRouteState();
+		}
 	}
+
+	componentDidUpdate() {
+		if(this.props.isCategory) {
+				this.props.clearRouteState();
+		}
+	}
+
+
 	changeFormat(form) {
 		if (form == "grid" && this.state.format !== "grid") {
 			this.setState(
@@ -175,7 +188,7 @@ class Posts extends Component {
 
 		var idArr;
 
-		// CHECK STATE
+		// check if searchResults are being passed in from react router with the router callback
 		if(this.props.location.state) {
 				if(Array.isArray(this.props.location.state.searchResults)) {
 				idArr = [];
@@ -184,10 +197,9 @@ class Posts extends Component {
 					idArr.push(this.props.location.state.searchResults[index].id);
 				}
 
-				// console.log(idArr);
+				console.log(idArr);
 			}
 		}
-
 		else if (this.props.searchResults) {
 			idArr = [];
 
@@ -195,7 +207,7 @@ class Posts extends Component {
 				idArr.push(this.props.searchResults[index].id);
 			}
 
-			// console.log(idArr);
+			console.log(idArr);
 		}
 
 		if(!this.state.postings) {
