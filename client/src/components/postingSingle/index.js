@@ -294,6 +294,15 @@ class SinglePosting extends React.Component {
         let lowerCaseBuyer = buyerAddress.toLowerCase()
         let lowerCaseSeller = sellerAddress.toLowerCase();
 
+        if(!this.state.web3.isAddress(lowerCaseSeller)) {
+          swal({
+            title: "Seller has Invalid Ethereum Address",
+            text: "Unable to purchase this item.",
+            icon: "error"
+          })
+          return;
+        }
+
         if(accounts.length < 1) {
           swal({
             title: "Unable to connect to the Ethereum Blockchain",
@@ -340,11 +349,11 @@ class SinglePosting extends React.Component {
         let wei = this.state.web3.toWei(amount, "ether");
 
         // set default gas 40 gwei
-        let gwei = new Number(40000000000)
+        // let gwei = new Number(40000000000)
         escrow.new(lowerCaseSeller,{
           from: accounts[0],
           value: wei,
-          gasPrice: gwei
+          // gasPrice: gwei
         })
         .then(instance => {
 
