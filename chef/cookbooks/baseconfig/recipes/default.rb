@@ -73,6 +73,10 @@ execute 'set_bash_file_permissions1' do
   command 'cd /home/vagrant/project && chmod u=rwx,g=rx,o=rx resetdb.sh'
 end
 
+execute 'bcrypt' do
+  command 'cd /home/vagrant/project && sudo yarn add bcrypt'
+end
+
 execute 'install_server_dependencies' do
   command 'cd /home/vagrant/project && sudo yarn install'
 end
