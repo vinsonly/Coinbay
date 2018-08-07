@@ -8,24 +8,6 @@ const {or, and, gt, lt} = Sequelize.Op;
 
 console.log(User);
 
-// app.post('/api/login', (req, res) => {
-//     // Mock user
-//     // get the user to send in the username and password here
-//     // then authenticate user's password with bcrypt
-  
-//     const user = {
-//       id: 1,
-//       username: 'vinson',
-//       email: 'vinsonly@live.ca'
-//     }
-  
-//     jwt.sign({user}, 'secretkey', { expiresIn: '30s' }, (err, token) => {
-//       res.json({
-//         token
-//       });
-//     });
-//   });
-
 module.exports = {
 
     // username, password
@@ -35,7 +17,6 @@ module.exports = {
         console.log("attempting to login");
 
         // verify the user's login information
-
         let errMsg = "Username/email and password does not match.";
 
         return User
