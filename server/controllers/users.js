@@ -28,7 +28,8 @@ module.exports = {
                         .create({
                             email: req.body.email,
                             username: req.body.username,
-                            password: hash
+                            password: hash,
+                            role: "user"
                         })
                         .then((user) => {
                             console.log("Created a new user");
@@ -45,10 +46,10 @@ module.exports = {
             });
         });
 
-        return 
+        return
     },
 
-    // 
+    //
     read(req, res) {
 
         if(req.body.validatedUser.role != "admin") {
@@ -70,14 +71,14 @@ module.exports = {
     },
 
     update(req, res) {
-        
+
         let id = parseInt(req.body.id);
 
         // validate endpoint
         if(!userAdminUserCheck(req.body.validatedUser, id)) {
             return;
         }
-        
+
         return User
             .findById(id)
                 .then(user => {
@@ -93,7 +94,7 @@ module.exports = {
                                 password: req.body.password || user.password,
                                 phone: req.body.phone || user.phone,
                                 crypto: req.body.crypto || user.crypto,
-                                rating: req.body.rating || user.rating 
+                                rating: req.body.rating || user.rating
                             })
                             .then(() => {
                                 console.log("Successfully updated user");
@@ -111,7 +112,7 @@ module.exports = {
                     console.log(error);
                     res.status(400).send(error);
                 })
-            
+
     },
 
     delete(req, res) {
@@ -121,8 +122,8 @@ module.exports = {
         if(!userAdminUserCheck(req.body.validatedUser, id)) {
             return;
         }
-        
-        return User 
+
+        return User
             .findById(id)
                 .then(user => {
                     if(!user) {
@@ -154,8 +155,8 @@ module.exports = {
 
     findById(req, res) {
         let id = parseInt(req.params.id);
-        
-        return User 
+
+        return User
             .findById(id)
                 .then(user => {
                     if(!user) {
@@ -171,13 +172,13 @@ module.exports = {
                     console.log(error);
                     res.status(400).send(error)
                 });
-    },    
-    
+    },
+
     deleteAll(req, res) {
         return user
             .destroy({
                 where: {
-                    
+
                 },
                 truncate: true
             })
@@ -196,12 +197,12 @@ module.exports = {
 
     findBoughtPostsByUserId(req, res) {
         let id = parseInt(req.params.id);
-        
-        return User 
+
+        return User
             .findOne({
                 where: {
                     id: id
-                }, 
+                },
                 include: [{
                     model: Posting,
                     as: 'boughtPosts',
@@ -225,11 +226,11 @@ module.exports = {
                     console.log(error);
                     res.status(400).send(error)
                 });
-    },    
+    },
 
     // check if the user exists in our database
     isExistingUser(req, res, next) {
-        
+
         User.findAll({
             where: {
                 [or]: {
@@ -275,9 +276,9 @@ module.exports = {
                             }
                         })
                         .then((users) => {
-                
+
                             console.log(users);
-                
+
                             if(users.length > 0) {
                                 return res.status(400).json({
                                     message: "Another user already exists with that username or email, please try again."
@@ -291,13 +292,13 @@ module.exports = {
                         })
 
                     }
-          
+
                 } else {
                     next();
-                } 
+                }
             })
     },
-    
+
     // get all posts that belong to the user or the user is a buyer
     transactionHistory(req, res) {
 
