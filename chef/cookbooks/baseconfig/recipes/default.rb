@@ -143,9 +143,9 @@ end
 #   command 'cd /home/vagrant/project/client && sudo yarn start'
 # end 
 
-execute 'start_app1' do
-  command 'cd /home/vagrant/project/client && sudo yarn build'
-end
+# execute 'start_app1' do
+#   command 'cd /home/vagrant/project/client && sudo yarn build'
+# end
 
 execute 'start_app' do
   command 'cd /home/vagrant/project && sudo yarn nginxstart'
