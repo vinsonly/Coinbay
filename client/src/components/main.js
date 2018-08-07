@@ -28,8 +28,6 @@ class Main extends Component {
 
         this.clearState = this.clearState.bind(this);
         this.isPropsDifferent = this.isPropsDifferent.bind(this);
-        this.isPathDifferent = this.isPathDifferent.bind(this);
-        this.clearOldState = this.clearOldState.bind(this);
 
         this.state = {
             reRenderFlag: false
@@ -44,27 +42,15 @@ class Main extends Component {
         this.routeProps = {};
     }
 
-    clearOldState() {
-      this.oldRoutePath = "";
-      this.oldRouteProps = {};
-    }
-
     isPropsDifferent() {
+        console.log(this.oldRoutePath);
         console.log(this.oldRouteProps);
 
+        let pathSame = this.oldRoutePath == this.props.routePath;
         let propsSame = JSON.stringify(this.oldRouteProps) == JSON.stringify(this.props.routeProps);
 
-        if(!(propsSame)) {
-            return true;
-        }
-    }
-
-    isPathDifferent() {
-        console.log(this.oldRoutePath);
-
-        let pathSame = this.oldRoutePath == this.props.routePath;
-
-        if(!(pathSame)) {
+        if(!(pathSame && propsSame)) {
+            console.log(true);
             return true;
         }
     }
@@ -72,28 +58,18 @@ class Main extends Component {
     render() {
 
         console.log(this.props.loggedInUser);
-        console.log("this.props.routePath", this.props.routePath);
-        console.log("this.props.routeProps", this.props.routeProps);
-
-        let routePropsChanged  = false;
 
         //check if props are different
         if(this.isPropsDifferent()) {
-            console.log("props different");
-            this.routeProps = this.props.routeProps,
-            this.oldRouteProps = this.routeProps;
-            routePropsChanged = true;
-        }
-
-        if(this.isPathDifferent()) {
-            console.log("path different");
             this.routePath = this.props.routePath,
+            this.routeProps = this.props.routeProps
+
             this.oldRoutePath = this.routePath;
+            this.oldRouteProps = this.routeProps;
         }
 
-        console.log("this.routePath", this.routePath);
 
-        if((this.routePath && this.routePath.length > 1) || routePropsChanged) {
+        if((this.routePath && this.routePath.length > 1)) {
 
             console.log(this.props);
             console.log(this.routePath);
@@ -134,7 +110,7 @@ class Main extends Component {
             <main>
                 <Switch>
                     <Route exact path="/" component={Posts}/>
-                    <Route path="/index" render={props => <Posts {...props} reset={true}/> } />
+                    // <Route path="/index" render={props => <Posts {...props} reset={true}/> } />
                     <Route path="/posts/categories/:category" render={props => <Posts {...props} isCategory={true} clearRouteState={this.clearOldState}/> } />
                     <Route path="/posts/:id" render={props => <SinglePosting {...props} loggedInUser={this.props.loggedInUser} refreshBalance={this.props.refreshBalance} walletBalance={this.props.walletBalance}/> }/>
                     <Route path="/posts/search_results" component={Posts} />
@@ -154,10 +130,6 @@ class Main extends Component {
         )
     }
 
-    componentDidUpdate() {
-      console.log("this.routePath", this.routePath);
-      console.log("this.routeProps", this.routeProps);
-    }
 }
 
 export default Main;

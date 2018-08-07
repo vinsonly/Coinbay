@@ -60,7 +60,7 @@ class SinglePosting extends React.Component {
         ethusd: body.data.quotes.USD.price
       })
       window.state = this.state;
-    }) 
+    })
     .catch(err => {
       console.log(err);
     });
@@ -151,7 +151,7 @@ class SinglePosting extends React.Component {
   }
 
   /**
-     * 
+     *
      * @return {number} The dot's width, in pixels.
     */
   offered() {
@@ -222,13 +222,13 @@ class SinglePosting extends React.Component {
       buttons: {
         submitOffer: "Submit Offer",
         cancel: "Cancel"
-      } 
+      }
     }).then(res => {
       if(res == "submitOffer") {
         return true;
       } else {
         return false
-      } 
+      }
     })
     .then((res) => {
       if(!res) {
@@ -237,20 +237,20 @@ class SinglePosting extends React.Component {
 
       getWeb3
       .then(results => {
-  
+
         console.log("results.web3", results.web3);
-  
+
         this.setState({
           web3: results.web3
         })
-  
+
         let ethPrice;
-  
+
         if(this.state.ethusd) {
           ethPrice = parseInt(this.state.posting.price)/this.state.ethusd;
         } else {
           ethPrice = parseInt(this.state.posting.price)/420;
-        }  
+        }
         // Instantiate contract once web3 provided.
         this.instantiateContract(ethPrice)
       })
@@ -274,7 +274,7 @@ class SinglePosting extends React.Component {
         text: "Please make sure you logged into your Ethereum account and conneced to the Ropsten TestNet on the MetaMask extension",
         icon: "error"
       })
-      return; 
+      return;
     }
 
     escrow.setProvider(this.state.web3.currentProvider)
@@ -376,7 +376,7 @@ class SinglePosting extends React.Component {
           .then(body => {
             if(status != 200) {
               swal(`Error: ${body.message}`);
-            } else {              
+            } else {
                 swal({
                   title: 'Successfully Submitted Offer',
                   text: "Please wait for the seller to accept your offer. Once your offer is accepted, meet the seller at the indicated meeting location at that indicated time and date. You can view the Ethereum transaction hash for the created contract in the 'Manage Transactions' page.",
@@ -384,13 +384,13 @@ class SinglePosting extends React.Component {
                   buttons: {
                     transactions: "View Active Transactions",
                     cancel: "Cancel"
-                  } 
+                  }
                 }).then(res => {
                   if(res == "transactions") {
                     this.props.history.push(`/manage_transactions`);
                   } else {
                     return false
-                  } 
+                  }
                 })
                 this.props.refreshBalance();
 
@@ -400,7 +400,7 @@ class SinglePosting extends React.Component {
                 // need condition to check (upon revisit) to see if already bidded
                 bidButton[0].style.color = "black";
                 bidButton[0].style.backgroundColor = "grey";
-                bidButton[0].style.cursor = "default";   
+                bidButton[0].style.cursor = "default";
 
                 this.setState(
                   (prevState,props) => {
@@ -412,7 +412,7 @@ class SinglePosting extends React.Component {
           .catch(err => {
             console.error('ERROR', err);
           })
-          
+
 
         })
         .catch(err => {
@@ -435,7 +435,7 @@ class SinglePosting extends React.Component {
   }
 
   render() {
-    
+
     if(!this.state.posting || !this.state.user || this.state.halfStarArray == null || this.state.blackStarArray == null || this.state.emptyStarArray == null ) {
       return(<div></div>);
     }
@@ -453,7 +453,7 @@ class SinglePosting extends React.Component {
       return (
         <div id="postingSingleDiv">
           <Grid container spacing={24}>
-    
+
             <Grid item xs={12} md={6}>
               <div className="image-display">
                 <img id="postingPicture"src={this.state.posting.images[0]}></img>
@@ -473,13 +473,13 @@ class SinglePosting extends React.Component {
                     <h4 style={{wordWrap:"break-word"}}>Ethereum Address: {this.state.user.crypto}</h4>
                     <div className="sellerRating">
                       <h4 style={{marginBottom: 0}}>Rating:</h4>
-               
+
                       {this.state.blackStarArray.map((x, index) => {
                         return (
                         <i className="material-icons" key={index}>
                           star
                         </i>
-                        ) 
+                        )
                       })}
 
                       {this.state.halfStarArray.map((x, index) => {
@@ -487,7 +487,7 @@ class SinglePosting extends React.Component {
                           <i className="material-icons" key={index}>
                           star_half
                           </i>
-                        ) 
+                        )
                       })}
 
                       {this.state.emptyStarArray.map((x, index) => {
@@ -495,7 +495,7 @@ class SinglePosting extends React.Component {
                           <i className="material-icons" key={index} >
                           star_border
                           </i>
-                        ) 
+                        )
                       })}
 
                     </div>

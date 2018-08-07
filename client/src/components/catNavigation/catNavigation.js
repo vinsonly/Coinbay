@@ -5,7 +5,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'mdbreact/dist/css/mdb.css';
 import './catNavigation.css';
 
-var categories = {  
+var categories = {
             0: "Automotives",
             1: "Beauty",
             2: "Pets",
@@ -21,7 +21,7 @@ var categories = {
             12: "Housing",
             13: "Sports & Outdoors",
             14: "Toys & Entertainment",
-            15: "Tools",                    
+            15: "Tools",
             16: "Antiques",
             17: "Miscellaneous"
 };
@@ -32,7 +32,7 @@ class CatNavigation extends Component {
     constructor(props) {
         super(props);
 
-        this.state = { 
+        this.state = {
             navText: "Expand"
         };
     }
@@ -76,7 +76,7 @@ class CatNavigation extends Component {
 
         // cycle through all categories and create buttons linked to react router
 		for (var i = 0; i < Object.keys(categories).length; i++) {
-		    rows.push(<Link to={"/posts/categories/"+categories[i]} key={categories[i]}><button id={categories[i]}>{categories[i]}</button></Link>);
+		    rows.push(<Link onClick={this.props.resetOldState} to={"/posts/categories/"+categories[i]} key={categories[i]}><button id={categories[i]}>{categories[i]}</button></Link>);
 		}
         return (
         	<div>

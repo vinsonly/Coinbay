@@ -131,7 +131,7 @@ class Navigation extends Component {
             <div className="nav-color">
                 <div className="white-text">
                     <Navbar className="expand" dark expand="lg" scrolling>
-                        <NavLink to="#" onClick={() => {window.location.replace('/')}}>
+                        <NavLink to="/">
                             <strong>CoinBay</strong>
                             <sup> Classifieds</sup>
                         </NavLink>

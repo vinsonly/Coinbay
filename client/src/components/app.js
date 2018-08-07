@@ -19,10 +19,13 @@ class App extends Component {
         this.getEthBalance2 = this.getEthBalance2.bind(this);
         this.startBalancePolling = this.startBalancePolling.bind(this);
         this.stopBalancePolling = this.stopBalancePolling.bind(this);
+        this.resettedOldState = this.resettedOldState.bind(this);
+        this.resetOldState = this.resetOldState.bind(this);
 
         this.state = {
             loggedInUser: {},
-            walletBalance: -1
+            walletBalance: -1,
+            toResetOldState: false
         }
 
         this.clearState();
@@ -46,7 +49,7 @@ class App extends Component {
             let data = {
                 token: sessionToken
             }
-    
+
             let status;
             fetch('/api/validateToken', {
                 method: 'POST',
@@ -62,7 +65,7 @@ class App extends Component {
             })
             .then(body => {
                 console.log(body);
-    
+
                 if(status != 200) {
                     console.log('ERROR:' + body.message);
                 } else {
@@ -105,8 +108,6 @@ class App extends Component {
     }
 
     getEthBalance2(web3) {
-        
-
         web3.eth.getAccounts((err, accounts) => {
             let account;
             if(err) {
@@ -134,13 +135,11 @@ class App extends Component {
                 })
             }
         })
-        
     }
-    
 
     handleRouteCallback(routePath, routeProps) {
         console.log('handle search callback');
-        
+
         console.log("routePath", routePath);
         console.log("routeProps", routeProps);
 
@@ -148,7 +147,7 @@ class App extends Component {
         this.setState({
             routePath: routePath,
             routeProps: routeProps
-        }) 
+        })
     }
 
     startBalancePolling() {
@@ -161,13 +160,26 @@ class App extends Component {
     stopBalancePolling() {
         clearInterval(this.accountInterval);
     }
-    
+
+    resettedOldState() {
+      this.setState({
+        toResetOldState: false
+      })
+    }
+
+    resetOldState() {
+      console.log("resetting old state");
+      this.setState({
+        toResetOldState: true
+      })
+    }
+
     render() {
         return(
             <div id="app">
                 <Navigation handleRouteCallback={this.handleRouteCallback} loggedInUser={this.state.loggedInUser} signOut={this.signOut} walletBalance={this.state.walletBalance}/>
-                <CatNavigation />
-                <Main routePath={this.state.routePath} routeProps={this.state.routeProps} clearRouteState={this.clearState} loggedInUser={this.state.loggedInUser} refreshBalance={this.getEthBalance1} walletBalance={this.state.walletBalance}/>
+                <CatNavigation resetOldState={this.resetOldState}/>
+                <Main routePath={this.state.routePath} routeProps={this.state.routeProps} clearRouteState={this.clearState} loggedInUser={this.state.loggedInUser} refreshBalance={this.getEthBalance1} walletBalance={this.state.walletBalance} toResetOldState={this.state.toResetOldState} resettedOldState={this.resettedOldState}/>
             </div>
         )
     }
