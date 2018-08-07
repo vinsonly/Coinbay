@@ -2,8 +2,7 @@ const Posting = require('../models/').Posting;
 const User = require('../models/').User;
 const verifyToken = require('./auth').verifyToken;
 const Op = require('sequelize').Op;
-const Sequelize = require('sequelize');
-// const Op = sequelize.Op;
+
 const auth = require('./auth');
 
 

@@ -339,8 +339,8 @@ class SinglePosting extends React.Component {
 
         let wei = this.state.web3.toWei(amount, "ether");
 
-        // set default gas 40 gwei
-        let gwei = new Number(40000000000)
+        // set default gas 80 gwei
+        let gwei = new Number(80000000000)
         escrow.new(lowerCaseSeller,{
           from: accounts[0],
           value: wei,
