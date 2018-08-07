@@ -22,9 +22,9 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-server/config/config.json
+# server/config/config.json
 
-/config.json
+# /config.json
 *~
 .vagrant
 
