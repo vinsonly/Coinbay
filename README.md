@@ -1,12 +1,16 @@
 # CoinBay 
 ## Setup Instructions
 1. Run ```$ vagrant up```
+2. Open your browser and navigate to http://localhost:8000/ to view the CoinBay app
+
+OR
 2. Navigate to project dir ~/coinbay-web-app/  
 3. In the root/client dir, run ```$ yarn install```
 4. Do the same in root/server dir, run ```$ yarn install```
 5. Back in root dir, run the initial data script ```$ ./resetdb.sh ```
 6. And now we can launch the app using ```$ yarn dev```
-7. Open your browser and navigate to http://localhost:8000/ to view the CoinBay app
+7. Open your browser and navigate to http://localhost:3000/ to view the CoinBay app
+
 8. You can register a new account or use a default user as listed below:
 - *Username: user1 (Password: user1) 
 - *Username: user2 (Password: user2)
