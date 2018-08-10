@@ -73,6 +73,26 @@ execute 'set_bash_file_permissions1' do
   command 'cd /home/vagrant/project && chmod u=rwx,g=rx,o=rx resetdb.sh'
 end
 
+execute 'install_node_gyp' do
+  command 'sudo npm install node-gyp -g -y'
+end
+
+execute 'install_node_gyp' do
+  command 'sudo apt-get install python -y'
+end
+
+execute 'install_node_gyp' do
+  command 'sudo apt-get install make -y'
+end
+
+execute 'install_node_gyp' do
+  command 'sudo apt-get install g++ -y'
+end
+
+execute 'bcrypt' do
+  command 'cd /home/vagrant/project && sudo yarn add bcrypt'
+end
+
 execute 'install_server_dependencies' do
   command 'cd /home/vagrant/project && sudo yarn install'
 end
@@ -123,9 +143,9 @@ end
 #   command 'cd /home/vagrant/project/client && sudo yarn start'
 # end 
 
-execute 'start_app1' do
-  command 'cd /home/vagrant/project/client && sudo yarn build'
-end
+# execute 'start_app1' do
+#   command 'cd /home/vagrant/project/client && sudo yarn build'
+# end
 
 execute 'start_app' do
   command 'cd /home/vagrant/project && sudo yarn nginxstart'
