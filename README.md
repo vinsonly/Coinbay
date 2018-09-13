@@ -93,7 +93,7 @@ Ethereum Wallet Balance in the NavBar is updated live when a user switches walle
 ## CRUD Postings Workflow:
 - https://drive.google.com/open?id=16sBLdIIC8AKQKOYwphKs_4stFWkgGPif
 
-##Transaction Workflow:
+## Transaction Workflow:
 - https://drive.google.com/open?id=1N5Wsu0N-ZMG9mKe7bJNHMQCoUcjjDeKy
 
 
