@@ -1,4 +1,4 @@
-# CoinBay 
+# CoinBay - Deployed at http://34.218.253.86
 ## Setup Instructions
 1. Run ```$ vagrant up```
 2. Open your browser and navigate to http://localhost:8000/ to view the CoinBay app
