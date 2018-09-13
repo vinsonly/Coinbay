@@ -4,10 +4,12 @@
 2. Open your browser and navigate to http://localhost:8000/ to view the CoinBay app
 
 OR
-2. Navigate to project dir ~/coinbay-web-app/  
-3. In the root/client dir, run ```$ yarn install```
-4. Do the same in root/server dir, run ```$ yarn install```
-5. Back in root dir, run the initial data script ```$ ./resetdb.sh ```
+1. Clone this repository onto your local machine
+```$ git clone https://github.com/vinsonly/Coinbay.git```
+2. Navigate to project dir ```$ cd ./coinbay-web-app```  
+3. Install dependencies for the client ```$ cd client && sudo yarn install```
+4. Install dependencies for the server, run ```$ cd .. && sudo yarn install```
+5. Back in root dir, run script to seed the database ```$ ./resetdb.sh ```
 6. And now we can launch the app using ```$ yarn dev```
 7. Open your browser and navigate to http://localhost:3000/ to view the CoinBay app
 
