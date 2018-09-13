@@ -21,8 +21,7 @@ OR
 ## Transaction Workflow
 Follow the steps listed below for setting up and testing the transaction (escrow) process 
 - https://docs.google.com/document/d/1bUKYl6C1ZQrLa4gN1gG0-LMMjQoN7OE2ZUx7OLtJB2o/edit?usp=sharing
-Video demo
-[![Video Demo](https://raw.github.com/GabLeRoux/WebMole/master/ressources/WebMole_Youtube_Video.png)](https://drive.google.com/file/d/1Eomh3whoNRRYFnFCvqxuHJdKCWBFoHB3/preview)
+[![Transactions Workflow Video Demo](https://raw.githubusercontent.com/vinsonly/Coinbay/master/transactions_workflow.gif)](https://drive.google.com/file/d/1Eomh3whoNRRYFnFCvqxuHJdKCWBFoHB3/preview)
 
 
 # Features (End-User)
