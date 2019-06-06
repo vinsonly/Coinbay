@@ -170,6 +170,8 @@ class SinglePosting extends React.Component {
       return;
     }
 
+    console.log("this.props.loggedInUser: ", this.props.loggedInUser)
+
     if(!this.props.loggedInUser.id) {
       swal({
         text: 'Please log in to place offers on items',
@@ -186,7 +188,7 @@ class SinglePosting extends React.Component {
       return;
     }
 
-    if(this.props.loggedInUser.crypto.length < 10) {
+    if(!this.props.loggedInUser.crypto || this.props.loggedInUser.crypto.length < 10) {
       swal({
         text: 'Please update your profile with a valid Ethereum Address to start placing offers.',
         icon: "info",
