@@ -13,7 +13,6 @@ li.nav-item {
 }
 
 div.dropdown {
-    width: 150px;
     margin: auto;
     display: flex;
     align-items: center;
@@ -45,7 +44,7 @@ div.search * {
 .searching-min form {
 	background-color: white !important;
 	border: solid white;
-	border-radius: 0.7em
+	border-radius: 0.7emdiv.dropdown
 }
 
 .searching input {
@@ -188,4 +187,8 @@ span#createPosting {
 
 span#createPosting:hover {
 	background-color: lightgrey;
+}
+div.dropdown > a, .flexAlignCenter {
+	display: flex !important; 
+    align-items: center !important;
 }

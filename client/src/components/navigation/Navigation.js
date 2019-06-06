@@ -168,9 +168,14 @@ class Navigation extends Component {
                                     (this.props.loggedInUser.id) ? (<NavItem>
                                         {/* {this.notifier()} */}
                                         <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
-                                        <DropdownToggle nav caret><span><i id="buddy" class="material-icons">
-                                            person
-                                            </i>{this.props.loggedInUser.username}</span></DropdownToggle>
+                                        <DropdownToggle nav caret>
+                                            <span className="flexAlignCenter">
+                                                <i id="buddy" className="material-icons">
+                                                    person
+                                                </i>
+                                                <span>{this.props.loggedInUser.username}</span>
+                                            </span>
+                                        </DropdownToggle>
                                         <DropdownMenu>
                                             <DropdownItem><NavLink to="/manage_transactions">Manage Transactions</NavLink></DropdownItem>
                                             <DropdownItem><NavLink to="/transaction_history">Transaction History</NavLink></DropdownItem>
