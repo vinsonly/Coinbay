@@ -1,13 +1,15 @@
-# CoinBay 
+# CoinBay - Deployed at http://34.218.253.86
 ## Setup Instructions
 1. Run ```$ vagrant up```
 2. Open your browser and navigate to http://localhost:8000/ to view the CoinBay app
 
 OR
-2. Navigate to project dir ~/coinbay-web-app/  
-3. In the root/client dir, run ```$ yarn install```
-4. Do the same in root/server dir, run ```$ yarn install```
-5. Back in root dir, run the initial data script ```$ ./resetdb.sh ```
+1. Clone this repository onto your local machine
+```$ git clone https://github.com/vinsonly/Coinbay.git```
+2. Navigate to project dir ```$ cd ./coinbay-web-app```  
+3. Install dependencies for the client ```$ cd client && sudo yarn install```
+4. Install dependencies for the server, run ```$ cd .. && sudo yarn install```
+5. Back in root dir, run script to seed the database ```$ ./resetdb.sh ```
 6. And now we can launch the app using ```$ yarn dev```
 7. Open your browser and navigate to http://localhost:3000/ to view the CoinBay app
 
@@ -19,6 +21,8 @@ OR
 ## Transaction Workflow
 Follow the steps listed below for setting up and testing the transaction (escrow) process 
 - https://docs.google.com/document/d/1bUKYl6C1ZQrLa4gN1gG0-LMMjQoN7OE2ZUx7OLtJB2o/edit?usp=sharing
+[![Transactions Workflow Video Demo](https://raw.githubusercontent.com/vinsonly/Coinbay/master/transactions_workflow.gif)](https://drive.google.com/file/d/1Eomh3whoNRRYFnFCvqxuHJdKCWBFoHB3/preview)
+
 
 # Features (End-User)
 ## Database keyword search
@@ -89,7 +93,7 @@ Ethereum Wallet Balance in the NavBar is updated live when a user switches walle
 ## CRUD Postings Workflow:
 - https://drive.google.com/open?id=16sBLdIIC8AKQKOYwphKs_4stFWkgGPif
 
-##Transaction Workflow:
+## Transaction Workflow:
 - https://drive.google.com/open?id=1N5Wsu0N-ZMG9mKe7bJNHMQCoUcjjDeKy
 
 
