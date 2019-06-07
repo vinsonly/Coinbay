@@ -148,6 +148,8 @@ class PostingUpload extends React.Component {
 
         console.log("data", data);
 
+        return
+
         fetch(url, {
             method: 'POST',
             body: JSON.stringify(data), // data can be `string` or {object}!

@@ -454,7 +454,7 @@ class SinglePosting extends React.Component {
     let lat, lng;
     if(this.state.posting.location && this.state.posting.location.lat && this.state.posting.location.lng) {
       lat = this.state.posting.location.lat;
-      lng = this.state.posting.location.lat;
+      lng = this.state.posting.location.lng;
     } else {
       lat = 49.280904;
       lng = -123.122441;
@@ -480,34 +480,49 @@ class SinglePosting extends React.Component {
                   <h2 className="seller-title">Seller: {this.state.user.username}</h2>
                   <div className="seller">
                     <h4>E-mail: {this.state.user.email}</h4>
-                    <h4>Phone: {this.state.user.phone}</h4>
-                    <h4 style={{wordWrap:"break-word"}}>Ethereum Address: {this.state.user.crypto}</h4>
+                    <h4>Phone: {this.state.user.phone || "n/a"}</h4>
+                    <h4 style={{wordWrap:"break-word"}}>Ethereum Address: {this.state.user.crypto || "n/a"}</h4>
                     <div className="sellerRating">
-                      <h4 style={{marginBottom: 0}}>Rating:</h4>
+                      <h4 style={{marginBottom: 0}}>Rating: 
+                        {this.state.user.rating == null ? " n/a" : "" }
+                      </h4>
 
-                      {this.state.blackStarArray.map((x, index) => {
-                        return (
-                        <i className="material-icons" key={index}>
-                          star
-                        </i>
-                        )
-                      })}
+                      {
+                        this.state.user.rating != null ? (
 
-                      {this.state.halfStarArray.map((x, index) => {
-                        return (
-                          <i className="material-icons" key={index}>
-                          star_half
-                          </i>
-                        )
-                      })}
+                          <div>
+                            {
+                              this.state.blackStarArray.map((x, index) => {
+                                return (
+                                <i className="material-icons" key={index}>
+                                  star
+                                </i>
+                                )
+                              })
+                            }
+                            {
+                              this.state.halfStarArray.map((x, index) => {
+                                return (
+                                  <i className="material-icons" key={index}>
+                                    star_half
+                                  </i>
+                                )
+                              })}
+                            }
+                            {
+                              this.state.emptyStarArray.map((x, index) => {
+                                return (
+                                  <i className="material-icons" key={index} >
+                                    star_border
+                                  </i>
+                                )
+                              })}
+                            }
 
-                      {this.state.emptyStarArray.map((x, index) => {
-                        return (
-                          <i className="material-icons" key={index} >
-                          star_border
-                          </i>
-                        )
-                      })}
+                          </div>
+                          
+                        ) : (<div></div>)
+                    }
 
                     </div>
                   </div>

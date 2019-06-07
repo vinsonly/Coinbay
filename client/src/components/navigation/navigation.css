@@ -163,6 +163,7 @@ span#navEth i {
 
 i#buddy {
 	margin-right: 5px;
+	font-size: 1.4em;
 }
 
 @media screen and (min-width: 405px) and (max-width: 790px) {
@@ -188,7 +189,9 @@ span#createPosting {
 span#createPosting:hover {
 	background-color: lightgrey;
 }
+
 div.dropdown > a, .flexAlignCenter {
 	display: flex !important; 
     align-items: center !important;
 }
+
