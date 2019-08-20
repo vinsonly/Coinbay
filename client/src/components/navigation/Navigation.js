@@ -93,11 +93,13 @@ class Navigation extends Component {
      * Navigation is expanded to show google maps image if current page is the home page
      */
     homeNavigation() {
-        var is_root = window.location.pathname == "/";
+        let is_root = window.location.pathname == "/";
 
-        if (is_root == true) {
+        let coverImgSrc = process.env.PUBLIC_URL + '/splash-map-lower-mainland.png';
+
+        if (is_root) {
             return(
-                <div className="center-search" style={{backgroundImage: 'url(' + require('./img/splash-map-lower-mainland.png') + ')'}} >
+                <div className="center-search" style={{backgroundImage: `url(${coverImgSrc})`}} >
                     <h1 id="slogan">Buy With Cryptocurrency, Sell With Certainty</h1>
                     <div className="searching">
                         <form className="form-inline md-form mt-0" id="searchForm">

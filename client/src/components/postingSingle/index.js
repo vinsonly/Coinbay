@@ -507,7 +507,7 @@ class SinglePosting extends React.Component {
                                     star_half
                                   </i>
                                 )
-                              })}
+                              })
                             }
                             {
                               this.state.emptyStarArray.map((x, index) => {
@@ -516,9 +516,8 @@ class SinglePosting extends React.Component {
                                     star_border
                                   </i>
                                 )
-                              })}
+                              })
                             }
-
                           </div>
                           
                         ) : (<div></div>)
