@@ -124,7 +124,7 @@ class Navigation extends Component {
 
         let walletBalance
         if(this.props.walletBalance == -1) {
-            walletBalance = "n/a"
+            walletBalance = "n/a (Please login to your MetaMask account)"
         } else {
             walletBalance = this.props.walletBalance + " ETH"
         }

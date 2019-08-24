@@ -268,6 +268,7 @@ class SinglePosting extends React.Component {
   }
 
   instantiateContract(amount) {
+    amount = amount.toString();
     console.log("instantiating contract with amount:", amount);
 
     if(!this.state.web3.currentProvider) {
@@ -296,7 +297,7 @@ class SinglePosting extends React.Component {
         let lowerCaseBuyer = buyerAddress.toLowerCase()
         let lowerCaseSeller = sellerAddress.toLowerCase();
 
-        if(!this.state.web3.isAddress(lowerCaseSeller)) {
+        if(!this.state.web3.utils.isAddress(lowerCaseSeller)) {
           swal({
             title: "Seller has Invalid Ethereum Address",
             text: "Unable to purchase this item.",
@@ -325,6 +326,10 @@ class SinglePosting extends React.Component {
           return;
         }
 
+        // subscribe to pending transactions
+
+        console.log("this.state.web3: ", this.state.web3);
+
         swal({
           title: "Processing order",
           text: "Please confirm the MetaMask transaction with the default 'Gas Limit' and 'Gas Price' values to ensure that the transaction succeeds. Please do not navigate away from this page. Once the transaction is submitted, the transaction will be posted to the Ethereum Blockchain",
@@ -348,7 +353,37 @@ class SinglePosting extends React.Component {
           closeOnClickOutside: false,
         })
 
-        let wei = this.state.web3.toWei(amount, "ether");
+        let subscription = this.state.web3.eth.subscribe('logs', {
+          address: buyerAddress.toLowerCase(),
+          fromBlock: null,
+          topics: null
+        }, function(error, result){
+          // if (!error)
+          //   console.log("result: ",result);
+          // else
+          //   console.log("logs error: ", error);
+        })
+        .on("data", function(log){
+            console.log("buyer log: ", log);
+        })
+        .on("error", console.error);
+
+        this.state.web3.eth.subscribe('logs', {
+          address: sellerAddress.toLowerCase(),
+          fromBlock: null,
+          topics: null
+        }, function(error, result){
+          // if (!error)
+          //   console.log("result: ",result);
+          // else
+          //   console.log("logs error: ", error);
+        })
+        .on("data", function(log){
+            console.log("seller log: ", log);
+        })
+        .on("error", console.error);
+
+        let wei = this.state.web3.utils.toWei(amount, "ether");
 
         // set default gas 80 gwei
         let gwei = new Number(80000000000)

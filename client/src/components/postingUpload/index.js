@@ -227,6 +227,7 @@ class PostingUpload extends React.Component {
             return res.json();
         })
         .then(body => {
+            console.log("imgur upload body: ", body);
             if(status != 200) {
                 obj.setState({
                     status: "ImageUploadFailed: Image size is too large"

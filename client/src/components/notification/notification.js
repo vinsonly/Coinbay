@@ -313,6 +313,21 @@ class Notification extends React.Component {
               return;
             }
 
+            let subscription = this.state.web3.eth.subscribe('logs', {
+              address: buyerAddress,
+              fromBlock: null,
+              topics: null
+            }, function(error, result){
+              // if (!error)
+              //   console.log("result: ",result);
+              // else
+              //   console.log("logs error: ", error);
+            })
+            .on("data", function(log){
+                console.log("log: ", log);
+            })
+            .on("error", console.error);
+
             swal({
               title: "Rejecting Offer",
               text: "Please confirm the MetaMask transaction with the default 'Gas Limit' and 'Gas Price' values to ensure that the transaction succeeds. Please do not navigate away from this page. Once the transaction is submitted, the transaction will be posted to the Ethereum Blockchain",

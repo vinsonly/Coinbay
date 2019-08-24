@@ -25,7 +25,7 @@
     "sweetalert": "^2.1.0",
     "truffle-contract": "^3.0.6",
     "typeface-roboto": "0.0.54",
-    "web3": "0.20.6"
+    "web3": "^1.2.1"
   },
   "scripts": {
     "start": "react-scripts start",

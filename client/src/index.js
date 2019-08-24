@@ -13,8 +13,6 @@ import PostingUpload from './components/postingUpload';
 import registerServiceWorker from './registerServiceWorker';
 import './index.css';
 
-import MetaCoin from "./components/ethComponents/metacoin.js"
-
 import Login from "./components/login/Login"
 import Register from "./components/register/Register"
 

@@ -43,18 +43,18 @@ contract('MetaCoin', function(accounts) {
       meta = instance;
       return meta.getBalance.call(account_one);
     }).then(function(balance) {
-      account_one_starting_balance = balance.toNumber();
+      account_one_starting_balance = Number(balance)();
       return meta.getBalance.call(account_two);
     }).then(function(balance) {
-      account_two_starting_balance = balance.toNumber();
+      account_two_starting_balance = Number(balance)();
       return meta.sendCoin(account_two, amount, {from: account_one});
     }).then(function() {
       return meta.getBalance.call(account_one);
     }).then(function(balance) {
-      account_one_ending_balance = balance.toNumber();
+      account_one_ending_balance = Number(balance)();
       return meta.getBalance.call(account_two);
     }).then(function(balance) {
-      account_two_ending_balance = balance.toNumber();
+      account_two_ending_balance = Number(balance)();
 
       assert.equal(account_one_ending_balance, account_one_starting_balance - amount, "Amount wasn't correctly taken from the sender");
       assert.equal(account_two_ending_balance, account_two_starting_balance + amount, "Amount wasn't correctly sent to the receiver");

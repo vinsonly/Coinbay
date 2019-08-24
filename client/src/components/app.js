@@ -101,6 +101,8 @@ class App extends Component {
                 })
             }
             this.getEthBalance2(results.web3);
+
+
           })
           .catch(() => {
             console.log('Error finding web3.');
@@ -124,7 +126,8 @@ class App extends Component {
                     return;
                 }
                 web3.eth.getBalance(account, (err, balance) => {
-                    let etherValue = web3.fromWei(balance.toNumber(), "ether");
+                    console.log("balance: ", balance);
+                    let etherValue = web3.utils.fromWei(balance, "ether");
                     let walletBalance = convertThreeDecimals(etherValue);
 
                     if(walletBalance != this.state.walletBalance) {
