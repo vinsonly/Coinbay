@@ -1,23 +1,31 @@
-# CoinBay - Deployed at http://34.218.253.86
-## Setup Instructions
-1. Run ```$ vagrant up```
-2. Open your browser and navigate to http://localhost:8000/ to view the CoinBay app
+# CoinBay - Deployed at https://coinbay.vinsonly.me (AWS EC2)
+## Setup Instructions on a Local Machine
 
-OR
+Package Requirements: 
+- Node.js v8 or v10 (https://nodejs.org/en/download/)
+- yarn v1.17 (https://yarnpkg.com/en/docs/install#windows-stable)
+- Postgres v10 (https://www.postgresql.org/download/)
+- Sequelize CLI (https://www.npmjs.com/package/sequelize-cli) ```sudo npm install -g sequelize-cli -y```
+
 1. Clone this repository onto your local machine
 ```$ git clone https://github.com/vinsonly/Coinbay.git```
-2. Navigate to project dir ```$ cd ./coinbay-web-app```  
+2. Navigate to project directory ```$ cd ./Coinbay```  
 3. Install dependencies for the client ```$ cd client && sudo yarn install```
 4. Install dependencies for the server, run ```$ cd .. && sudo yarn install```
-5. Back in root dir, run script to seed the database ```$ ./resetdb.sh ```
-6. And now we can launch the app using ```$ yarn dev```
-7. Open your browser and navigate to http://localhost:3000/ to view the CoinBay app
+5. Create Postgres Database users with default password (PLEASE CHANGE PASSWORD OF USER AFTER USER IS CREATED)
+```./createuser.sh```
+6. Create local database
+```sudo -u postgres createdb cryptobay-dev```
+7. Back in root dir, run script to seed the database ```$ ./resetdb.sh ```
+8. And now we can launch the app using ```$ yarn dev```
+9. Open your browser and navigate to http://localhost:3000/ to view the CoinBay app
 
-8. You can register a new account or use a default user as listed below:
-- *Username: user1 (Password: user1) 
-- *Username: user2 (Password: user2)
-    - *These accounts will have some postings assigned to their account so that you can immediately view and use functionality within the profile dashboard
-    
+10. You can register a new account or use a default user as listed below:
+- Username: user1 (Password: user1) 
+- Username: user2 (Password: user2)
+    - These accounts will have some postings assigned to their account so that you can immediately view and use functionality within the profile dashboard
+- *The private keys for the Ropsten Ethereum Testnet wallets associated with the above accounts can be found in: https://github.com/vinsonly/Coinbay/blob/master/privatekeys.txt*
+
 ## Transaction Workflow
 Follow the steps listed below for setting up and testing the transaction (escrow) process 
 - https://docs.google.com/document/d/1bUKYl6C1ZQrLa4gN1gG0-LMMjQoN7OE2ZUx7OLtJB2o/edit?usp=sharing
