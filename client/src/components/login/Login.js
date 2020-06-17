@@ -73,18 +73,25 @@ class Login extends React.Component  {
     return(
       <div className="container" id="loginContainer">
         <Row>
-          <Col md="6">
-            <form onSubmit={this.handleSubmit}>
-              <p className="h5 text-center mb-4">Sign in</p>
-              <div className="grey-text">
-                <Input label="Email or Username" icon="envelope" group type="text" validate error="wrong" success="right" value={this.state.user} onChange={this.handleChange}/>
-                <Input label="Password" icon="lock" group type="password" validate value={this.state.password} onChange={this.handleChange}/>
-              </div>
-              <div className="text-center">
-                <Button onClick={this.handleSubmit}>Login</Button>
-              </div>
-            </form>
-          </Col>
+          <Row>
+            <Col md="6">
+              <form onSubmit={this.handleSubmit}>
+                <p className="h5 text-center mb-4">Sign in</p>
+                <div className="grey-text">
+                  <Input label="Email or Username" icon="envelope" group type="text" validate error="wrong" success="right" value={this.state.user} onChange={this.handleChange}/>
+                  <Input label="Password" icon="lock" group type="password" validate value={this.state.password} onChange={this.handleChange}/>
+                </div>
+                <div className="text-center">
+                  <Button onClick={this.handleSubmit}>Login</Button>
+                </div>
+              </form>
+            </Col>
+          </Row>
+          <Row className="test-accounts-container">
+            <h3>Test Accounts:</h3>
+            <p>Username: User1, Password: User1</p>
+            <p>Username: User2, Password: User2</p>
+          </Row>
         </Row>
       </div>
     );

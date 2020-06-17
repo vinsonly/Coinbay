@@ -5,6 +5,7 @@
     width: 100vw;
     min-width: 320px;
     height: 85vh;
+    padding-top: 0;
 }
 
 div.row {
@@ -12,4 +13,13 @@ div.row {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.row.test-accounts-container {
+    margin-top: 5em;
+    flex-direction: column;
+}
+
+.row.test-accounts.container h1 {
+    margin-bottom: 1em;
 }
