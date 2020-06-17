@@ -89,8 +89,8 @@ class Login extends React.Component  {
           </Row>
           <Row className="test-accounts-container">
             <h3>Test Accounts:</h3>
-            <p>Username: User1, Password: User1</p>
-            <p>Username: User2, Password: User2</p>
+            <p>Username: user1, Password: user1</p>
+            <p>Username: user2, Password: user2</p>
           </Row>
         </Row>
       </div>
