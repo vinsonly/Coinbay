@@ -514,9 +514,6 @@ class SinglePosting extends React.Component {
                   <br/>
                   <h2 className="seller-title">Seller: {this.state.user.username}</h2>
                   <div className="seller">
-                    <h4>E-mail: {this.state.user.email}</h4>
-                    <h4>Phone: {this.state.user.phone || "n/a"}</h4>
-                    <h4 style={{wordWrap:"break-word"}}>Ethereum Address: {this.state.user.crypto || "n/a"}</h4>
                     <div className="sellerRating">
                       <h4 style={{marginBottom: 0}}>Rating: 
                         {this.state.user.rating == null ? " n/a" : "" }
@@ -561,7 +558,6 @@ class SinglePosting extends React.Component {
                     </div>
                   </div>
                   <br/>
-                  <h5 className="metaMaskWarning"><strong>Note: You must have the <a target="_blank" href="https://metamask.io/">Metamask browser extension</a> installed to place orders and confirm orders.</strong></h5>
                   <Button onClick={ () => this.offered() } variant="contained" color="primary" className="bid-button" style={this.state.bidButtonStyle} disabled={this.state.buttonDisabled}>
                     {this.state.buttonText}
                   </Button>
