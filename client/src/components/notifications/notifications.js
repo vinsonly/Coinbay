@@ -146,6 +146,9 @@ class Notifications extends React.Component {
 
     return (
 	    <div id="notifications">
+
+				This page can probably be removed and its functionality merged with the transactions history page, look at how ebay does it
+
 				<div id="sentOffers" className="notificationsPost">
 					<h3> Pending Sent Offers [{this.state.buyerPendingConfPosts.length}]</h3>
 					{this.state.buyerPendingConfPosts.map(post => {
