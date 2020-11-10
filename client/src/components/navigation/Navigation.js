@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { Navbar, NavbarBrand, NavbarNav, NavbarToggler, Collapse, NavItem, NavLink, Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'mdbreact';
+import { Navbar, NavbarNav, NavbarToggler, Collapse, NavItem, NavLink, Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'mdbreact';
 import Search from '../search/Search';
-import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'mdbreact/dist/css/mdb.css';
 import './navigation.css';
@@ -122,13 +121,6 @@ class Navigation extends Component {
     }
     render() {
 
-        let walletBalance
-        if(this.props.walletBalance == -1) {
-            walletBalance = "n/a (Please login to your MetaMask account)"
-        } else {
-            walletBalance = this.props.walletBalance + " ETH"
-        }
-
       return (
             <div className="nav-color">
                 <div className="white-text">
@@ -153,19 +145,6 @@ class Navigation extends Component {
                               </NavItem>
                             </NavbarNav>
                             <NavbarNav right>
-                                {
-                                    (this.props.loggedInUser.id) ? (
-                                        <NavItem>
-                                            <span id="navEth">
-                                                <i class="material-icons">
-                                                    account_balance_wallet
-                                                </i>
-                                                {walletBalance}
-                                            </span>
-                                        </NavItem>
-                                    ) : (<div></div>)
-                                }
-
                                 {
                                     (this.props.loggedInUser.id) ? (<NavItem>
                                         {/* {this.notifier()} */}
