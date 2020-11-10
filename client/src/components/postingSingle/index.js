@@ -41,21 +41,6 @@ class SinglePosting extends React.Component {
     this.offered = this.offered.bind(this);
     this.setButtonStyle = this.setButtonStyle.bind(this);
 
-    //get ethereum price from cmc
-    fetch('https://api.coinmarketcap.com/v2/ticker/1027/')
-    .then(res => {
-      return res.json();
-    })
-    .then(body => {
-      console.log(body.data.quotes.USD.price);
-      this.setState({
-        ethusd: body.data.quotes.USD.price
-      })
-      window.state = this.state;
-    })
-    .catch(err => {
-      console.log(err);
-    });
 
     fetch(`/api/posting/${postingId}`)
       .then(res => {
@@ -99,10 +84,6 @@ class SinglePosting extends React.Component {
           .catch(err => {
             console.log(err);
           })
-      })
-
-      getWeb3.then(res => {
-        window.web3 = res;
       })
 
   }
