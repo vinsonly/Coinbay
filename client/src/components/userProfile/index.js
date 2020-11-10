@@ -32,7 +32,6 @@ class UserProfile extends Component {
                 username: this.props.user.username || "",
                 email: this.props.user.email || "",
                 phone: this.props.user.phone || "",
-                crypto: this.props.user.crypto || "",
                 userLoaded: true
             })
         } 
@@ -76,8 +75,7 @@ class UserProfile extends Component {
             id: this.props.user.id,
             email: this.state.email,
             username: this.state.username,
-            phone: this.state.phone,
-            crypto: this.state.crypto
+            phone: this.state.phone
         }
         
         console.log(data);
@@ -135,11 +133,6 @@ class UserProfile extends Component {
                     phone: event.target.value
                 })
                 break;
-            case 'crypto':
-                this.setState({
-                    crypto: event.target.value
-                })
-                break;
         }
     }
     
@@ -166,9 +159,6 @@ class UserProfile extends Component {
                         </li>
                         <li class="userListField">
                             <p><span class="fieldName">Phone Number:</span> <input onChange={this.handleChange} name="phone" value={this.state.phone} /> </p>
-                        </li>
-                        <li class="userListField">
-                        <p><span class="fieldName">Ethereum Address:</span> <input onChange={this.handleChange} name="crypto" value={this.state.crypto} /> </p>
                         </li>
                         <li class="userListField">
                             <p><span class="fieldName">User Rating:</span> {(this.props.user.rating) ? (this.props.user.rating) + "/10" : "n/a"}</p>
@@ -203,9 +193,6 @@ class UserProfile extends Component {
                     </li>
                     <li class="userListField">
                         <p><span class="fieldName">Phone Number:</span> {(this.props.user.phone) ? (this.props.user.phone) : "n/a"}</p>
-                    </li>
-                    <li class="userListField">
-                        <p><span class="fieldName">Ethereum Address:</span> {(this.props.user.crypto) ?  (this.props.user.crypto) : "n/a"}</p>
                     </li>
                     <li class="userListField">
                         <p><span class="fieldName">User Rating:</span> {(this.props.user.rating) ? (this.props.user.rating) + "/10" : "n/a"}</p>
