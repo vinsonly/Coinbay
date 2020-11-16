@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@google/maps": "^0.5.5",
+    "axios": "^0.21.0",
     "bcrypt": "^3.0.0",
     "ejs": "^2.6.1",
     "express": "^4.16.2",
