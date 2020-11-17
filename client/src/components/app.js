@@ -4,7 +4,6 @@ import Navigation from './navigation/Navigation';
 import Search from './search/Search'
 import CatNavigation from './catNavigation/catNavigation';
 import { BrowserRouter, Route, Link, Router, Redirect, withRouter } from 'react-router-dom';
-import getWeb3 from '../eth/getWeb3';
 import { baseUrl} from '../index';
 
 class App extends Component {
@@ -16,8 +15,6 @@ class App extends Component {
         this.handleRouteCallback = this.handleRouteCallback.bind(this);
         this.getLoggedInUser = this.getLoggedInUser.bind(this);
         this.signOut = this.signOut.bind(this);
-        this.getEthBalance1 = this.getEthBalance1.bind(this);
-        this.getEthBalance2 = this.getEthBalance2.bind(this);
         this.startBalancePolling = this.startBalancePolling.bind(this);
         this.stopBalancePolling = this.stopBalancePolling.bind(this);
         this.resettedOldState = this.resettedOldState.bind(this);
@@ -31,7 +28,6 @@ class App extends Component {
 
         this.clearState();
         this.getLoggedInUser();
-        // this.getEthBalance1();
         this.startBalancePolling();
     }
 
@@ -92,55 +88,6 @@ class App extends Component {
         this.props.history.push('/');
     }
 
-    getEthBalance1() {
-        getWeb3
-          .then(results => {
-
-            if(results.web3 != this.state.web3) {
-                this.setState({
-                    web3: results.web3
-                })
-            }
-            this.getEthBalance2(results.web3);
-
-
-          })
-          .catch(() => {
-            console.log('Error finding web3.');
-          })
-    }
-
-    getEthBalance2(web3) {
-        web3.eth.getAccounts((err, accounts) => {
-            let account;
-            if(err) {
-                console.error(err);
-                return;
-            } else {
-                account = accounts[0];
-                if(!accounts || accounts.length < 1) {
-                    if(this.state.walletBalance != -1) {
-                        this.setState({
-                            walletBalance: -1
-                        })
-                    }
-                    return;
-                }
-                web3.eth.getBalance(account, (err, balance) => {
-                    console.log("balance: ", balance);
-                    let etherValue = web3.utils.fromWei(balance, "ether");
-                    let walletBalance = convertThreeDecimals(etherValue);
-
-                    if(walletBalance != this.state.walletBalance) {
-                        this.setState({
-                            walletBalance: walletBalance
-                        })
-                    }
-                })
-            }
-        })
-    }
-
     handleRouteCallback(routePath, routeProps) {
         console.log('handle search callback');
 
@@ -156,9 +103,6 @@ class App extends Component {
 
     startBalancePolling() {
         let obj = this;
-        this.accountInterval = setInterval(function() {
-            obj.getEthBalance1();
-        }, 2000);
     }
 
     stopBalancePolling() {
@@ -183,7 +127,7 @@ class App extends Component {
             <div id="app">
                 <Navigation handleRouteCallback={this.handleRouteCallback} loggedInUser={this.state.loggedInUser} signOut={this.signOut} walletBalance={this.state.walletBalance}/>
                 <CatNavigation resetOldState={this.resetOldState}/>
-                <Main routePath={this.state.routePath} routeProps={this.state.routeProps} clearRouteState={this.clearState} loggedInUser={this.state.loggedInUser} refreshBalance={this.getEthBalance1} walletBalance={this.state.walletBalance} toResetOldState={this.state.toResetOldState} resettedOldState={this.resettedOldState}/>
+                <Main routePath={this.state.routePath} routeProps={this.state.routeProps} clearRouteState={this.clearState} loggedInUser={this.state.loggedInUser} walletBalance={this.state.walletBalance} toResetOldState={this.state.toResetOldState} resettedOldState={this.resettedOldState}/>
             </div>
         )
     }

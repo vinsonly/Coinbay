@@ -9,10 +9,6 @@ const auth = require('./auth');
 var db = require('../models');
 var sequelize = db.sequelize;
 
-// var getWeb3 = require('../../utils/getWeb3');
-
-// var BasicEscrow = require('../eth/build/contracts/BasicEscrow.json');
-
 module.exports = {
     // define your route handlers here, see below for details
 
