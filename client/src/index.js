@@ -18,7 +18,8 @@ import Register from "./components/register/Register"
 
 import App from './components/app';
 
-let baseUrl = "https://coinbay.vinsonly.me";
+// let baseUrl = "https://coinbay.vinsonly.me";
+let baseUrl = "https://hqk24xu3jg.execute-api.us-east-1.amazonaws.com/dev";
 
 var env = process.env.NODE_ENV || 'development';
 
@@ -27,7 +28,7 @@ if (env == 'development') {
 }
 
 if (process.env.REACT_APP_CUSTOM_NODE_ENV && process.env.REACT_APP_CUSTOM_NODE_ENV == 'production') {
-	baseUrl = "https://coinbay.vinsonly.me";
+	baseUrl = "https://hqk24xu3jg.execute-api.us-east-1.amazonaws.com/dev";
 }
 
 console.log("baseUrl: ", baseUrl);
