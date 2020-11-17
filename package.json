@@ -12,6 +12,7 @@
   "dependencies": {
     "@google/maps": "^0.5.5",
     "bcrypt": "^3.0.0",
+    "cors": "^2.8.5",
     "ejs": "^2.6.1",
     "express": "^4.16.2",
     "faker": "^4.1.0",
