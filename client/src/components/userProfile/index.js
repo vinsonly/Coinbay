@@ -3,6 +3,7 @@ import Button from '@material-ui/core/Button';
 import './styles.css'
 import { Link } from 'react-router-dom';
 import ReactSpinner from 'react-spinners';
+import { baseUrl} from '../../index';
 
 class UserProfile extends Component {
     constructor(props) {
@@ -84,7 +85,7 @@ class UserProfile extends Component {
         
         setTimeout(function() {
             // set a post request 
-            fetch('/api/user/update', {
+            fetch(baseUrl + '/api/user/update', {
                 method: 'POST',
                 body: JSON.stringify(data), // data can be `string` or {object}!
                 headers:{

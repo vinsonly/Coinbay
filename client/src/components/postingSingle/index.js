@@ -7,6 +7,7 @@ import './postingSingle.css';
 import SimpleMap from '../mapsPostLocation/mapsPostLocation';
 import setUpRatingArrays from '../../helpers/postings.js';
 import swal from 'sweetalert';
+import { baseUrl} from '../../index';
 
 const styles = theme => ({
   root: {
@@ -42,7 +43,7 @@ class SinglePosting extends React.Component {
     this.setButtonStyle = this.setButtonStyle.bind(this);
 
 
-    fetch(`/api/posting/${postingId}`)
+    fetch(`${baseUrl}/api/posting/${postingId}`)
       .then(res => {
         console.log(res);
         postingStatus = res.status;
@@ -61,7 +62,7 @@ class SinglePosting extends React.Component {
       })
       .then((body) => {
         console.log(body);
-        fetch(`/api/user/${body.userId}`)
+        fetch(`${baseUrl}/api/user/${body.userId}`)
           .then((res) => {
             userStatus = res.status;
             console.log(res);

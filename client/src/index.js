@@ -18,6 +18,20 @@ import Register from "./components/register/Register"
 
 import App from './components/app';
 
+let baseUrl = "https://coinbay.vinsonly.me";
+
+var env = process.env.NODE_ENV || 'development';
+
+if (env == 'development') {
+    baseUrl = "http://localhost:5000";
+}
+
+if (process.env.REACT_APP_CUSTOM_NODE_ENV && process.env.REACT_APP_CUSTOM_NODE_ENV == 'production') {
+	baseUrl = "https://coinbay.vinsonly.me";
+}
+
+console.log("baseUrl: ", baseUrl);
+
 // ReactDOM.render(
 // 	<div>
 // 		<Navigation/>
@@ -35,3 +49,5 @@ ReactDOM.render((
 );
 
 registerServiceWorker();
+
+export { baseUrl };

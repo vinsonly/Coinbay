@@ -9,6 +9,7 @@ import TransactionModal from './transactionModal';
 import UserModal from './userModal';
 import DisputeModal from './disputeModal';
 import './styles.css';
+import { baseUrl} from '../../index';
 
 class TransactionHistory extends Component {
   constructor(props) {
@@ -30,7 +31,7 @@ class TransactionHistory extends Component {
     console.log(userId);
 
     let status;
-    fetch(`/api/user/postings/${userId}/transactionHistory`,{
+    fetch(`${baseUrl}/api/user/postings/${userId}/transactionHistory`,{
       method: 'GET',
       headers:{
         'Content-Type': 'application/json',

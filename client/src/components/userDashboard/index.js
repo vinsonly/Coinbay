@@ -4,7 +4,7 @@ import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import ReactTable from "react-table";
 import { BrowserRouter, Route, Link, Router, Redirect, withRouter } from 'react-router-dom';
-
+import { baseUrl} from '../../index';
 import swal from 'sweetalert';
 
 import './styles.css';
@@ -38,7 +38,7 @@ class UserDashboard extends Component {
 
   fetchPosts = async () => {
     let status;
-    fetch(`/api/user/postings/${this.props.loggedInUser.id}`)
+    fetch(`${baseUrl}/api/user/postings/${this.props.loggedInUser.id}`)
       .then(res => {
         console.log(res);
         status = res.status;
@@ -91,7 +91,7 @@ class UserDashboard extends Component {
         }
         let status;
 
-        fetch('/api/posting/delete', {
+        fetch(baseUrl + '/api/posting/delete', {
           method: 'POST',
           body: JSON.stringify(data), // data can be `string` or {object}!
           headers:{

@@ -4,6 +4,7 @@ import FilterDropdown from '../dropdown/dropdown';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'mdbreact/dist/css/mdb.css';
 import './posts.css';
+import { baseUrl} from '../../index';
 
 class Posts extends Component {
 	constructor(props) {
@@ -20,7 +21,9 @@ class Posts extends Component {
 			resetted: false
 		};
 
-		fetch(`/api/postings_with_users`)
+		console.log("baseUrl: ", baseUrl);
+
+		fetch(`${baseUrl}/api/postings_with_users`)
 		.then(res => {
 			postingStatus = res.status;
 			return res.json();
@@ -38,7 +41,7 @@ class Posts extends Component {
 					console.log(err);
 				})
 
-		fetch(`/api/postings/newest`)
+		fetch(`${baseUrl}/api/postings/newest`)
 		.then(res => {
 			postingStatus = res.status;
 			return res.json();

@@ -5,6 +5,7 @@ import Search from './search/Search'
 import CatNavigation from './catNavigation/catNavigation';
 import { BrowserRouter, Route, Link, Router, Redirect, withRouter } from 'react-router-dom';
 import getWeb3 from '../eth/getWeb3';
+import { baseUrl} from '../index';
 
 class App extends Component {
 
@@ -51,7 +52,7 @@ class App extends Component {
             }
 
             let status;
-            fetch('/api/validateToken', {
+            fetch(baseUrl + '/api/validateToken', {
                 method: 'POST',
                 body: JSON.stringify(data),
                 headers: {

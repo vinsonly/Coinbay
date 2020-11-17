@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, Row, Col, Input, Button } from 'mdbreact';
 import './login.css';
-
+import { baseUrl} from '../../index';
 
 /** Class representing a login form component */
 class Login extends React.Component  {
@@ -25,7 +25,7 @@ class Login extends React.Component  {
     event.preventDefault();
     let data = this.state;
     let status;
-    fetch('/api/login', {
+    fetch(baseUrl + '/api/login', {
         method: 'POST', // or 'PUT'
         body: JSON.stringify(data), // data can be `string` or {object}!
         headers:{

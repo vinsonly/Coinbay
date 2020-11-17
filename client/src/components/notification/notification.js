@@ -7,6 +7,7 @@ import { BrowserRouter, Route, Link, Router, Redirect, withRouter } from 'react-
 import Button from '@material-ui/core/Button';
 import "./notification.css";
 import 'react-notifications/lib/notifications.css';
+import { baseUrl} from '../../index';
 
 const contract = require('truffle-contract');
 const escrow = contract(BasicEscrow);
@@ -208,7 +209,7 @@ class Notification extends React.Component {
 
                 // set the state to pending
                 // save result.tx into the database and set status to pending on the database
-                fetch('/api/posting/setoffer', {
+                fetch(baseUrl + '/api/posting/setoffer', {
                   method: 'POST',
                   body: JSON.stringify(data), // data can be `string` or {object}!
                   headers:{
@@ -369,7 +370,7 @@ class Notification extends React.Component {
 
                 // set the state to pending
                 // save result.tx into the database and set status to pending on the database
-                fetch('/api/posting/setoffer', {
+                fetch(baseUrl + '/api/posting/setoffer', {
                   method: 'POST',
                   body: JSON.stringify(data), // data can be `string` or {object}!
                   headers:{
@@ -516,7 +517,7 @@ class Notification extends React.Component {
                 }
 
                 let status;
-                fetch('/api/posting/set_transaction',{
+                fetch(baseUrl + '/api/posting/set_transaction',{
                   method: 'POST',
                   body: JSON.stringify(data), // data can be `string` or {object}!
                   headers:{
@@ -664,7 +665,7 @@ class Notification extends React.Component {
                 }
 
                 let status;
-                fetch('/api/posting/set_transaction',{
+                fetch(baseUrl + '/api/posting/set_transaction',{
                   method: 'POST',
                   body: JSON.stringify(data), // data can be `string` or {object}!
                   headers:{

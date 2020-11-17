@@ -4,7 +4,7 @@ import Search from '../search/Search';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'mdbreact/dist/css/mdb.css';
 import './navigation.css';
-
+import { baseUrl} from '../../index';
 
 /** Class representing a Navigation Bar component */
 class Navigation extends Component {
@@ -62,7 +62,7 @@ class Navigation extends Component {
             token: sessionToken
         }
         let status;
-        fetch('/api/validateToken', {
+        fetch(baseUrl + '/api/validateToken', {
             method: 'POST',
             body: JSON.stringify(data),
             headers: {
@@ -99,7 +99,7 @@ class Navigation extends Component {
         if (is_root) {
             return(
                 <div className="center-search" style={{backgroundImage: `url(${coverImgSrc})`}} >
-                    <h1 id="slogan">Buy With Cryptocurrency, Sell With Certainty</h1>
+                    <h1 id="slogan">Save Money for a Cause</h1>
                     <div className="searching">
                         <form className="form-inline md-form mt-0" id="searchForm">
                             <Search handleRouteCallback={this.props.handleRouteCallback}/>
@@ -126,7 +126,7 @@ class Navigation extends Component {
                 <div className="white-text">
                     <Navbar className="expand" dark expand="lg" scrolling>
                         <NavLink to="/">
-                            <strong>CoinBay</strong>
+                            <strong>Charity Thrift Shop</strong>
                             <sup> Classifieds</sup>
                         </NavLink>
                         { !this.state.isWideEnough && <NavbarToggler onClick = { this.onClick } />}

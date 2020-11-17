@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import './notifications.css';
 import Notification from '../notification/notification';
- 
+import { baseUrl} from '../../index';
+
 class Notifications extends React.Component {
 
 	constructor(props) {
@@ -24,7 +25,7 @@ class Notifications extends React.Component {
 		let status;
 		let userId = this.props.loggedInUser.id;
 		console.log("userId", userId);
-		fetch(`/api/buyer_postings/${userId}`)
+		fetch(`${baseUrl}/api/buyer_postings/${userId}`)
 			.then(res => {
 				status = res.status;
 				return res.json();
@@ -67,7 +68,7 @@ class Notifications extends React.Component {
 		let status;
 		let userId = this.props.loggedInUser.id;
 		console.log("userId", userId);
-		fetch(`/api/seller_postings/${this.props.loggedInUser.id}/with_buyer`)
+		fetch(`${baseUrl}/api/seller_postings/${this.props.loggedInUser.id}/with_buyer`)
 			.then(res => {
 			status = res.status;
 			return res.json();

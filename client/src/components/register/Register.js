@@ -2,7 +2,7 @@ import React from 'react';
 import { Container, Row, Col, Input, Button } from 'mdbreact';
 import { Route } from 'react-router-dom';
 import Login from "../login/Login";
-
+import { baseUrl} from '../../index';
 import './register.css'
 
 class Register extends React.Component  {
@@ -54,7 +54,7 @@ class Register extends React.Component  {
       password: this.state.password
     }
 
-    fetch('/api/user', {
+    fetch(baseUrl + '/api/user', {
       method: 'POST', // or 'PUT'
       body: JSON.stringify(data), // data can be `string` or {object}!
       headers:{

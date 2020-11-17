@@ -6,6 +6,7 @@ import Dropzone from 'react-dropzone';
 import './styling.css';
 import swal from 'sweetalert';
 import { Button } from 'mdbreact';
+import { baseUrl} from '../../index';
 
 let object;
 /** Class representing a postings creation component */
@@ -214,7 +215,7 @@ class PostingUpload extends React.Component {
             status: "Uploading image(s)..."
         });
 
-        fetch('https://api.imgur.com/3/image', {
+        fetch(baseUrl + 'https://api.imgur.com/3/image', {
             method: 'POST', // or 'PUT'
             body: JSON.stringify(data), // data can be `string` or {object}!
             headers:{

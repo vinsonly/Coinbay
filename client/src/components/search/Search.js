@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Switch, Redirect, withRouter } from 'react-router
 import Posts from '../posts/Posts';
 import './search.css';
 import Autosuggest from 'react-autosuggest';
-
+import { baseUrl} from '../../index';
 
 function escapeRegexCharacters(str) {
   return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -65,7 +65,7 @@ class SearchInner extends Component {
 
     let postingStatus;
 
-      fetch(`/api/postings/newest`)
+      fetch(`${baseUrl}/api/postings/newest`)
       .then(res => {
         postingStatus = res.status;
         return res.json();
@@ -143,7 +143,7 @@ class SearchInner extends Component {
     let postingStatus;
 
     if(this.state.searchBy == 'title'){
-      fetch(`/api/postings/searchTitle/${value}`)
+      fetch(`${baseUrl}/api/postings/searchTitle/${value}`)
         .then(res => {
           postingStatus = res.status;
           return res.json();
@@ -165,7 +165,7 @@ class SearchInner extends Component {
         })
     }
     else if (this.state.searchBy == 'user'){
-      fetch(`/api/postings/searchUsername/${value}`)
+      fetch(`${baseUrl}/api/postings/searchUsername/${value}`)
         .then(res => {
           postingStatus = res.status;
           return res.json();
