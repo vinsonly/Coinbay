@@ -34,24 +34,24 @@ var categories = {
 
 // Sample images for each category
 var images = {
-            0: "https://i.imgur.com/Mq5SNYg.jpg",
-            1: "https://i.imgur.com/2LVebjF.jpg",
-            2: "https://i.imgur.com/HNrEwz3.png",
-            3: "https://i.imgur.com/2CbSHuj.jpg",
-            4: "https://i.imgur.com/8wsZnTz.jpg",
-            5: "https://i.imgur.com/BPaF0O4.jpg",
-            6: "https://i.imgur.com/4LXRixl.jpg",
-            7: "https://i.imgur.com/PZomq2A.jpg",
-            8: "https://i.imgur.com/YRwoNB4.jpg",
-            9: "https://i.imgur.com/jZn1Yhh.jpg",
-            10: "https://i.imgur.com/QKIitvA.jpg",
-            11: "https://i.imgur.com/v8rGiYc.jpg",
-            12: "https://i.imgur.com/9jPq2hy.jpg",
-            13: "https://i.imgur.com/MFhxFEO.jpg",
-            14: "https://i.imgur.com/pJCZUGe.jpg",
-            15: "https://i.imgur.com/j5DSa41.jpg",
-            16: "https://i.imgur.com/DGRm1It.jpg",
-            17: "https://i.imgur.com/blvKIcs.jpg"
+  0: "https://thrift-shop-bucket.s3.amazonaws.com/0-nio-es6.jpg",
+  1: "https://thrift-shop-bucket.s3.amazonaws.com/1-beauty.jpg",
+  2: "https://thrift-shop-bucket.s3.amazonaws.com/2-pets.png",
+  3: "https://thrift-shop-bucket.s3.amazonaws.com/3-iphone.jpg",
+  4: "https://thrift-shop-bucket.s3.amazonaws.com/4-cracking-coding-interview.jpg",
+  5: "https://thrift-shop-bucket.s3.amazonaws.com/5-nuptse.jpg",
+  6: "https://thrift-shop-bucket.s3.amazonaws.com/6-championship-ring.jpg",
+  7: "https://thrift-shop-bucket.s3.amazonaws.com/7-art.jpg",
+  8: "https://thrift-shop-bucket.s3.amazonaws.com/8-health.jpg",
+  9: "https://thrift-shop-bucket.s3.amazonaws.com/9-garden.jpg",
+  10: "https://thrift-shop-bucket.s3.amazonaws.com/10-office.jpg",
+  11: "https://thrift-shop-bucket.s3.amazonaws.com/11-music.jpg",
+  12: "https://thrift-shop-bucket.s3.amazonaws.com/12-housing.jpg",
+  13: "https://thrift-shop-bucket.s3.amazonaws.com/13-outdoors.jpg",
+  14: "https://thrift-shop-bucket.s3.amazonaws.com/14-toys.jpg",
+  15: "https://thrift-shop-bucket.s3.amazonaws.com/15-tools.jpg",
+  16: "https://thrift-shop-bucket.s3.amazonaws.com/16-antiques.jpg",
+  17: "https://thrift-shop-bucket.s3.amazonaws.com/17-misc.jpg",
 };
 
 //Generate randomized fake postings
