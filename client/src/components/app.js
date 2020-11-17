@@ -110,13 +110,10 @@ class App extends Component {
     }
 
     getEthBalance2(web3) {
-        web3.eth.getAccounts((err, accounts) => {
-            let account;
-            if(err) {
-                console.error(err);
-                return;
-            } else {
-                account = accounts[0];
+        web3.eth.getAccounts().then((accounts) => {
+
+            let account = accounts[0];
+                console.log("accounts: ", accounts)
                 if(!accounts || accounts.length < 1) {
                     if(this.state.walletBalance != -1) {
                         this.setState({
@@ -136,8 +133,40 @@ class App extends Component {
                         })
                     }
                 })
-            }
+        }).catch(err => {
+            console.error(err);
+            return;
         })
+
+        // web3.eth.getAccounts((err, accounts) => {
+        //     let account;
+        //     if(err) {
+        //         console.error(err);
+        //         return;
+        //     } else {
+        //         account = accounts[0];
+        //         console.log("accounts: ", accounts)
+        //         if(!accounts || accounts.length < 1) {
+        //             if(this.state.walletBalance != -1) {
+        //                 this.setState({
+        //                     walletBalance: -1
+        //                 })
+        //             }
+        //             return;
+        //         }
+        //         web3.eth.getBalance(account, (err, balance) => {
+        //             console.log("balance: ", balance);
+        //             let etherValue = web3.utils.fromWei(balance, "ether");
+        //             let walletBalance = convertThreeDecimals(etherValue);
+
+        //             if(walletBalance != this.state.walletBalance) {
+        //                 this.setState({
+        //                     walletBalance: walletBalance
+        //                 })
+        //             }
+        //         })
+        //     }
+        // })
     }
 
     handleRouteCallback(routePath, routeProps) {

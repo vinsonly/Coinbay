@@ -17,6 +17,8 @@ const getWeb3 = new Promise(function(resolve, reject) {
 
       console.log('Injected web3 detected.');
 
+      console.log("results: ", results)
+
       resolve(results)
     } else {
       // Fallback to localhost if no web3 injection. We've configured this to
@@ -24,6 +26,8 @@ const getWeb3 = new Promise(function(resolve, reject) {
       var provider = new Web3.providers.HttpProvider('http://127.0.0.1:7545')
 
       web3 = new Web3(provider)
+
+      console.log("web3: ", web3)
 
       results = {
         web3: web3
