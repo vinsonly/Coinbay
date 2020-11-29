@@ -10,6 +10,14 @@ console.log(User);
 
 module.exports = {
 
+    /**
+     * /api/login
+     * {
+     *  user: "user1",
+     *  password: "user1"
+     * }
+     */
+
     // username, password
     login(req, res) {
         console.log("req.body:");

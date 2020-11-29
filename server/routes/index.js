@@ -19,6 +19,7 @@ module.exports = (app) => {
     app.get('/api/user/postings/:userId', postingsController.findByUser); // anyone
 
     app.get('/api/postings', postingsController.read); // anyone
+    app.post('/api/posting/setSold', authController.verifyToken, postingsController.setSold); // only posting owner
     app.post('/api/posting/setoffer', authController.verifyToken, postingsController.setOffer); // only posting owner
     app.post('/api/posting', authController.verifyToken, postingsController.create); // user must be logged in
     app.post('/api/posting/update', authController.verifyToken, postingsController.update); // only posting owner
@@ -37,5 +38,4 @@ module.exports = (app) => {
     // WRITE THE OTHER ENDPOINTS DOWN HERE
     app.post('/api/login', authController.login);
     app.post('/api/validateToken', authController.checkToken);
-
 }

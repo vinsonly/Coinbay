@@ -640,6 +640,47 @@ module.exports = {
                     res.status(400).send(error);
                 })
 
-    }
+    },
+
+    /**
+     * /api/posting/setoffer
+     *  {
+            id: 1, # posting id
+        }
+    */
+    setSold(req, res) {
+
+        let id = parseInt(req.body.id);
+        console.log(req.body);
+
+        return Posting
+            .findById(id)
+                .then(posting => {
+                    if(!posting) {
+                        return res.status(404).send({
+                            message: `posting with id: ${id} not found.`
+                        })
+                    } else {
+                        return posting
+                            .update({
+                                status: "fulfilled"
+                            })
+                            .then(() => {
+                                console.log("Successfully updated posting");
+                                res.send(posting);
+                            })
+                            .catch((error) => {
+                                console.log("Opps we ran into an error");
+                                console.log(error);
+                                res.status(400).send(error);
+                            })
+                    }
+                })
+                .catch((error) => {
+                    console.log("Opps we ran into an error");
+                    console.log(error);
+                    res.status(400).send(error);
+                })
+    },
 
 }
